@@ -1,11 +1,44 @@
 .header {
-    height: 60px;
+    height: 90px;
     width: 100%;
     box-shadow: rgb(0 0 0 / 12%) 0px 1px 1px;
-    display: flex;
+    justify-content: space-between;
+    background-color: #ffe7cc;
+    font-family: 'DINRoundPro';
 }
 
 .inner {
     height: 100%;
-    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    height: 85px;
+    width: 105.42px;
+}
+.button1 {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    background-color: #ffe7cc;
+    border: none;
+    font-family: 'DINRoundPro';
+    font-weight: 700;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.button2 {
+    font-size: 16px;
+    border-radius: 20px;
+    border: none;
+    color: rgb(0, 0, 0);
+    background-color: #f8bc8a;
+    padding: 6px 8px;
+    cursor: pointer;
+    box-sizing: border-box;
+    font-family: 'DINRoundPro';
+    font-weight: 700;
+    line-height: 22px;
+    min-width: 100px;
 }

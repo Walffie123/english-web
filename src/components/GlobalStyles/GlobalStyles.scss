@@ -1,6 +1,6 @@
 @import 'normalize.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;0,700;1,500;1,600&display=swap');
-
+@import url('../../fonts/dinround/stylesheet.css');
 :root {
     //Default Layout
     --default-layout-header-height: 60px;
@@ -18,5 +18,5 @@ html {
 
 body {
     font-size: 20px;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'DINRoundPro';
 }
