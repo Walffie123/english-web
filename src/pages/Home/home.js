@@ -9,7 +9,7 @@ function Home() {
                 <h1>
                     The <span className={cx('abc')}>Future</span> Of Education Is Here!
                 </h1>
-                <p>
+                <p className={cx('para')}>
                     This course is designed to help you improve your English language skills, whether you are a beginner
                     or an advanced learner. Our program is structured to provide you with the tools and resources you
                     need to succeed in your English language learning journey.
