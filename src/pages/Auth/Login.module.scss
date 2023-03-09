@@ -1,0 +1,43 @@
+body {
+    text-align: right;
+}
+.logo {
+    width: 50%;
+    margin: 45px 0;
+}
+.logo-img {
+    text-align: center;
+}
+
+form {
+    box-sizing: border-box;
+    margin: 100px 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    border-radius: 20px;
+    background-color: var(--primary);
+    width: 27%;
+    display: inline-block;
+    padding: 20px 30px;
+}
+
+.auth-wrapper .form-control:focus {
+    border-color: #167bff;
+    box-shadow: none;
+}
+label {
+    font-weight: 400;
+}
+.forgot-password,
+.forgot-password a {
+    text-align: right;
+    font-size: 13px;
+    padding-top: 10px;
+    color: #7f7d7d;
+    margin: 0;
+}
+.forgot-password a {
+    color: #167bff;
+}
