@@ -14,6 +14,7 @@ function Home() {
                     or an advanced learner. Our program is structured to provide you with the tools and resources you
                     need to succeed in your English language learning journey.
                 </p>
+                <button className={cx('Explore')}>Explore Course</button>
             </div>
             <img className={cx('Idiots')} src={images} alt="Idiots"></img>
         </div>

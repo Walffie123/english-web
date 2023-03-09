@@ -1,0 +1,30 @@
+.btn {
+    font-size: 17px;
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'DINRoundPro';
+    line-height: 22px;
+    min-width: 100px;
+
+    + .btn {
+        margin-left: 2px;
+    }
+}
+
+.login {
+    margin-right: 10px;
+    &:hover {
+        color: red;
+    }
+}
+
+.register {
+    border-radius: 20px;
+    padding: 6px 8px;
+    background-color: #f8bc8a;
+    box-sizing: border-box;
+    &:hover {
+        color: red;
+    }
+}
