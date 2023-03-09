@@ -1,44 +1,46 @@
+import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
-
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import images from '~/assets/images/Engliterature_free-file.png';
 const cx = classNames.bind(styles);
-
-function Login() {
-    return (
-        // <div>
-        //     <h1>Login</h1>
-        // </div>
-        <section>
-            <div className={cx('form-box')}>
-                <div className={cx('form-value')}>
-                    <form action="">
-                        <h2>Login</h2>
-                        <div className={cx('inputbox')}>
-                            <input type="email" required></input>
-                            <label for="">Email</label>
-                        </div>
-                        <div className={cx('inputbox')}>
-                            <input type="password" required></input>
-                            <label for="">Password</label>
-                        </div>
-                        <div className={cx('inputbox')}>
-                            <label for="">
-                                <input type="checkbox">
-                                    Remember Me <a href="/register">Forget Password</a>
-                                </input>
+export default class Login extends Component {
+    render() {
+        return (
+            <form>
+                <div>
+                    <div className={cx('logo-img')}>
+                        <img className={cx('logo')} src={images} alt="Engliterature"></img>
+                    </div>
+                    <div className="">
+                        <label>Email address</label>
+                        <input type="email" className="form-control" placeholder="Enter email" />
+                    </div>
+                    <div className="">
+                        <label>Password</label>
+                        <input type="password" className="form-control" placeholder="Enter password" />
+                    </div>
+                    <div className="">
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                            <label className="custom-control-label" htmlFor="customCheck1">
+                                Remember me
                             </label>
                         </div>
-                        <button>Log in</button>
-                        <div className="register">
-                            <p>
-                                Don't have a account <a href="/register">Register</a>
-                            </p>
-                        </div>
-                    </form>
+                    </div>
+                    <div className="">
+                        <button type="submit" className="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                    <p className="forgot-password text-right">
+                        Forgot{' '}
+                        <a href="#">
+                            <span className="blue">password?</span>
+                        </a>
+                    </p>
                 </div>
-            </div>
-        </section>
-    );
+            </form>
+        );
+    }
 }
-
-export default Login;

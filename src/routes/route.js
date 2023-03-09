@@ -10,8 +10,8 @@ const publicRoutes = [
     { path: '/courses', component: Courses },
     { path: '/upload', component: Upload },
     { path: '/game', component: Game },
-    { path: '/register', component: Register },
-    { path: '/login', component: Login },
+    { path: '/register', component: Register, layout: null },
+    { path: '/login', component: Login, layout: null },
 ];
 
 //phai Login moi dung Route nay`
