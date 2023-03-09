@@ -1,5 +1,4 @@
 import { Draggable, Droppable } from 'react-drag-and-drop';
-
 function Game() {
     return (
         <div>
