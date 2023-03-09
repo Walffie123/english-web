@@ -15,7 +15,7 @@
 .login {
     margin-right: 10px;
     &:hover {
-        color: red;
+        color: #e00712ed;
     }
 }
 
@@ -25,6 +25,26 @@
     background-color: #f8bc8a;
     box-sizing: border-box;
     &:hover {
-        color: red;
+        color: #e00712ed;
+    }
+}
+.submit {
+    background: #00649d;
+    box-shadow: 0 4px 40px rgb(0 0 0 / 15%), inset -2px -4px 15px rgb(0 0 0 / 14%);
+    border-radius: 51px;
+    text-transform: uppercase;
+    color: #fff;
+    font-family: 'DINRoundPro';
+    font-style: normal;
+    padding: 12px;
+    font-size: 20px;
+    border-radius: 50px;
+    width: 100%;
+    border: none;
+    outline: none;
+    font-weight: 400;
+    font-size: 14px;
+    &:hover {
+        background-color: #e00712ed;
     }
 }
