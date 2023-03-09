@@ -1,29 +1,42 @@
-import React, { useState } from 'react';
-import './Login.module.scss';
-
-const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log('Username:', username);
-    console.log('Password:', password);
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="username">Username:</label>
-        <input type="text" id="username" value={username} onChange={(event) => setUsername(event.target.value)} />
-      </div>
-      <div>
-        <label htmlFor="password">Password:</label>
-        <input type="password" id="password" value={password} onChange={(event) => setPassword(event.target.value)} />
-      </div>
-      <button type="submit">Log in</button>
-    </form>
-  );
-};
-
-export default Login;
+import React, { Component } from 'react';
+import classNames from 'classnames/bind';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import styles from './Login.module.scss';
+import Button from '~/components/Button/btn';
+import images from '~/assets/images/Engliterature_free-file.png';
+const cx = classNames.bind(styles);
+export default class Login extends Component {
+    render() {
+        return (
+            <form>
+                <div>
+                    <div className={cx('logo-img')}>
+                        <img className={cx('logo')} src={images} alt="Engliterature"></img>
+                    </div>
+                    <div className="">
+                        <label>Email address</label>
+                        <input type="email" className="form-control" placeholder="Enter email" />
+                    </div>
+                    <div className="">
+                        <label>Password</label>
+                        <input type="password" className="form-control" placeholder="Enter password" />
+                    </div>
+                    <div className={cx('box2')}>
+                        <div className="custom-control custom-checkbox">
+                            <input type="checkbox" className="custom-control-input" id="customCheck1" />
+                            <label className="custom-control-label" htmlFor="customCheck1">
+                                Remember me
+                            </label>
+                        </div>
+                        <p className={cx('forgot')}>
+                            Forgot <a href="#">password?</a>
+                        </p>
+                    </div>
+                    <div className={cx('submit-login')}>
+                        <Button submit>Submit</Button>
+                    </div>
+                </div>
+            </form>
+        );
+    }
+}
