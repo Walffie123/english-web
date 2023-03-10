@@ -14,19 +14,14 @@
 
 .login {
     margin-right: 10px;
-    &:hover {
-        color: #e00712ed;
-    }
 }
 
 .register {
-    border-radius: 20px;
+    border-radius: 10px;
     padding: 6px 8px;
-    background-color: #f8bc8a;
+    background-color: black;
     box-sizing: border-box;
-    &:hover {
-        color: #e00712ed;
-    }
+    color: white;
 }
 .submit {
     background: #00649d;
