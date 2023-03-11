@@ -3,17 +3,15 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import images from '~/assets/images/Engliterature_free-file.png';
-
 import Button from '~/components/Button/btn';
+
 const cx = classNames.bind(styles);
 
 function Header() {
     return (
         <header className={cx('header')}>
             <div className={cx('inner')}>
-                <div>
-                    <img className={cx('logo')} src={images} alt="Engliterature"></img>
-                </div>
+                <img className={cx('logo')} src={images} alt="Engliterature"></img>
                 <div className={cx('Home')}>
                     <a href="/">Home</a>
                 </div>
@@ -30,7 +28,7 @@ function Header() {
                     <a href="/courses">Courses</a>
                 </div>
                 <div className={cx('actions')}>
-                    <FontAwesomeIcon icon={faRightToBracket} />
+                    <FontAwesomeIcon className={cx('ilogin')} icon={faRightToBracket} />
                     <Button login href="/login" target="_blank">
                         Login
                     </Button>

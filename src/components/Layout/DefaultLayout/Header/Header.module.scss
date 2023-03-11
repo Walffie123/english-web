@@ -1,12 +1,15 @@
 .header {
+    font-size: 18px;
     height: 90px;
     width: 100%;
-    box-shadow: rgb(0 0 0 / 12%) 0px 1px 1px;
+    box-shadow: rgb(0 0 0 / 10%) 0px 1px 1px;
     justify-content: space-between;
     background-color: #ffe7cc;
     font-family: 'DINRoundPro';
     padding: 0px;
     margin: 0px;
+    font-weight: 550;
+    color: black;
 }
 
 .inner {
@@ -17,8 +20,11 @@
 }
 
 a {
-    text-decoration: none;
     color: black;
+    text-decoration: none;
+    &:hover {
+        color: #ffcba4;
+    }
 }
 
 .logo {
@@ -27,4 +33,9 @@ a {
 }
 .ilogin {
     margin-right: 5px;
+}
+.actions {
+    &:hover {
+        color: #ffcba4;
+    }
 }
