@@ -1,0 +1,16 @@
+{
+    "sentences": [
+      {
+        "text": "The ____ is always greener on the other side.",
+        "answer": "grass"
+      },
+      {
+        "text": "You can't judge a book by its ____.",
+        "answer": "cover"
+      },
+      {
+        "text": "Actions speak louder than ____.",
+        "answer": "words"
+      }
+    ]
+  }
