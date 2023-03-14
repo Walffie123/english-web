@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './Auth.module.scss';
-import Button from '~/components/Button/btn';
+import Button from '~/components/Button/Btn';
 import images from '~/assets/images/Engliterature_free-file.png';
 const cx = classNames.bind(styles);
 export default class Login extends Component {
@@ -15,14 +16,13 @@ export default class Login extends Component {
                         <img className={cx('logo')} src={images} alt="Engliterature"></img>
                     </div>
                     <div className="">
-                        <label>Email address</label>
+                        <label for="inputfield">User Name</label>
                         <div>
-                            <input
-                                FontAwesomeIcon={faUser}
-                                type="email"
-                                className="form-control"
-                                placeholder="Enter email"
-                            />
+                            <div>
+                                <div className={cx('input-group')}>
+                                    <input type="user" className={cx('form-control')} placeholder="Enter user name" />
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div className="">

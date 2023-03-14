@@ -4,6 +4,8 @@ import Upload from '~/pages/Upload/upload';
 import Game from '~/pages/Game/game';
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
+import WordAsscociation from '../components/Games/WordAssociation/WordAss';
+
 //khong can Login van dung Route nay`
 const publicRoutes = [
     { path: '/', component: Home },
@@ -12,6 +14,7 @@ const publicRoutes = [
     { path: '/game', component: Game },
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: Login, layout: null },
+    { path: '/word', component: WordAsscociation },
 ];
 
 //phai Login moi dung Route nay`

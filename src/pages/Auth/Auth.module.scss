@@ -1,6 +1,7 @@
 body {
     text-align: center;
-    background-image: url(../../assets/images/milad-fakurian-E8Ufcyxz514-unsplash.jpg);
+    background: linear-gradient(to left, #ad5389, #e0afa0);
+    // background-image: url(../../assets/images/learning.jpg);
 }
 .logo {
     width: 50%;
@@ -11,7 +12,7 @@ body {
 }
 
 form {
-    box-shadow: rgb(0 0 0 / 30%) 1px 1px 1px 1px;
+    box-shadow: rgb(0 0 0 / 30%) 3px 3px 3px 3px;
     box-sizing: border-box;
     margin: 80px;
     display: flex;
@@ -19,7 +20,8 @@ form {
     align-items: center;
     text-align: left;
     border-radius: 20px;
-    background-color: var(--primary);
+    background-color: #f4f3ee;
+    // background-color: var(--primary);
     display: inline-block;
     padding: 20px 30px;
 }

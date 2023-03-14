@@ -3,7 +3,7 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import images from '~/assets/images/Engliterature_free-file.png';
-import Button from '~/components/Button/btn';
+import Button from '~/components/Button/Btn';
 
 const cx = classNames.bind(styles);
 
