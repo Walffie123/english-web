@@ -1,0 +1,48 @@
+.game-container {
+    font-family: 'Trebuchet MS', 'Lucida Grande', Verdana, Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 150px;
+}
+
+.questions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.question-box {
+    background-color: rgb(136, 134, 134);
+    color: white;
+    margin: 15px;
+    border-radius: 10px;
+    padding: 20px 40px 20px 40px;
+}
+
+.options-buttons {
+    display: flex;
+    flex-direction: row;
+}
+.option-button {
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background-color: rgb(75, 134, 111);
+    color: white;
+    cursor: pointer;
+}
+
+.option-button:disabled {
+    background-color: rgb(121, 121, 121);
+    color: rgb(136, 134, 134);
+}
+
+.answer-display {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}

@@ -1,24 +1,12 @@
-import { Draggable, Droppable } from 'react-drag-and-drop';
+
+import Button from '~/components/Button/Btn';
 function Game() {
     return (
-        <div>
-            <ul>
-                <Draggable type="fruit" data="banana">
-                    <li>Banana</li>
-                </Draggable>
-                <Draggable type="fruit" data="apple">
-                    <li>Apple</li>
-                </Draggable>
-                <Draggable type="metal" data="silver">
-                    <li>Silver</li>
-                </Draggable>
-            </ul>
-            <Droppable
-                types={['fruit']} // <= allowed drop types
-                onDrop={this.onDrop.bind(this)}
-            >
-                <ul className="Smoothie"></ul>
-            </Droppable>
+        <div className="game-content">
+            <h1>Game</h1>
+            <Button href={'/word'}>Word Association</Button>
+            <Button href={'/list'}>List</Button>
+            <Button href={'/flashcard'}>Flash Card</Button>
         </div>
     );
 }

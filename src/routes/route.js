@@ -7,6 +7,8 @@ import Register from '~/pages/Auth/register';
 import ListComponent from '~/components/ListComponent';
 import FlashCardComponent from '~/components/FlashCardComponent';
 import FlashCardLessonComponent from '~/components/FlashCardLessonComponent';
+import WordAsscociation from '../components/Games/WordAssociation/WordAss';
+
 //khong can Login van dung Route nay`
 const publicRoutes = [
     { path: '/', component: Home },
@@ -18,6 +20,7 @@ const publicRoutes = [
     { path: '/list', component: ListComponent },
     { path: '/flashcard', component: FlashCardComponent},
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent},
+    { path: '/word', component: WordAsscociation },
 ];
 
 //phai Login moi dung Route nay`

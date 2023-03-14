@@ -1,0 +1,58 @@
+body {
+    text-align: center;
+    background: linear-gradient(to left, #ad5389, #e0afa0);
+    // background-image: url(../../assets/images/learning.jpg);
+}
+.logo {
+    width: 50%;
+    margin: 45px 0;
+}
+.logo-img {
+    text-align: center;
+}
+
+form {
+    box-shadow: rgb(0 0 0 / 30%) 3px 3px 3px 3px;
+    box-sizing: border-box;
+    margin: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    border-radius: 20px;
+    background-color: #f4f3ee;
+    // background-color: var(--primary);
+    display: inline-block;
+    padding: 20px 30px;
+}
+
+label {
+    font-family: 'DinroundPRO';
+    color: black;
+}
+.submit-login {
+    text-align: center;
+    padding: 20px 30px;
+}
+.box2 {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+.remember {
+    margin-left: 3px;
+}
+.forgot {
+    margin-left: 150px;
+    color: black;
+}
+.forgot a {
+    color: black;
+    &:hover {
+        color: blue;
+    }
+}
+.sign-in {
+    text-align: center;
+}

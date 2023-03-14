@@ -1,4 +1,4 @@
-import {FlashcardArray, Flashcard} from 'react-quizlet-flashcard'
+import {FlashcardArray} from 'react-quizlet-flashcard'
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
