@@ -26,7 +26,7 @@ function Home() {
                     This course is designed to help you improve your English language skills, whether you are a beginner
                     or an advanced learner. Our program is structured to provide you with the tools and resources you
                     need to succeed in your English language learning journey.
-                    <div>
+                    {/* <div>
                         <Paper elevation={3}>
                             {user.map((users) => (
                                 <Paper elevation={6} key={users.userId}>
@@ -35,9 +35,8 @@ function Home() {
                                     Password:{users.password}
                                 </Paper>
                             ))}
-                            <video src="http://res.cloudinary.com/dcbt4j7z2/video/upload/v1678783820/EnglishWeb/zvuvsuqaxobuyheh4hxe.mp4" />
                         </Paper>
-                    </div>
+                    </div> */}
                 </p>
 
                 <div className={cx('d')}>
