@@ -2,15 +2,22 @@ import { FlashcardArray } from 'react-quizlet-flashcard';
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faShuffle } from '@fortawesome/free-solid-svg-icons';
+import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { click } from '@testing-library/user-event/dist/click';
 
 export default function FlashCardComponent(props) {
     const [cards, setCards] = useState([]);
     const [starredIds, setStarredIds] = useState([]);
+    const [unStarredIds, setUnStarredIds] = useState([]);
     const [shuffle, setShuffle] = useState(false);
     const [currentCard, setCurrentCard] = useState(1);
+    const [currentStarredCard, setCurrentStarredCard] = useState(1);
     const [starredCards, setStarredCards] = useState([]);
     const [loadStarredCards, setLoadStarredCards] = useState(false);
+    // const [clickStar, setClickStar] = useState(false);
     const controlRef = useRef({});
 
     useEffect(() => {
@@ -23,43 +30,39 @@ export default function FlashCardComponent(props) {
             backHTML: '<h3>' + card.backHTML + '</h3>',
             id: index + 1,
         }));
-        
-        if(loadStarredCards === true) {
+        // console.log(newCards);
+        if (loadStarredCards === true) {
             let filteredCards = newCards;
-            if (shuffle) {
-                filteredCards.sort(() => Math.random() - 0.5);
-            } 
-        if (starredIds.length > 0) {
-            filteredCards = newCards.filter((card) => starredIds.includes(card.id));
-        }
-        setCards(filteredCards);
+            if (starredIds.length >= 0) {
+                filteredCards = newCards.filter((card) => starredIds.includes(card.id));
+            }
+            setStarredCards(filteredCards);
+            controlRef.current.resetArray();
         } else {
             setCards(newCards);
+            controlRef.current.resetArray();
         }
-        controlRef.current.resetArray();
+        if (shuffle) {
+            newCards.sort(() => Math.random() - 0.5);
+        }
     };
 
     const handleShuffleClick = () => {
         setShuffle(!shuffle);
     };
 
-
-
     const handleStarClick = (id) => {
         if (starredIds.includes(id)) {
-            setStarredIds(starredIds.filter((starredId) => starredId !== id));
+            const newStarredIds = starredIds.filter((starredId) => starredId !== id);
+            setStarredIds(newStarredIds);
+            setUnStarredIds(newStarredIds);
         } else {
             setStarredIds([...starredIds, id]);
         }
+        // setClickStar(!clickStar);
     };
     console.log(starredIds);
-
-    const renderStar = (id) => (
-        <div className={`star-icon ${starredIds.includes(id) ? 'starred' : ''}`} onClick={() => handleStarClick(id)}>
-            <FontAwesomeIcon icon={faStar} />
-        </div>
-    );
-
+    // starredCards.map((card) => console.log(card.id));
     const handleLoadStarredCards = () => {
         setLoadStarredCards(!loadStarredCards);
         loadCards();
@@ -67,39 +70,137 @@ export default function FlashCardComponent(props) {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-12">
-                    <FlashcardArray
-                        cards={starredCards.length > 0 ? starredCards : cards}
-                        frontContentStyle={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            position: 'relative',
-                        }}
-                        backContentStyle={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            position: 'relative',
-                        }}
-                        onCardChange={(id, index) => {
-                            setCurrentCard(index);
-                        }}
-                        forwardRef={controlRef}
-                        
-                    />
-                </div>
-                <div className="col-12">
-                    <button onClick={handleShuffleClick}>Shuffle</button>
-                </div>
-                <div className="col-12">
-                    <span>{renderStar(currentCard)}</span>
-                </div>
-                <div className="col-12">
-                    <button onClick={handleLoadStarredCards}>Load Starred Cards</button>
-                    
-                </div>
+                {!loadStarredCards && (
+                    <div className='col-md-12'>
+                        <div className="col-md-12">
+                            <div
+                                className="col-12"
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <FlashcardArray
+                                    cards={cards}
+                                    frontContentStyle={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                    backContentStyle={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                    }}
+                                    onCardChange={(id, index) => {
+                                        setCurrentCard(id);
+                                        console.log("Current: " + id);
+                                    }}
+                                    forwardRef={controlRef}
+                                />
+                            </div>
+                        </div>
+                        <div className="col-md-12">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div
+                                        style={{
+                                            color: shuffle ? 'orange' : 'black',
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div>
+                                        <div
+                                            style={{
+                                                color: starredIds.includes(currentCard) ? 'orange' : 'black',
+                                            }}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faLightbulb}
+                                                onClick={() => handleStarClick(currentCard)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div>
+                                        <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                {loadStarredCards && (
+                    <div className="col-md-12">
+                        <div
+                            className="col-12"
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <FlashcardArray
+                                cards={starredCards}
+                                frontContentStyle={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                                backContentStyle={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                }}
+                                onCardChange={(id, index) => {
+                                    setCurrentStarredCard(id);
+                                    console.log("Starred: " + id);
+                                }}
+                                forwardRef={controlRef}
+                            />
+                        </div>
+                        <div className="col-md-12">
+                            <div className="row">
+                                <div className="col-md-4">
+                                    <div
+                                        style={{
+                                            color: shuffle ? 'orange' : 'black',
+                                        }}
+                                    >
+                                        <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div>
+                                        <div
+                                            style={{
+                                                color: starredIds.includes(currentStarredCard) ? 'orange' : 'black',
+                                            }}
+                                        >
+                                            <FontAwesomeIcon
+                                                icon={faLightbulb}
+                                                onClick={() => handleStarClick(currentStarredCard)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="col-md-4">
+                                    <div>
+                                        <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
+            <div className="row"></div>
         </div>
     );
 }
