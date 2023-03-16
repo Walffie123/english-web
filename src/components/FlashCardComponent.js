@@ -7,6 +7,7 @@ import { faLightbulb } from '@fortawesome/free-solid-svg-icons';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { click } from '@testing-library/user-event/dist/click';
+import { render } from '@testing-library/react';
 
 export default function FlashCardComponent(props) {
     const [cards, setCards] = useState([]);
@@ -26,8 +27,17 @@ export default function FlashCardComponent(props) {
     const loadCards = async () => {
         const result = await axios.get('http://localhost:8080/loadFlashCard');
         const newCards = result.data.map((card, index) => ({
-            frontHTML: '<h3>' + card.frontHTML + '</h3>',
-            backHTML: '<h3>' + card.backHTML + '</h3>',
+            frontHTML: (
+                <div>
+                    <h3> {card.frontHTML}</h3>
+                </div>
+            ),
+            backHTML: (
+                <div>
+                    <h3>{card.backHTML}</h3>
+                </div>
+            ),
+
             id: index + 1,
         }));
         // console.log(newCards);
@@ -55,7 +65,6 @@ export default function FlashCardComponent(props) {
         if (starredIds.includes(id)) {
             const newStarredIds = starredIds.filter((starredId) => starredId !== id);
             setStarredIds(newStarredIds);
-            setUnStarredIds(newStarredIds);
         } else {
             setStarredIds([...starredIds, id]);
         }
@@ -63,15 +72,40 @@ export default function FlashCardComponent(props) {
     };
     console.log(starredIds);
     // starredCards.map((card) => console.log(card.id));
-    const handleLoadStarredCards = () => {
+    console.log(currentStarredCard);
+
+    const handleLoadStarredCardsOne = () => {
+        console.log('loadStarredCards: ' + loadStarredCards)      
+        if (loadStarredCards === false && !starredIds.includes(currentStarredCard)){
+            setCurrentCard(Math.floor(Math.random() * (10 - 1 + 1)) + 1);
+        }
+        else if(loadStarredCards === false && starredIds.includes(currentStarredCard)){
+            setCurrentCard(starredIds[0]);
+        }
+        else{
+            setCurrentCard(starredIds[0])
+        }
         setLoadStarredCards(!loadStarredCards);
-        loadCards();
     };
+    const handleLoadStarredCardsTwo = () => {
+        console.log('loadStarredCards: ' + loadStarredCards)
+        if (loadStarredCards === true && !starredIds.includes(currentCard)){
+            setCurrentStarredCard(Math.floor(Math.random() * (10 - 1 + 1)) + 1);
+        }
+        else if (loadStarredCards === true && starredIds.includes(currentCard)){
+            setCurrentStarredCard(starredIds[0]);
+        }
+        else{
+            setCurrentCard(starredIds[0])
+        }
+        setLoadStarredCards(!loadStarredCards);
+    };
+
     return (
         <div className="container">
             <div className="row">
                 {!loadStarredCards && (
-                    <div className='col-md-12'>
+                    <div className="col-md-12">
                         <div className="col-md-12">
                             <div
                                 className="col-12"
@@ -95,7 +129,7 @@ export default function FlashCardComponent(props) {
                                     }}
                                     onCardChange={(id, index) => {
                                         setCurrentCard(id);
-                                        console.log("Current: " + id);
+                                        console.log('Current: ' + id);
                                     }}
                                     forwardRef={controlRef}
                                 />
@@ -128,14 +162,13 @@ export default function FlashCardComponent(props) {
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                        <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                        <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCardsOne} />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 )}
-
                 {loadStarredCards && (
                     <div className="col-md-12">
                         <div
@@ -160,7 +193,7 @@ export default function FlashCardComponent(props) {
                                 }}
                                 onCardChange={(id, index) => {
                                     setCurrentStarredCard(id);
-                                    console.log("Starred: " + id);
+                                    console.log('Starred: ' + id);
                                 }}
                                 forwardRef={controlRef}
                             />
@@ -178,6 +211,7 @@ export default function FlashCardComponent(props) {
                                 </div>
                                 <div className="col-md-4">
                                     <div>
+                                        {/* ${starredIds.includes(id) ? ' starred' : ''} */}
                                         <div
                                             style={{
                                                 color: starredIds.includes(currentStarredCard) ? 'orange' : 'black',
@@ -192,7 +226,7 @@ export default function FlashCardComponent(props) {
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                        <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                        <FontAwesomeIcon icon={faEye} onClick={ handleLoadStarredCardsTwo} />
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +234,6 @@ export default function FlashCardComponent(props) {
                     </div>
                 )}
             </div>
-            <div className="row"></div>
         </div>
     );
 }
