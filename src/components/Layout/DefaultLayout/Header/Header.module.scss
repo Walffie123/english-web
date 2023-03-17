@@ -1,12 +1,15 @@
 .header {
-    height: 90px;
+    font-size: 18px;
+    height: 110px;
     width: 100%;
-    box-shadow: rgb(0 0 0 / 12%) 0px 1px 1px;
-    justify-content: space-between;
-    background-color: #ffe7cc;
+    box-shadow: rgb(0 0 0 / 10%) 0px 1px 1px;
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    // background-color: #ffe7cc;
     font-family: 'DINRoundPro';
     padding: 0px;
     margin: 0px;
+    font-weight: 550;
+    color: rgb(214, 214, 214);
 }
 
 .inner {
@@ -17,13 +20,25 @@
 }
 
 a {
+    color: rgb(214, 214, 214);
     text-decoration: none;
-    color: black;
+    &:hover {
+        color: #f4f3ee;
+    }
 }
 
 .logo {
     height: 85px;
     width: 105.42px;
+    margin: 0 0 0 22px;
+}
+.ilogin {
+    margin-right: 5px;
+}
+.actions {
+    &:hover {
+        color: #ffa51d;
+    }
 }
 .ilogin {
     margin-right: 5px;
