@@ -4,7 +4,6 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShuffle, faEye, faLightbulb, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
 export default function FlashCardComponent(props) {
     const [cards, setCards] = useState([]);
@@ -16,21 +15,13 @@ export default function FlashCardComponent(props) {
     const [starredCards, setStarredCards] = useState([]);
     const [loadStarredCards, setLoadStarredCards] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
     // const [clickStar, setClickStar] = useState(false);
     const controlRef = useRef({});
-    const navigate = useNavigate();
-    
+
     useEffect(() => {
         loadCards();
-    }, [shuffle, loadStarredCards]);
-
-    const filterCards = (cards, filterIds) => {
-        if (filterIds.length > 0) {
-            return cards.filter((card) => filterIds.includes(card.id));
-        } else {
-            return cards;
-        }
-    };
+    }, [shuffle, loadStarredCards, isDelete]);
 
     const loadCards = async () => {
         const result = await axios.get('http://localhost:8080/loadFlashCard');
@@ -65,8 +56,6 @@ export default function FlashCardComponent(props) {
         }
     };
 
-
-
     const handleShuffleClick = () => {
         setShuffle(!shuffle);
     };
@@ -90,8 +79,15 @@ export default function FlashCardComponent(props) {
     };
 
     const handleDeleteStarredCards = () => {
-        setStarredIds([]);
-      };
+        const confirmDelete = window.confirm('Are you sure you want to delete all starred cards?');
+        if (confirmDelete) {
+            setStarredIds([]);
+            setIsDelete(!isDelete);
+            if (loadStarredCards) {
+                setLoadStarredCards(!loadStarredCards);
+            }
+        }
+    };
 
     const isStarred = (id) => {
         if (id === currentStarredCard) {
@@ -100,8 +96,6 @@ export default function FlashCardComponent(props) {
             return starredIds.includes(id);
         }
     };
-
-
 
     return (
         <div className="container">
@@ -140,22 +134,20 @@ export default function FlashCardComponent(props) {
                         <div className="col-md-12">
                             <div className="row">
                                 <div className="col-md-3">
-                                    
-                                        <div
-                                            style={{
-                                                color: shuffle ? 'orange' : 'black',
-                                            }}
+                                    <div
+                                        style={{
+                                            color: shuffle ? 'orange' : 'black',
+                                        }}
+                                    >
+                                        <OverlayTrigger
+                                            placement="bottom"
+                                            overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
                                         >
-                                             <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
-                                            >
                                             <span>
-                                            <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
+                                                <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
                                             </span>
-                                            </OverlayTrigger>
-                                        </div>
-                                    
+                                        </OverlayTrigger>
+                                    </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div>
@@ -168,40 +160,43 @@ export default function FlashCardComponent(props) {
                                                 placement="bottom"
                                                 overlay={<Tooltip id="star">Remember this card</Tooltip>}
                                             >
-                                            <span>
-                                                <FontAwesomeIcon
-                                                    icon={faLightbulb}
-                                                    onClick={() => handleStarClick(currentCard)}
-                                                />
-                                                
-                                            </span>
+                                                <span>
+                                                    <FontAwesomeIcon
+                                                        icon={faLightbulb}
+                                                        onClick={() => handleStarClick(currentCard)}
+                                                    />
+                                                </span>
                                             </OverlayTrigger>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-3">
-                                        <div>
+                                    <div>
                                         <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="star">Show starred card</Tooltip>}
-                                            >
+                                            placement="bottom"
+                                            overlay={<Tooltip id="star">Show starred card</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                                <FontAwesomeIcon
+                                                    icon={faEye}
+                                                    onClick={handleLoadStarredCards}
+                                                    style={{ color: loadStarredCards ? 'orange' : 'black' }}
+                                                />
                                             </span>
-                                            </OverlayTrigger>
-                                        </div>                                 
+                                        </OverlayTrigger>
+                                    </div>
                                 </div>
                                 <div className="col-md-3">
-                                        <div>
+                                    <div>
                                         <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
-                                            >
+                                            placement="bottom"
+                                            overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faTrashCan} onClick={handleDeleteStarredCards} />
+                                                <FontAwesomeIcon icon={faTrashCan} onClick={handleDeleteStarredCards} />
                                             </span>
-                                            </OverlayTrigger>
-                                        </div>                                 
+                                        </OverlayTrigger>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -245,48 +240,46 @@ export default function FlashCardComponent(props) {
                                         }}
                                     >
                                         <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
-                                            >
+                                            placement="bottom"
+                                            overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
+                                                <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
                                             </span>
-                                            </OverlayTrigger>
+                                        </OverlayTrigger>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                        {/* ${starredIds.includes(id) ? ' starred' : ''} */}
-                                        <div
-                                            style={{
-                                                color: starredIds.includes(currentStarredCard) ? 'orange' : 'black',
-                                            }}
-                                        >
+                                        <div>
                                             <OverlayTrigger
                                                 placement="bottom"
-                                                overlay={<Tooltip id="star">Forget this card</Tooltip>}
+                                                overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
                                             >
-                                            <span>
-                                                <FontAwesomeIcon
-                                                    icon={faLightbulb}
-                                                    onClick={() => handleStarClick(currentStarredCard)}
-                                                />
-                                                
-                                            </span>
+                                                <span>
+                                                    <FontAwesomeIcon
+                                                        icon={faTrashCan}
+                                                        onClick={handleDeleteStarredCards}
+                                                    />
+                                                </span>
                                             </OverlayTrigger>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                    <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="star">Show full card</Tooltip>}
-                                            >
+                                        <OverlayTrigger
+                                            placement="bottom"
+                                            overlay={<Tooltip id="star">Show full card</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                                <FontAwesomeIcon
+                                                    icon={faEye}
+                                                    onClick={handleLoadStarredCards}
+                                                    style={{ color: loadStarredCards ? 'orange' : 'black' }}
+                                                />
                                             </span>
-                                            </OverlayTrigger>
+                                        </OverlayTrigger>
                                     </div>
                                 </div>
                             </div>

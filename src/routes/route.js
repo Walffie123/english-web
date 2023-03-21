@@ -8,6 +8,7 @@ import ListComponent from '~/components/ListComponent';
 import FlashCardComponent from '~/components/FlashCardComponent';
 import FlashCardLessonComponent from '~/components/FlashCardLessonComponent';
 import WordAsscociation from '../components/Games/WordAssociation/WordAss';
+import CRUDFlashCardComponent from '~/components/CRUDFlashCardComponent';
 
 //khong can Login van dung Route nay`
 const publicRoutes = [
@@ -21,6 +22,7 @@ const publicRoutes = [
     { path: '/flashcard', component: FlashCardComponent},
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent},
     { path: '/word', component: WordAsscociation },
+    { path: '/crudFlashCard/:lessonid', component: CRUDFlashCardComponent }
 ];
 
 //phai Login moi dung Route nay`

@@ -235,22 +235,13 @@ export default function FlashCardLessonComponent(props) {
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                        {/* ${starredIds.includes(id) ? ' starred' : ''} */}
-                                        <div
-                                            style={{
-                                                color: starredIds.includes(currentStarredCard) ? 'orange' : 'black',
-                                            }}
-                                        >
-                                            <OverlayTrigger
+                                    <div>
+                                        <OverlayTrigger
                                                 placement="bottom"
-                                                overlay={<Tooltip id="star">Forget this card</Tooltip>}
+                                                overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
                                             >
                                             <span>
-                                                <FontAwesomeIcon
-                                                    icon={faLightbulb}
-                                                    onClick={() => handleStarClick(currentStarredCard)}
-                                                />
-                                                
+                                            <FontAwesomeIcon icon={faTrashCan} onClick={handleDeleteStarredCards} />
                                             </span>
                                             </OverlayTrigger>
                                         </div>
