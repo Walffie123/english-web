@@ -4,9 +4,13 @@ import Upload from '~/pages/Upload/upload';
 import Game from '~/pages/Game/game';
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
+import ListComponent from '~/components/ListComponent';
+import FlashCardComponent from '~/components/FlashCardComponent';
+import FlashCardLessonComponent from '~/components/FlashCardLessonComponent';
 import FillInTheBlankGame from '~/pages/Game/fillinblank';
 import FillInTheBlankIntro from '~/pages/Game/FillInBlankIntro';
 import FillInBlankGame from '~/pages/Game/FillInBlankCrud';
+import CRUDFlashCardComponent from '~/components/CRUDFlashCardComponent';
 //khong can Login van dung Route nay`
 const publicRoutes = [
     { path: '/', component: Home },
@@ -20,7 +24,9 @@ const publicRoutes = [
     { path: '/login', component: Login, layout: null },
     { path: '/fillinblank', component: FillInTheBlankIntro, layout: null},
     { path: '/fillinblankcrud', component: FillInBlankGame, layout: null},
-    // { path: '/word', component: WordAsscociation },
+    { path: '/flashcard', component: FlashCardComponent},
+    { path: '/flashcard/:lessonid', component: FlashCardLessonComponent},
+    { path: '/crudFlashCard/:lessonid', component: CRUDFlashCardComponent }
 ];
 
 //phai Login moi dung Route nay`

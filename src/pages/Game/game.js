@@ -6,7 +6,9 @@ function Game() {
             <h1>Game</h1>
             <div>
                <Button href={'/word'}>Word Association</Button> 
-            </div>
+                <Button href={'/list'}>List</Button>
+            <Button href={'/flashcard'}>Flash Card</Button>
+        </div>
             <div>
             <Button href={'/fillinblank'}>Fill In Blank</Button>
             </div>

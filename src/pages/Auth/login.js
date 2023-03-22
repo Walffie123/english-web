@@ -45,7 +45,7 @@ export default class Login extends Component {
                         <Button submit>Submit</Button>
                     </div>
                     <div className={cx('sign-in')}>
-                        Dont Have Account?<a href="/register"> Sign In Now</a>
+                        Dont Have Account?<a href="/register"> Sign Up Now</a>
                     </div>
                 </div>
             </form>
