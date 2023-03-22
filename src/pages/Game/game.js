@@ -11,6 +11,9 @@ function Game() {
             <Button href={'/fillinblank'}>Fill In Blank</Button>
             </div>
             <div>
+            <Button href={'/fillinblankcrud'}>Fill In Blank Management</Button>
+            </div>
+            <div>
                 <video src="http://res.cloudinary.com/dcbt4j7z2/video/upload/v1678783820/EnglishWeb/zvuvsuqaxobuyheh4hxe.mp4"></video>
             </div>
         </div>

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faArrowRight, faArrowRotateBackward, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './fillinblank.css';
 import Button from '~/components/Button/btn';
+
 function FillInTheBlankGame() {
     const [questions, setQuestions] = useState([]);
     const [answers, setAnswers] = useState([]);
@@ -57,6 +58,12 @@ function FillInTheBlankGame() {
             ).length;
             setScore(newScore);
             setShowAnswers(true);
+        }
+    };
+
+    const handlePreviousQuestion = () => {
+        if (currentQuestionIndex > 0) {
+            setCurrentQuestionIndex(currentQuestionIndex - 1);
         }
     };
 
@@ -119,18 +126,26 @@ function FillInTheBlankGame() {
                     <div className="questions">
                         <p>{currentQuestion.question}</p>
                         <input
+                            className="input"
                             type="text"
                             value={answers[currentQuestionIndex]}
                             onChange={handleAnswerChange}
                             placeholder="Enter your answer"
                         />
                     </div>
+                    <div className='btn'>
+                        {currentQuestionIndex > 0 && (
+                            <button className="button" onClick={() => handlePreviousQuestion()}>
+                                 <FontAwesomeIcon icon={faArrowLeft} /> Previous Question
+                            </button>
+                        )}
+                        {currentQuestionIndex < questions.length - 1 && (
+                            <button className="button" onClick={() => handleNextQuestion()}>
+                                Next Question <FontAwesomeIcon icon={faArrowRight} />
+                            </button>
+                        )}
+                    </div>
 
-                    {currentQuestionIndex < questions.length - 1 && (
-                        <button className="button" onClick={() => handleNextQuestion()}>
-                            Next Question <FontAwesomeIcon icon={faArrowRight} />
-                        </button>
-                    )}
                     {currentQuestionIndex === questions.length - 1 && (
                         <button className="button" onClick={() => handleNextQuestion()}>
                             Finish <FontAwesomeIcon icon={faCheck} />
