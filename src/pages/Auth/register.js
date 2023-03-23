@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import styles from './Auth.module.scss';
-import Button from '~/components/Button/btn';
+import Button from '~/components/Button/Btn';
 import images from '~/assets/images/Engliterature_free-file.png';
 const cx = classNames.bind(styles);
 export default class Register extends Component {
@@ -37,6 +37,7 @@ export default class Register extends Component {
                         <label>Password</label>
                         <input type="password" className="form-control" placeholder="Enter password" />
                     </div>
+
                     <div className="">
                         <label>Address</label>
                         <input type="Address" className="form-control" placeholder="Enter Address" />
@@ -56,7 +57,8 @@ export default class Register extends Component {
                         <div className="custom-control custom-checkbox">
                             <input type="checkbox" className="custom-control-input" id="customCheck1" />
                             <label className={cx('remember')} htmlFor="customCheck1">
-                                I have read and accpet the terms and conditions
+                                I have read and accpet the{' '}
+                                <span style={{ textDecoration: 'underline', color: 'blue' }}>terms and conditions</span>
                             </label>
                         </div>
                     </div>
