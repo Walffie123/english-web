@@ -4,16 +4,6 @@ import images from '~/assets/images/Daco_4375001.png';
 const cx = classNames.bind(styles);
 
 function Home() {
-    const [user, setUser] = useState([]);
-
-    useEffect(() => {
-        fetch('http://localhost:8080/user/list')
-            .then((res) => res.json())
-            .then((result) => {
-                setUser(result);
-            });
-    }, []);
-
     return (
         <div className={cx('wrapper')}>
             <div>
