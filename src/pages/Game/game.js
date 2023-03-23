@@ -4,7 +4,7 @@ function Game() {
     return (
         <div className="game-content">
             <h1>Game</h1>
-            <Button href={'/word'}>Word Association</Button>
+            <Button href={'/wordassintro'}>Word Association</Button>
         </div>
     );
 }

@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({ to, href, login, register, submit, onClick, children, ...passProps }) {
+function Button({ to, href, login, register, submit, onClick, children, choices, home, play, ...passProps }) {
     let Btn = 'button';
     const props = {
         onClick,
@@ -13,6 +13,9 @@ function Button({ to, href, login, register, submit, onClick, children, ...passP
         login,
         register,
         submit,
+        choices,
+        home,
+        play,
     };
 
     if (to) {
@@ -27,6 +30,9 @@ function Button({ to, href, login, register, submit, onClick, children, ...passP
         login,
         register,
         submit,
+        home,
+        choices,
+        play,
     });
 
     return (
