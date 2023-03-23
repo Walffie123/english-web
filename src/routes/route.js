@@ -9,8 +9,9 @@ import FlashCardComponent from '~/components/FlashCardComponent';
 import FlashCardLessonComponent from '~/components/FlashCardLessonComponent';
 import FillInTheBlankGame from '~/pages/Game/fillinblank';
 import FillInTheBlankIntro from '~/pages/Game/FillInBlankIntro';
-import FillInBlankGame from '~/pages/Game/FillInBlankCrud';
+import FillInBlankGame from '~/pages/Game/CRUDFillInBlankComponent';
 import CRUDFlashCardComponent from '~/components/CRUDFlashCardComponent';
+import CRUDFillInBlankComponent from '~/pages/Game/CRUDFillInBlankComponent';
 //khong can Login van dung Route nay`
 const publicRoutes = [
     { path: '/', component: Home },
@@ -26,7 +27,8 @@ const publicRoutes = [
     { path: '/fillinblankcrud', component: FillInBlankGame, layout: null},
     { path: '/flashcard', component: FlashCardComponent},
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent},
-    { path: '/crudFlashCard/:lessonid', component: CRUDFlashCardComponent }
+    { path: '/crudFlashCard/:lessonid', component: CRUDFlashCardComponent },
+    { path: '/crudFillInBlank/:levelid', component: CRUDFillInBlankComponent },
 ];
 
 //phai Login moi dung Route nay`
