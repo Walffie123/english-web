@@ -7,6 +7,7 @@ import styles from './Auth.module.scss';
 import Button from '~/components/Button/Btn';
 import images from '~/assets/images/Engliterature_free-file.png';
 const cx = classNames.bind(styles);
+
 export default class Login extends Component {
     render() {
         return (

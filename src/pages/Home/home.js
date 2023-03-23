@@ -2,6 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
+
 const cx = classNames.bind(styles);
 
 function Home() {
