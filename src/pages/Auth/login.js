@@ -1,6 +1,5 @@
-import React, { Component, useState } from 'react';
+import React, {useState } from 'react';
 import classNames from 'classnames/bind';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './Auth.module.scss';
 import Button from '~/components/Button/Btn';
