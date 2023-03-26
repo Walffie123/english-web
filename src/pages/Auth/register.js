@@ -66,7 +66,7 @@ export default class Register extends Component {
                         <Button submit>Register</Button>
                     </div>
                     <p style={{ textAlign: 'center' }}>
-                        Already registered ? <a href="/login">Sign Up</a>
+                        Already registered ? <a href="/login">Sign In</a>
                     </p>
                 </div>
             </form>
