@@ -4,6 +4,8 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from '../Course/CourseCRUD.module.scss';
 import { Modal, Button } from 'react-bootstrap';
+import { faFileCirclePlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const cx = classNames.bind(styles);
 export default function CourseCRUDComponent(props) {
@@ -39,7 +41,7 @@ export default function CourseCRUDComponent(props) {
 
     useEffect(() => {
         loadCourse(teacherid);
-    }, []);
+    }, [courses]);
 
     const loadCourse = async (teacherid) => {
         //Vai bua them vao la findCourseByTeacherId
@@ -109,8 +111,11 @@ export default function CourseCRUDComponent(props) {
                 <div className={cx('col-md-12')}>
                     <h1 className={cx('title')}>Course CRUD</h1>
                     <div className="d-flex justify-content-end">
-                        <Button className={cx('add-btn')} onClick={() => setShowAddCourse(!showAddCourse)}>
-                            Add Course
+                        <Button className={cx('add-btn')} onClick={() => setShowAddCourse(!showAddCourse)} style={
+                            showAddCourse ? { backgroundColor: '#ff0000', borderColor: '#ff0000' } : { backgroundColor: '#28a745', borderColor: '#28a745' }
+                        }>
+                            <FontAwesomeIcon icon={faFileCirclePlus} />
+                            {showAddCourse ? ' Close' : ' Add Course'}
                         </Button>
                     </div>
                     {showAddCourse && (
@@ -207,7 +212,7 @@ export default function CourseCRUDComponent(props) {
                                         {
                                             color: 'blue',
                                         }
-                                    } href={`courseDetail/${course.courseID}`}>{course.courseName}
+                                    } href={`/courseDetail/${course.courseID}`}>{course.courseName}
                                     </a></td>
                                     <td>{course.descriptions}</td>
                                     <td>{course.payment}</td>
@@ -216,16 +221,16 @@ export default function CourseCRUDComponent(props) {
                                     <td>{course.teacherId}</td>
                                     <td>
                                         <button
-                                            className={cx('btn btn-primary')}
+                                            className={cx('btn btn-primary', 'col-md-6')}
                                             onClick={() => handleOpenModal(course.courseID)}
                                         >
-                                            Update
+                                            <FontAwesomeIcon icon={faPenToSquare} />
                                         </button>
                                         <button
-                                            className={cx('btn btn-danger')}
+                                            className={cx('btn btn-danger', 'col-md-6') }
                                             onClick={() => deleteCourse(course.courseID)}
                                         >
-                                            Delete
+                                            <FontAwesomeIcon icon={faTrash}/>
                                         </button>                               
                                     </td>
                                 </tr>
