@@ -12,6 +12,7 @@ import CRUDFlashCardComponent from '~/components/Flashcards/CRUDFlashCardCompone
 import CourseComponent from '~/components/Course/CourseComponent';
 import CourseDetailComponent from '~/components/Course/CourseDetailComponent';
 import CourseCRUDComponent from '~/components/Course/CourseCRUDComponent';
+import WordAssIntro from '../components/Games/WordAssociation/WordAssIntro';
 
 //khong can Login van dung Route nay`
 const publicRoutes = [
@@ -24,7 +25,8 @@ const publicRoutes = [
     { path: '/list', component: ListComponent },
     { path: '/flashcard', component: FlashCardComponent},
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent},
-    { path: '/word', component: WordAsscociation },
+    { path: '/word/:levelid', component: WordAsscociation, layout: null },
+    { path: '/wordassintro', component: WordAssIntro, layout: null },
     { path: '/crudFlashCard/:lessonid', component: CRUDFlashCardComponent },
     { path: '/loadCourse', component: CourseComponent },
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },

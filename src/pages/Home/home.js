@@ -3,8 +3,9 @@ import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
 import CourseComponent from '~/components/Course/CourseComponent';
-const cx = classNames.bind(styles);
+import Button from '~/components/Button/btn';
 
+const cx = classNames.bind(styles);
 function Home() {
     return (
         <div className={cx('home-container')}>
@@ -67,8 +68,8 @@ function Home() {
                             <p style={{ color: 'solid blue' }}> Unit 1 </p>
                         </div>
                         <div className={cx('box-button')}>
-                            <button> Practice</button>
-                            <button> See Result</button>
+                            <Button home> Practice</Button>
+                            <Button home> See Result</Button>
                         </div>
                     </div>
                 </div>
@@ -102,8 +103,8 @@ function Home() {
                             <p style={{ color: 'solid blue' }}> Game 1 </p>
                         </div>
                         <div className={cx('box-button')}>
-                            <button> Practice</button>
-                            <button> See Result</button>
+                            <Button home> Practice</Button>
+                            <Button home> See Result</Button>
                         </div>
                     </div>
                 </div>
@@ -113,7 +114,7 @@ function Home() {
             <div className={cx('introduce')}>
                 <img className={cx('Idiot')} src={newimage} alt="Idiots"></img>
                 <div>
-                    <h1>
+                    <h1 className={cx('introduce-title')}>
                         WHY WE LEARN FROM <span className={cx('abc')}>ENGLITERATURE</span>
                     </h1>
                     <p className={cx('para')}>
