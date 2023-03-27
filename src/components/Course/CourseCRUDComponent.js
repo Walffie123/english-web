@@ -67,6 +67,19 @@ export default function CourseCRUDComponent(props) {
         const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, course);
         setIsSave(!isSave);
         console.log(result.data);
+        setCourse({
+            courseName: '',
+            descriptions: '',
+            payment: '',
+            images: '',
+            level: {
+                levelId: '',
+            },
+            teacher: {
+                userId: '',
+            }
+        
+        }); // clear input fields
         }
     };
 
