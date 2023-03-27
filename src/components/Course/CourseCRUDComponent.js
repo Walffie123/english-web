@@ -37,11 +37,13 @@ export default function CourseCRUDComponent(props) {
     const [showAddCourse, setShowAddCourse] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { teacherid } = useParams();
+    const [isDelete, setIsDelete] = useState(false);
+    const [isSave, setIsSave] = useState(false);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
         loadCourse(teacherid);
-    }, [courses]);
+    }, [isDelete, isSave]);
 
     const loadCourse = async (teacherid) => {
         //Vai bua them vao la findCourseByTeacherId
@@ -52,7 +54,6 @@ export default function CourseCRUDComponent(props) {
 
     const loadCourseById = async (courseId) => {
         const result = await axios.get(`${baseUrl}/findCourse/${courseId}`);
-        console.log(result.data);
         setToUpdateCourse(result.data);
     };
 
@@ -61,10 +62,12 @@ export default function CourseCRUDComponent(props) {
             alert('Please fill all fields');
             return;
         }
-        console.log(course);
+        else{
+            console.log(course);
         const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, course);
+        setIsSave(!isSave);
         console.log(result.data);
-        loadCourse();
+        }
     };
 
     const updateCourse = async (courseId) => {
@@ -88,7 +91,7 @@ export default function CourseCRUDComponent(props) {
     const deleteCourse = async (id) => {
         const result = await axios.delete(`${baseUrl}/deleteCourse/${id}`);
         console.log(result.data);
-        loadCourse();
+        setIsDelete(!isDelete);
     };
 
     const handleCloseModal = () => {
@@ -100,10 +103,7 @@ export default function CourseCRUDComponent(props) {
         setIsModalOpen(true);
         loadCourseById(courseId);
     };
-
-    useEffect(() => {
-        loadCourse();
-    }, []);
+ 
 
     return (
         <div className={cx('container')}>
@@ -156,12 +156,11 @@ export default function CourseCRUDComponent(props) {
                             <div className={cx('form-group')}>
                                 <label htmlFor="image">Image</label>
                                 <input
-                                    type="text"
+                                    type="file"
                                     className={cx('form-control')}
                                     id="image"
                                     placeholder="Enter image"
-                                    value={course.images}
-                                    onChange={(e) => setCourse({ ...course, images: e.target.value })}
+                                    onChange={(e) => setCourse({ ...course, images: e.target.files[0].name })}
                                 />
                             </div>
                             <div className={cx('form-group')}>
