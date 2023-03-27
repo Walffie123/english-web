@@ -2,10 +2,10 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
+import CourseComponent from '~/components/Course/CourseComponent';
 import Button from '~/components/Button/btn';
 
 const cx = classNames.bind(styles);
-
 function Home() {
     return (
         <div className={cx('home-container')}>
@@ -27,10 +27,13 @@ function Home() {
             </div>
 
             <div className={cx('content2')}>
-                <div className={cx('search1')}>
+                {/* <div className={cx('search1')}>
                     <input type="text" placeholder="Course name" />
                     <input type="text" placeholder="Tutor name" />
                     <input type="text" placeholder="Popular Course" />
+                </div> */}
+                <div>
+                    <CourseComponent/>                
                 </div>
             </div>
 

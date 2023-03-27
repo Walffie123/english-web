@@ -13,6 +13,7 @@ import FillInBlankGame from '~/pages/Game/CRUDFillInBlankComponent';
 import CRUDFlashCardComponent from '~/components/Flashcards/CRUDFlashCardComponent';
 import CRUDFillInBlankComponent from '~/pages/Game/CRUDFillInBlankComponent';import CourseComponent from '~/components/Course/CourseComponent';
 import CourseDetailComponent from '~/components/Course/CourseDetailComponent';
+import CourseCRUDComponent from '~/components/Course/CourseCRUDComponent';
 import WordAssIntro from '../components/Games/WordAssociation/WordAssIntro';
 import WordAssociation from '~/components/Games/WordAssociation/WordAss';
 import LessonDetailComponent from '~/components/Lesson/LessonDetailComponent';
@@ -38,7 +39,9 @@ const publicRoutes = [
     { path: '/crudFlashCard/:lessonid', component: CRUDFlashCardComponent },
     { path: '/loadCourse', component: CourseComponent },
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },
-    { path: '/courseDetail/findLesson/:lessonid', component: LessonDetailComponent}
+    { path: '/courseDetail/findLesson/:lessonid', component: LessonDetailComponent},
+    { path: '/courseCRUD/:teacherid', component: CourseCRUDComponent },
+    
     
 ];
 
