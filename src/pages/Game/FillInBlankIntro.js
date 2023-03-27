@@ -24,8 +24,8 @@ function FillInTheBlankIntro() {
                     Are you ready to play? Click the button below to get started!
                 </p>
             </div>
-            <div className="play">
-                <Button play href={'/fillinblank/1'}>
+            <div className="plays">
+                <Button href={'/fillinblank/1'}>
                     <FontAwesomeIcon icon={faPlay} /> Play Now
                 </Button>
             </div>

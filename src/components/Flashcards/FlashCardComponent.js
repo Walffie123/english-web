@@ -1,10 +1,12 @@
 import { FlashcardArray } from 'react-quizlet-flashcard';
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import classNames from 'classnames/bind';
+import styles from '../Flashcards/FlashCard.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShuffle, faEye, faLightbulb, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-
+const cx = classNames.bind(styles);
 export default function FlashCardComponent(props) {
     const [cards, setCards] = useState([]);
     const [starredIds, setStarredIds] = useState([]);
@@ -98,7 +100,7 @@ export default function FlashCardComponent(props) {
     };
 
     return (
-        <div className="container">
+        <div className={cx('fl-container')}>
             <div className="row">
                 {!loadStarredCards && (
                     <div className="col-md-12">

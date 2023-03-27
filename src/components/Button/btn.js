@@ -5,7 +5,7 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({ to, href, login, register,  submit, back, play, onClick, children, ...passProps}) {
+function Button({ to, href, login, register, submit, onClick, children, choices, home, play, ...passProps }) {
     let Btn = 'button';
     const props = {
         onClick,
@@ -13,7 +13,8 @@ function Button({ to, href, login, register,  submit, back, play, onClick, child
         login,
         register,
         submit,
-        back,
+        choices,
+        home,
         play,
     };
 
@@ -28,9 +29,10 @@ function Button({ to, href, login, register,  submit, back, play, onClick, child
     const btn = cx('btn', {
         login,
         register,
-        submit,   
-        back,  
-        play, 
+        submit,
+        home,
+        choices,
+        play,
     });
 
     return (

@@ -17,11 +17,16 @@ export default function CRUDFlashCardComponent(props) {
     const [flashCardId, setFlashCardId] = useState('');
     const [showAddFlashCard, setShowAddFlashCard] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const lessonId = useParams();
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
     // console.log(lessonId);
     const saveFlashCard = () => {
-        axios
+        if(flashCard.frontHTML === '' || flashCard.backHTML === '') {
+            window.alert('Please fill in all fields');
+            return;
+        } else{
+            axios
             .post(`${baseUrl}/saveFlashCard/${lessonId.lessonid}`, flashCard)
             .then((response) => {
                 console.log(response);
@@ -31,6 +36,8 @@ export default function CRUDFlashCardComponent(props) {
             .catch((error) => {
                 console.log(error);
             });
+        }
+        setFlashCard({ frontHTML: '', backHTML: '', lesson: { lessonId: '' } });
     };
 
     const handleCloseModal = () => {
@@ -68,6 +75,12 @@ export default function CRUDFlashCardComponent(props) {
     };
 
     const updateFlashCard = () => {
+
+        if(toUpdateFlashCard.frontHTML === '' || toUpdateFlashCard.backHTML === '') {
+            window.alert('Fields cannot be empty');
+            return;
+        }
+        else{
         axios
             .put(`${baseUrl}/updateFlashCard/${flashCardId}`, toUpdateFlashCard)
             .then((response) => {
@@ -79,13 +92,14 @@ export default function CRUDFlashCardComponent(props) {
             .catch((error) => {
                 console.log(error);
             });
-
+        }
         setIsModalOpen(false);
+        setFlashCard({ frontHTML: '', backHTML: '', lesson: { lessonId: '' } });
     };
 
     const deleteFlashCardById = (flashCardId) => {
-        const cofirmDelete = window.confirm('Are you sure you want to delete this flash card?');
-        if (cofirmDelete) {
+        // const cofirmDelete = window.confirm('Are you sure you want to delete this flash card?');
+        // if (cofirmDelete) {
             axios
                 .delete(`${baseUrl}/deleteFlashCard/${flashCardId}`)
                 .then((response) => {
@@ -96,7 +110,7 @@ export default function CRUDFlashCardComponent(props) {
                 .catch((error) => {
                     console.log(error);
                 });
-        }
+        // }
     };
     const handleAddFlashCard = () => {
         setShowAddFlashCard(!showAddFlashCard);
@@ -127,9 +141,9 @@ export default function CRUDFlashCardComponent(props) {
                                     <motion.tr
                                         key={flashCard.id}
                                         layout
-                                        initial={{ opacity: 0, y: 50 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -50 }}
+                                        initial={{ opacity: 0}}
+                                        animate={{ opacity: 1}}
+                                        exit={{ opacity: 0}}
                                     >
                                         <td>{flashCard.id}</td>
                                         <td>{flashCard.frontHTML}</td>
@@ -162,13 +176,16 @@ export default function CRUDFlashCardComponent(props) {
                                 <tr>
                                     <td></td>
                                     <td>
+                                        
                                         <input
                                             className="col-md-12"
                                             type="text"
                                             placeholder="Front HTML"
                                             value={flashCard.frontHTML}
-                                            onChange={(e) => setFlashCard({ ...flashCard, frontHTML: e.target.value })}
+                                            onChange={(e) => {setFlashCard({ ...flashCard, frontHTML: e.target.value })
+                                        }}
                                         />
+                                          {errorMessage && <p style={{ color: 'red' }} >{errorMessage}</p>}                                                                            
                                     </td>
                                     <td>
                                         <input
@@ -176,15 +193,15 @@ export default function CRUDFlashCardComponent(props) {
                                             type="text"
                                             placeholder="Back HTML"
                                             value={flashCard.backHTML}
-                                            onChange={(e) => setFlashCard({ ...flashCard, backHTML: e.target.value })}
+                                            onChange={(e) => {setFlashCard({ ...flashCard, backHTML: e.target.value })}}
                                         />
-                                    </td>
-                                    <td></td>
+                                    </td> 
                                     <td>
                                         <Button variant="success" onClick={saveFlashCard}>
                                             Save
                                         </Button>
                                     </td>
+                                    
                                 </tr>
                             )}
                         </tbody>

@@ -46,7 +46,7 @@
     animation-delay: 1s;
     animation-fill-mode: forwards;
   }
-.play{
+.plays{
   opacity: 0;
   animation-name: fade-in;
   animation-duration: 2s;
@@ -59,7 +59,7 @@
   background-color: #463f3a;
   transition: width 2s;
 }
-   .play:hover {
+   .plays:hover {
       background-color: rgb(41, 81, 114);
       width: 210px;
       

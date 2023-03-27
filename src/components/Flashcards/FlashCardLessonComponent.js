@@ -16,6 +16,7 @@ export default function FlashCardLessonComponent(props) {
     const [starredCards, setStarredCards] = useState([]);
     const [loadStarredCards, setLoadStarredCards] = useState(false);
     const [showTooltip, setShowTooltip] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
     // const [clickStar, setClickStar] = useState(false);
     const controlRef = useRef({});
     const {lessonid} = useParams();
@@ -79,7 +80,14 @@ export default function FlashCardLessonComponent(props) {
     };
 
     const handleDeleteStarredCards = () => {
-        setStarredIds([]);
+        const confirmDelete = window.confirm('Are you sure you want to delete all starred cards?');
+        if (confirmDelete) {
+            setStarredIds([]);
+            setIsDelete(!isDelete);
+            if (loadStarredCards) {
+                setLoadStarredCards(!loadStarredCards);
+            }
+        }
       };
 
     return (

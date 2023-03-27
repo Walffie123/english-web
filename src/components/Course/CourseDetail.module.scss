@@ -1,0 +1,48 @@
+.container {
+    margin: 50px 0;
+}
+
+.image-container {
+}
+
+.image {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 5px;
+}
+
+.course-name {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 20px 0;
+}
+
+.description {
+    font-size: 18px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.payment {
+    font-size: 24px;
+    font-weight: bold;
+    color: #27ae60;
+    margin-bottom: 20px;
+}
+.enroll-btn {
+    background-color: #27ae60;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+}
+
+.enroll-btn:hover {
+    background-color: #2ecc71;
+}
+.cardtitle {
+    text-align: left;
+}

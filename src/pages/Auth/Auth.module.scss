@@ -1,7 +1,8 @@
-.auth-body {
-    background: linear-gradient(to left, #ad5389, #e0afa0);
-    // background-image: url(../../assets/images/learning.jpg);
+.auth-.form-body {
+    // background: linear-gradient(to left, #ad5389, #e0afa0);
+    background-image: url(../../assets/images/layered-waves-haikei.png);
     height: 980px;
+    background-size: 100%;
 }
 .logo {
     width: 50%;
@@ -22,7 +23,8 @@ form {
     align-items: center;
     text-align: left;
     border-radius: 20px;
-    background-color: #f4f3ee;
+    background-image: url(../../assets/images/lam.png);
+    // background-color: #f4f3ee;
     // background-color: var(--primary);
     display: inline-block;
     padding: 20px 30px;
