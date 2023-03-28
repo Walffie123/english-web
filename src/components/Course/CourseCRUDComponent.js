@@ -37,11 +37,13 @@ export default function CourseCRUDComponent(props) {
     const [showAddCourse, setShowAddCourse] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { teacherid } = useParams();
+    const [isDelete, setIsDelete] = useState(false);
+    const [isSave, setIsSave] = useState(false);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
         loadCourse(teacherid);
-    }, [courses]);
+    }, [isDelete, isSave]);
 
     const loadCourse = async (teacherid) => {
         //Vai bua them vao la findCourseByTeacherId
@@ -63,6 +65,7 @@ export default function CourseCRUDComponent(props) {
         }
         console.log(course);
         const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, course);
+        setIsSave(!isSave);
         console.log(result.data);
         loadCourse();
     };
@@ -87,7 +90,8 @@ export default function CourseCRUDComponent(props) {
 
     const deleteCourse = async (id) => {
         const result = await axios.delete(`${baseUrl}/deleteCourse/${id}`);
-        console.log(result.data);
+        setIsDelete(!isDelete);
+        console.log(result.data);    
         loadCourse();
     };
 
@@ -101,9 +105,6 @@ export default function CourseCRUDComponent(props) {
         loadCourseById(courseId);
     };
 
-    useEffect(() => {
-        loadCourse();
-    }, []);
 
     return (
         <div className={cx('container')}>
@@ -212,14 +213,14 @@ export default function CourseCRUDComponent(props) {
                                         {
                                             color: 'blue',
                                         }
-                                    } href={`/courseDetail/${course.courseID}`}>{course.courseName}
+                                    } href={`/lessonCRUD/${course.courseID}`}>{course.courseName}
                                     </a></td>
                                     <td>{course.descriptions}</td>
                                     <td>{course.payment}</td>
                                     <td>{course.images}</td>
                                     <td>{course.levelId}</td>
                                     <td>{course.teacherId}</td>
-                                    <td>
+                                    <td className='row'>
                                         <button
                                             className={cx('btn btn-primary', 'col-md-6')}
                                             onClick={() => handleOpenModal(course.courseID)}

@@ -2,124 +2,118 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames/bind';
-import styles from '../Course/LessonCRUD.module.scss';
+import styles from '../Lesson/LessonCRUDComponent.module.scss';
 import { Modal, Button } from 'react-bootstrap';
 import { faFileCirclePlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const cx = classNames.bind(styles);
-export default function CourseCRUDComponent(props) {
-    const [course, setCourse] = useState({
-        courseName: '',
-        descriptions: '',
-        payment: '',
-        images: '',
-        level: {
-            levelId: '',
-        },
-        teacher: {
-            userId: '',
-        },
+export default function LessonCRUDComponent(props) {
+    const [lesson, setLesson] = useState({
+        lessonName: '',
+        content: '',
+        courseId: '',
     });
-    const [toUpdateCourse, setToUpdateCourse] = useState({
-        courseName: '',
-        descriptions: '',
-        payment: '',
-        images: '',
-        level: {
-            levelId: '',
-        },
-        teacher: {
-            userId: '',
-        },
+    const [toUpdateLesson, setToUpdateLesson] = useState({
+        lessonName: '',
+        content: '',
+        courseId: '',
     });
-    const [courses, setCourses] = useState([]);
-    const [showAddCourse, setShowAddCourse] = useState(false);
+    const [lessons, setLessons] = useState([]);
+    const [showAddLesson, setShowAddLesson] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { teacherid } = useParams();
+    const { courseid } = useParams();
+    const [isDelete, setIsDelete] = useState(false);
+    const [isSave, setIsSave] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
-        loadCourse(teacherid);
-    }, [courses]);
+        loadLesson(courseid);
+    }, [isDelete, isSave, isUpdate]);
 
-    const loadCourse = async (teacherid) => {
-        //Vai bua them vao la findCourseByTeacherId
-        const result = await axios.get(`${baseUrl}/findCourseByTeacherId/${teacherid}`);
+    const loadLesson = async (courseid) => {
+        
+        const result = await axios.get(`${baseUrl}/loadLesson/${courseid}`);
         console.log(result.data);
-        setCourses(result.data);
+        setLessons(result.data);
     };
 
-    const loadCourseById = async (courseId) => {
-        const result = await axios.get(`${baseUrl}/findCourse/${courseId}`);
+    const loadLessonById = async (lessonId) => {
+        const result = await axios.get(`${baseUrl}/findLesson/${lessonId}`);
         console.log(result.data);
-        setToUpdateCourse(result.data);
+        console.log(result.data.content);
+        setToUpdateLesson({
+            lessonName: result.data.lessonName,
+            content: result.data.content,
+            courseId: result.data.course.courseID,
+        });
+        console.log(toUpdateLesson.content);
     };
 
-    const addCourse = async (teacherId) => {
-        if (course.courseName === '' || course.descriptions === '' || course.payment === '' || course.images === '') {
+    const addLesson = async (courseId) => {
+        if (lesson.lessonName === '' || lesson.content === '' ) {
             alert('Please fill all fields');
             return;
         }
-        console.log(course);
-        const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, course);
+        console.log(lesson);
+        const result = await axios.post(`${baseUrl}/saveLesson/${courseId}`, lesson);
+        setIsSave(!isSave);
         console.log(result.data);
-        loadCourse();
+
     };
 
-    const updateCourse = async (courseId) => {
+    const updateLesson = async () => {
         if (
-            toUpdateCourse.courseName === '' ||
-            toUpdateCourse.descriptions === '' ||
-            toUpdateCourse.payment === '' ||
-            toUpdateCourse.images === ''
+            toUpdateLesson.lessonName === '' ||
+            toUpdateLesson.content === '' ||
+            toUpdateLesson.courseId === ''
         ) {
             alert('Please fill all fields');
             return;
         }
-        const result = await axios.put(
-            `${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacher.userId}`,
-            toUpdateCourse,
-        );
+        const result = await axios.put(`${baseUrl}/updateLesson/${toUpdateLesson.courseId}`, toUpdateLesson);
         console.log(result.data);
-        loadCourse();
+        setToUpdateLesson({
+            lessonName: '',
+            content: '',
+            courseId: '',
+        });
+        setIsUpdate(!isUpdate);
+        setIsModalOpen(false); 
     };
 
-    const deleteCourse = async (id) => {
-        const result = await axios.delete(`${baseUrl}/deleteCourse/${id}`);
+    const deleteLesson = async (id) => {
+        const result = await axios.delete(`${baseUrl}/deleteLesson/${id}`);
+        setIsDelete(!isDelete);
         console.log(result.data);
-        loadCourse();
     };
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
-    const handleOpenModal = (courseId) => {
-        console.log(courseId);
+    const handleOpenModal = (lessonId) => {
+        console.log(lessonId);
         setIsModalOpen(true);
-        loadCourseById(courseId);
+        loadLessonById(lessonId);
     };
-
-    useEffect(() => {
-        loadCourse();
-    }, []);
 
     return (
         <div className={cx('container')}>
             <div className={cx('row')}>
                 <div className={cx('col-md-12')}>
-                    <h1 className={cx('title')}>Course CRUD</h1>
+                    <h1 className={cx('title')}>Lesson CRUD</h1>
                     <div className="d-flex justify-content-end">
-                        <Button className={cx('add-btn')} onClick={() => setShowAddCourse(!showAddCourse)} style={
-                            showAddCourse ? { backgroundColor: '#ff0000', borderColor: '#ff0000' } : { backgroundColor: '#28a745', borderColor: '#28a745' }
+                        <Button className={cx('add-btn')} onClick={() => setShowAddLesson(!showAddLesson)} style={
+                            showAddLesson ? { backgroundColor: '#ff0000', borderColor: '#ff0000' } : { backgroundColor: '#28a745', borderColor: '#28a745' }
                         }>
                             <FontAwesomeIcon icon={faFileCirclePlus} />
-                            {showAddCourse ? ' Close' : ' Add Course'}
+                            {showAddLesson ? ' Close' : ' Add Lesson'}
                         </Button>
                     </div>
-                    {showAddCourse && (
-                        <div className={cx('add-course')}>
+                    {showAddLesson && (
+                        <div className={cx('add-lesson')}>
                             <div className={cx('form-group')}>
                                 <label htmlFor="name">Name</label>
                                 <input
@@ -127,66 +121,34 @@ export default function CourseCRUDComponent(props) {
                                     className={cx('form-control')}
                                     id="name"
                                     placeholder="Enter name"
-                                    value={course.courseName}
-                                    onChange={(e) => setCourse({ ...course, courseName: e.target.value })}
+                                    value={lesson.lessonName}
+                                    onChange={(e) => setLesson({ ...lesson, lessonName: e.target.value })}
                                 />
                             </div>
                             <div className={cx('form-group')}>
-                                <label htmlFor="description">Description</label>
+                                <label htmlFor="description">Content</label>
                                 <input
                                     type="text"
                                     className={cx('form-control')}
                                     id="description"
                                     placeholder="Enter description"
-                                    value={course.descriptions}
-                                    onChange={(e) => setCourse({ ...course, descriptions: e.target.value })}
+                                    value={lesson.content}
+                                    onChange={(e) => setLesson({ ...lesson, content: e.target.value })}
                                 />
                             </div>
+                            
                             <div className={cx('form-group')}>
-                                <label htmlFor="payment">Payment</label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control')}
-                                    id="payment"
-                                    placeholder="Enter payment"
-                                    value={course.payment}
-                                    onChange={(e) => setCourse({ ...course, payment: e.target.value })}
-                                />
-                            </div>
-                            <div className={cx('form-group')}>
-                                <label htmlFor="image">Image</label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control')}
-                                    id="image"
-                                    placeholder="Enter image"
-                                    value={course.images}
-                                    onChange={(e) => setCourse({ ...course, images: e.target.value })}
-                                />
-                            </div>
-                            <div className={cx('form-group')}>
-                                <label htmlFor="level">Level</label>
+                                <label htmlFor="level">CourseID</label>
                                 <input
                                     type="text"
                                     className={cx('form-control')}
                                     id="level"
-                                    placeholder="Enter level"
-                                    value={course.level.levelId}
-                                    onChange={(e) => setCourse({ ...course, level: { levelId: e.target.value } })}
+                                    placeholder="Enter CourseID"
+                                    value={lesson.courseId}
+                                    onChange={(e) => setLesson({ ...lesson, courseId: e.target.value })}
                                 />
                             </div>
-                            <div className={cx('form-group')}>
-                                <label htmlFor="teacher">Teacher</label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control')}
-                                    id="teacher"
-                                    placeholder="Enter teacher"
-                                    value={course.teacher.userId}
-                                    onChange={(e) => setCourse({ ...course, teacher: { userId: e.target.value } })}
-                                />
-                            </div>
-                            <button className={cx('btn btn-primary')} onClick={() => addCourse(course.teacher.userId)}>
+                            <button className={cx('btn btn-primary')} onClick={() => addLesson(lesson.courseId)}>
                                 Add Course
                             </button>
                         </div>
@@ -196,39 +158,28 @@ export default function CourseCRUDComponent(props) {
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Level</th>
-                                <th scope="col">Teacher</th>
-                                <th scope="col">Action</th>
+                                <th scope="col">Content</th>
+                                <th scope="col">Course ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {courses.map((course, index) => (
+                            {lessons.map((lesson, index) => (
                                 <tr key={index}>
-                                    <th scope="row">{course.courseID}</th>
-                                    <td><a style={
-                                        {
-                                            color: 'blue',
-                                        }
-                                    } href={`/courseDetail/${course.courseID}`}>{course.courseName}
+                                    <th scope="row">{lesson.lessonId}</th>
+                                    <td><a>{lesson.lessonName}
                                     </a></td>
-                                    <td>{course.descriptions}</td>
-                                    <td>{course.payment}</td>
-                                    <td>{course.images}</td>
-                                    <td>{course.levelId}</td>
-                                    <td>{course.teacherId}</td>
+                                    <td>{lesson.content}</td>
+                                    <td>{lesson.courseId}</td>
                                     <td>
                                         <button
                                             className={cx('btn btn-primary', 'col-md-6')}
-                                            onClick={() => handleOpenModal(course.courseID)}
+                                            onClick={() => handleOpenModal(lesson.lessonId)}
                                         >
                                             <FontAwesomeIcon icon={faPenToSquare} />
                                         </button>
                                         <button
                                             className={cx('btn btn-danger', 'col-md-6') }
-                                            onClick={() => deleteCourse(course.courseID)}
+                                            onClick={() => deleteLesson(lesson.lessonId)}
                                         >
                                             <FontAwesomeIcon icon={faTrash}/>
                                         </button>                               
@@ -241,13 +192,13 @@ export default function CourseCRUDComponent(props) {
             </div>
             <Modal show={isModalOpen} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Update Course</Modal.Title>
+                    <Modal.Title>Update Lesson</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className={cx('container')}>
                         <div className={cx('row')}>
                             <div className={cx('col-md-12')}>
-                                <h1 className={cx('title')}>Update Course</h1>
+                                <h1 className={cx('title')}>Update Lesson</h1>
                                 <div className={cx('form-group')}>
                                     <label htmlFor="name">Name</label>
                                     <input
@@ -255,69 +206,44 @@ export default function CourseCRUDComponent(props) {
                                         className={cx('form-control')}
                                         id="name"
                                         placeholder="Enter name"
-                                        value={toUpdateCourse.courseName}
+                                        value={toUpdateLesson.lessonName}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, courseName: e.target.value })
+                                            setToUpdateLesson({ ...toUpdateLesson, lessonName: e.target.value })
                                         }
                                     />
                                 </div>
                                 <div className={cx('form-group')}>
-                                    <label htmlFor="description">Description</label>
+                                    <label htmlFor="description">Content</label>
                                     <input
                                         type="text"
                                         className={cx('form-control')}
                                         id="description"
-                                        placeholder="Enter description"
-                                        value={toUpdateCourse.descriptions}
+                                        placeholder="Enter content"
+                                        value={toUpdateLesson.content}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, descriptions: e.target.value })
+                                            setToUpdateLesson({ ...toUpdateLesson, content: e.target.value })
                                         }
                                     />
                                 </div>
+                                
                                 <div className={cx('form-group')}>
-                                    <label htmlFor="payment">Payment</label>
-                                    <input
-                                        type="text"
-                                        className={cx('form-control')}
-                                        id="payment"
-                                        placeholder="Enter payment"
-                                        value={toUpdateCourse.payment}
-                                        onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, payment: e.target.value })
-                                        }
-                                    />
-                                </div>
-                                <div className={cx('form-group')}>
-                                    <label htmlFor="image">Image</label>
-                                    <input
-                                        type="text"
-                                        className={cx('form-control')}
-                                        id="image"
-                                        placeholder="Enter image"
-                                        value={toUpdateCourse.images}
-                                        onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, images: e.target.value })
-                                        }
-                                    />
-                                </div>
-                                <div className={cx('form-group')}>
-                                    <label htmlFor="level">Level</label>
+                                    <label htmlFor="level">Course ID</label>
                                     <input
                                         type="text"
                                         className={cx('form-control')}
                                         id="level"
-                                        placeholder="Enter level"
-                                        value={toUpdateCourse.level.levelId}
+                                        placeholder="Enter Course ID"
+                                        value={toUpdateLesson.courseId}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, level: { levelId: e.target.value } })
+                                            setToUpdateLesson({ ...toUpdateLesson, courseId: e.target.value  })
                                         }
                                     />
                                 </div>
                                 <button
                                     className={cx('btn btn-primary')}
-                                    onClick={() => updateCourse(toUpdateCourse.courseID)}
+                                    onClick={() => updateLesson(toUpdateLesson.lessonId)}
                                 >
-                                    Update Course
+                                    Update Lesson
                                 </button>
                             </div>
                         </div>

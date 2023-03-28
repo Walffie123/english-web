@@ -17,6 +17,7 @@ import CourseCRUDComponent from '~/components/Course/CourseCRUDComponent';
 import WordAssIntro from '../components/Games/WordAssociation/WordAssIntro';
 import WordAssociation from '~/components/Games/WordAssociation/WordAss';
 import LessonDetailComponent from '~/components/Lesson/LessonDetailComponent';
+import LessonCRUDComponent from '~/components/Lesson/LessonCRUDComponent';
 //khong can Login van dung Route nay`
 const publicRoutes = [
     { path: '/', component: Home },
@@ -41,7 +42,7 @@ const publicRoutes = [
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },
     { path: '/courseDetail/findLesson/:lessonid', component: LessonDetailComponent},
     { path: '/courseCRUD/:teacherid', component: CourseCRUDComponent },
-    
+    { path: '/lessonCRUD/:courseid', component: LessonCRUDComponent}
     
 ];
 

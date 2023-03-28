@@ -36,6 +36,8 @@ export default function CourseDetailComponent(props) {
                             </div>
                         </Card.Body>
                     </Card>
+
+                    <Button href={`/flashcard/${lessonid}`}>Flash Card</Button>
                 </div>
             </div>
         </div>
