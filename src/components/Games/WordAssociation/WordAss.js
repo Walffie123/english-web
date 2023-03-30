@@ -4,7 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import Button from '../../Button/Btn';
+import Button from '../../Button/btn';
 import Logo from './icons8-bear-64.png';
 import styles from './WordAss.module.scss';
 const cx = classNames.bind(styles);

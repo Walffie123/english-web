@@ -1,0 +1,93 @@
+$primary-color: #4CAF50;
+$secondary-color: #ccc;
+$tertiary-color: #3e8e41;
+
+.container {
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid $secondary-color;
+  border-radius: 4px;
+  font-size: 1rem;
+  line-height: 1.5;
+
+ #edit:hover {
+    color: orange;
+  }
+ #delete:hover {
+    color: red;
+  }  
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+
+    .col-md-6 {
+      flex: 1 1 50%;
+      padding: 0 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .listFlashCard {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+
+      thead th {
+        text-align: center;
+        background-color: $secondary-color;
+        padding: 0.5rem;
+        font-weight: bold;
+      }
+
+      tbody td {
+        padding: 0.5rem;
+        border-bottom: 1px solid $secondary-color;
+
+        &:hover {
+          background-color: #f5f5f5;
+        }
+      }
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .textArea {
+      width: 100%;
+      padding: 0.5rem;
+      border-radius: 4px;
+      border: 1px solid $secondary-color;
+      margin-bottom: 1rem;
+    }
+
+    .button {
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.5rem;
+      margin-right: 0.5rem;
+      cursor: pointer;
+
+      &:hover {
+        background-color: $tertiary-color;
+      }
+
+      &:disabled {
+        background-color: $secondary-color;
+        cursor: not-allowed;
+      }
+
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+      }
+    }
+  }
+}

@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 // import styles from './Upload.module.scss';
 import { Container, Paper } from '@mui/material';
-import { DefaultPlayer } from 'react-html5video/dist';
 
 // const cx = classNames.bind(styles);
 
@@ -11,6 +10,7 @@ function Upload() {
     const [videoURL, setUrl] = useState('');
     const uploadFileHandler = (e) => {
         setUrl(e.target.files[0]);
+        console.log(videoURL);
     };
     const [videos, setVideos] = useState([]);
 
@@ -19,6 +19,7 @@ function Upload() {
         // fileReader.onload = () => {
         const formData = new FormData();
         formData.append('multipartFile', videoURL);
+        console.log(videoURL);
         axios.post('//localhost:8080/cloudinary/upload/1', formData);
         // };
     };

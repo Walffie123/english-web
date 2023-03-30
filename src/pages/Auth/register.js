@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import styles from './Auth.module.scss';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
 import images from '~/assets/images/Engliterature_free-file.png';
 import { useState } from 'react';
 import axios from 'axios';

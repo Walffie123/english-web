@@ -2,7 +2,7 @@ import React, {useState } from 'react';
 import classNames from 'classnames/bind';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './Auth.module.scss';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
 import images from '~/assets/images/Engliterature_free-file.png';
 import axios from 'axios';
 const cx = classNames.bind(styles);
