@@ -1,3 +1,4 @@
+
 .cardtitle{
     font-size: 1.5rem;
     font-weight: 600;
@@ -28,3 +29,25 @@
     justify-content: center;
     align-items: center;
 }
+
+.search-bar{
+    box-sizing:border-box;
+    padding-left: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc; 
+}
+
+.wrapper {
+    position:relative;
+  }
+
+  .icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    padding: 4px;
+    position: absolute;
+    box-sizing:border-box;
+    top:50%;
+    left:2px;
+    transform: translateY(-50%);
+  }
