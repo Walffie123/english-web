@@ -11,7 +11,6 @@
     font-weight: 550;
     color: rgb(214, 214, 214);
 }
-
 .inner {
     height: 100%;
     display: flex;
@@ -40,3 +39,49 @@ a {
         color: #ffa51d;
     }
 }
+//------Modal-----
+// .auth-modal {
+//     display: none; /* Hidden by default */
+//     position: fixed; /* Stay in place */
+//     z-index: 1; /* Sit on top */
+//     left: 0;
+//     top: 0;
+//     width: 100%; /* Full width */
+//     height: 100%; /* Full height */
+//     overflow: auto; /* Enable scroll if needed */
+//     background-color: rgb(0, 0, 0); /* Fallback color */
+//     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+// }
+/* Modal Header */
+.modal-header {
+    padding: 2px 16px;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2px 16px;
+}
+
+/* Modal Content */
+.auth-modal {
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    @keyframes animatetop {
+        from {
+            top: -300px;
+            opacity: 0;
+        }
+        to {
+            top: 0;
+            opacity: 1;
+        }
+    }
+}
+
+/* Add Animation */

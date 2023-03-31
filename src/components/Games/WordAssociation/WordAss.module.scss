@@ -1,34 +1,52 @@
 .gameWA-container {
-    background-color: aliceblue;
+    background-color: white;
     background-repeat: no-repeat;
     background-size: 100%;
     min-height: 681px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
-.WAbox {
-}
+
 .option {
-    margin-right: 10px;
-    padding: 8px 16px;
-    background-color: white;
-    border: 1px solid gray;
-    border-radius: 4px;
-    color: black;
-    font-size: 16px;
-    transition: all 0.2s ease-in-out; /* Hiệu ứng chuyển đổi mượt mà */
+    border: 0.125rem solid #646f90;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: grid;
+    font-size: 1rem;
+    font-weight: 400;
+    grid-template-columns: auto 1fr;
+    letter-spacing: normal;
+    line-height: 1.5;
+    padding: 1rem;
+    position: relative;
+    width: 100%;
 
     &:hover {
         background-color: gray;
         color: white;
-        cursor: pointer;
     }
 }
 .option:disabled {
     background-color: rgb(121, 121, 121);
     color: rgb(136, 134, 134);
 }
-.navigation-button{
 
+.options-box {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: 1fr 1fr;
+}
+.navigation-button {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    padding: 8px 16px;
+    border-radius: 20px;
+    border: none;
+}
+.navi-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }

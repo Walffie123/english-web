@@ -3,9 +3,8 @@ import { useHref, useParams } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faArrowRight, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../Button/Btn';
-import Logo from './icons8-bear-64.png';
 import styles from './WordAss.module.scss';
 const cx = classNames.bind(styles);
 
@@ -14,29 +13,29 @@ export default function WordAssociation() {
     const [score, setScore] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
 
-    const { levelid } = useParams();
+    const { lessonid } = useParams();
     const [questions, setQuestions] = useState([]);
     const clicked = [];
 
     useEffect(() => {
-        getQuestions(levelid);
+        getQuestions(lessonid);
     }, []);
 
-    const getQuestions = async (levelid) => {
-        const res = await axios.get(`http://localhost:8080/word/${levelid}`);
+    const getQuestions = async (lessonid) => {
+        const res = await axios.get(`http://localhost:8080/word/${lessonid}`);
         setQuestions(res.data);
         console.log(res.data);
     };
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
-        handleAnswer(option.correct);
+        handleAnswer(option.isCorrect);
         clicked.push(option);
         renderOptions.disabled = clicked.includes(option);
     };
 
-    const handleAnswer = (correct) => {
-        if (correct) {
+    const handleAnswer = (isCorrect) => {
+        if (isCorrect) {
             setScore(score + 1);
         }
         const nextQuestion = currentQuestion + 1;
@@ -64,34 +63,36 @@ export default function WordAssociation() {
             <div>
                 <h1>Let's Rock 🤖</h1>
                 <h3 className={cx('score')}>Your score is: {score}</h3>
-                <div className={cx('WAbox')}>
+                <div className={cx('')}>
                     {questions.map((question, index) => {
                         if (index !== currentQuestion) {
                             return null;
                         }
                         return (
-                            <div className={cx('questions')} id="question-display" key={question.id}>
-                                <div>{question.questionText}</div>
-                                <div>{renderOptions(question.option)}</div>
-                                <div className="">
-                                    {currentQuestion !== questions.length - 1 ? (
-                                        <Button
-                                            className={cx('navigation-button')}
-                                            onClick={() => setCurrentQuestion(currentQuestion + 1)}
-                                        >
-                                            Next
-                                        </Button>
-                                    ) : null}
+                            <article className={cx('WABox')}>
+                                <div className={cx('questions-box')} id="question-display" key={question.id}>
+                                    {question.questionText}
+                                </div>
+                                <div className={cx('options-box')}>{renderOptions(question.option)}</div>
+                                <div className={cx('navi-container')}>
                                     {currentQuestion !== questions.length + 1 ? (
                                         <Button
                                             className={cx('navigation-button')}
                                             onClick={() => setCurrentQuestion(currentQuestion - 1)}
                                         >
-                                            Back
+                                            <FontAwesomeIcon icon={faArrowLeft} />
+                                        </Button>
+                                    ) : null}
+                                    {currentQuestion !== questions.length - 1 ? (
+                                        <Button
+                                            className={cx('navigation-button')}
+                                            onClick={() => setCurrentQuestion(currentQuestion + 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faArrowRight} />
                                         </Button>
                                     ) : null}
                                 </div>
-                            </div>
+                            </article>
                         );
                     })}
                 </div>

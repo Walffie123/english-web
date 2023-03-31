@@ -14,6 +14,18 @@
     padding-top: 50px;
     box-shadow: rgb(0 0 0 / 30%) 1px 1px 1px 1px;
     color: rgb(255, 255, 255);
+    margin-bottom: 10px;
+}
+.introduce-2 {
+    display: flex;
+    justify-content: justify;
+    align-items: center;
+    // background-color: #8e2de2;
+    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    padding-top: 50px;
+    box-shadow: rgb(0 0 0 / 30%) 1px 1px 1px 1px;
+    color: rgb(255, 255, 255);
+    margin-top: 10px;
 }
 
 .introduce-title {
@@ -61,13 +73,6 @@
     margin-top: 20px;
 }
 
-.content3 {
-    background-color: white;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-top: 50px;
-}
 .textTitle {
     margin-top: -50px;
     color: rgb(82, 63, 63);

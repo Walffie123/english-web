@@ -6,6 +6,7 @@ import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
 import WordAsscociation from '../components/Games/WordAssociation/WordAss';
 import WordAssIntro from '../components/Games/WordAssociation/WordAssIntro';
+import WACRUD from '~/components/Games/WordAssociation/WACRUD';
 
 //khong can Login van dung Route nay`
 const publicRoutes = [
@@ -15,8 +16,9 @@ const publicRoutes = [
     { path: '/game', component: Game },
     { path: '/register', component: Register, layout: null },
     { path: '/login', component: Login, layout: null },
-    { path: '/word/:levelid', component: WordAsscociation, layout: null },
+    { path: '/word/:lessonid', component: WordAsscociation, layout: null },
     { path: '/wordassintro', component: WordAssIntro, layout: null },
+    { path: '/crudwa/:lessonid', component: WACRUD, layout: null },
 ];
 
 //phai Login moi dung Route nay`
