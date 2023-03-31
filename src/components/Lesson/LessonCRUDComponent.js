@@ -12,12 +12,20 @@ export default function LessonCRUDComponent(props) {
     const [lesson, setLesson] = useState({
         lessonName: '',
         content: '',
-        courseId: '',
+        course: {
+            courseID: '',
+        },
+        pdfFile: '',
+
     });
     const [toUpdateLesson, setToUpdateLesson] = useState({
         lessonName: '',
         content: '',
-        courseId: '',
+        course: {
+            courseID: '',
+        },
+        pdfFile: '',
+
     });
     const [lessons, setLessons] = useState([]);
     const [showAddLesson, setShowAddLesson] = useState(false);
@@ -37,18 +45,14 @@ export default function LessonCRUDComponent(props) {
         const result = await axios.get(`${baseUrl}/loadLesson/${courseid}`);
         console.log(result.data);
         setLessons(result.data);
+        
     };
 
     const loadLessonById = async (lessonId) => {
         const result = await axios.get(`${baseUrl}/findLesson/${lessonId}`);
         console.log(result.data);
         console.log(result.data.content);
-        setToUpdateLesson({
-            lessonName: result.data.lessonName,
-            content: result.data.content,
-            courseId: result.data.course.courseID,
-        });
-        console.log(toUpdateLesson.content);
+        setToUpdateLesson(result.data);      
     };
 
     const addLesson = async (courseId) => {
@@ -63,21 +67,24 @@ export default function LessonCRUDComponent(props) {
 
     };
 
-    const updateLesson = async () => {
+    const updateLesson = async (lessonId) => {
         if (
             toUpdateLesson.lessonName === '' ||
             toUpdateLesson.content === '' ||
-            toUpdateLesson.courseId === ''
+            toUpdateLesson.course.courseID === ''
         ) {
             alert('Please fill all fields');
             return;
         }
-        const result = await axios.put(`${baseUrl}/updateLesson/${toUpdateLesson.courseId}`, toUpdateLesson);
+        const result = await axios.put(`${baseUrl}/updateLesson/${lessonId}`, toUpdateLesson);
         console.log(result.data);
         setToUpdateLesson({
             lessonName: '',
             content: '',
-            courseId: '',
+            course: {
+                courseID: '',
+            },
+            pdfFile: '',
         });
         setIsUpdate(!isUpdate);
         setIsModalOpen(false); 
@@ -136,6 +143,17 @@ export default function LessonCRUDComponent(props) {
                                     onChange={(e) => setLesson({ ...lesson, content: e.target.value })}
                                 />
                             </div>
+                            <div className={cx('form-group')}>
+                                <label htmlFor="level">Resource link, Drive</label>
+                                <input
+                                    type="text"
+                                    className={cx('form-control')}
+                                    id="level"
+                                    placeholder="Enter Resource link, Drive"
+                                    value={lesson.pdfFile}
+                                    onChange={(e) => setLesson({ ...lesson, pdfFile: e.target.value })}
+                                />
+                            </div>
                             
                             <div className={cx('form-group')}>
                                 <label htmlFor="level">CourseID</label>
@@ -144,7 +162,8 @@ export default function LessonCRUDComponent(props) {
                                     className={cx('form-control')}
                                     id="level"
                                     placeholder="Enter CourseID"
-                                    value={lesson.courseId}
+                                    value={courseid}
+                                    disabled
                                     onChange={(e) => setLesson({ ...lesson, courseId: e.target.value })}
                                 />
                             </div>
@@ -159,7 +178,9 @@ export default function LessonCRUDComponent(props) {
                                 <th scope="col">ID</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Content</th>
+                                <th scope="col">Resource link, Drive</th>
                                 <th scope="col">Course ID</th>
+                                <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -169,6 +190,9 @@ export default function LessonCRUDComponent(props) {
                                     <td><a>{lesson.lessonName}
                                     </a></td>
                                     <td>{lesson.content}</td>
+                                    <td>
+                                        <a className={cx('pdf-file')} href={lesson.pdfFile}>{lesson.pdfFile}</a>
+                                    </td>
                                     <td>{lesson.courseId}</td>
                                     <td>
                                         <button
@@ -225,6 +249,19 @@ export default function LessonCRUDComponent(props) {
                                         }
                                     />
                                 </div>
+                                <div className={cx('form-group')}>
+                                    <label htmlFor="description">Resource Link, Drive</label>
+                                    <input
+                                        type="text"
+                                        className={cx('form-control')}
+                                        id="description"
+                                        placeholder="Enter link"
+                                        value={toUpdateLesson.pdfFile}
+                                        onChange={(e) =>
+                                            setToUpdateLesson({ ...toUpdateLesson, pdfFile: e.target.value })
+                                        }
+                                    />
+                                </div>
                                 
                                 <div className={cx('form-group')}>
                                     <label htmlFor="level">Course ID</label>
@@ -233,7 +270,7 @@ export default function LessonCRUDComponent(props) {
                                         className={cx('form-control')}
                                         id="level"
                                         placeholder="Enter Course ID"
-                                        value={toUpdateLesson.courseId}
+                                        value={toUpdateLesson.course.courseID}
                                         onChange={(e) =>
                                             setToUpdateLesson({ ...toUpdateLesson, courseId: e.target.value  })
                                         }
