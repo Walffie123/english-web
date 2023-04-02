@@ -1,10 +1,11 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './Auth.module.scss';
 import Button from '~/components/Button/btn';
 import images from '~/assets/images/Engliterature_free-file.png';
 import axios from 'axios';
+import authService from '~/services/auth.service';
 const cx = classNames.bind(styles);
 
 export default function Login() {
@@ -15,21 +16,26 @@ export default function Login() {
         console.log(username);
         console.log(password);
 
-        const loginDto = {
-            usernameOrEmail: username,
-            password: password,
-        };
+        // const loginDto = {
+        // usernameOrEmail: username,
+        // password: password,
+        // };
 
-        axios
-            .post('//localhost:8080/api/auth/signin', loginDto)
-            .then((response) => {
-                // status 200 la login thanh cong, nen them session hay token chi chi do vo day
-                if (response.status === 200) window.location.href = '/';
-                else return Promise.reject('Invalid login');
-            })
-            .catch((message) => {
-                alert(message);
-            });
+        // axios
+        //     .post('//localhost:8080/api/auth/signin', loginDto)
+        //     .then((response) => {
+        //         // status 200 la login thanh cong, nen them session hay token chi chi do vo day
+        //         if (response.status === 200) {
+        //             console.log(response);
+        //             window.location.href = '/';
+        //         } else return Promise.reject('Invalid login');
+        //     })
+        //     .catch((message) => {
+        //         alert(message);
+        //     });
+        authService.login(username, password).then(() => {
+            window.location.href = '/';
+        });
     }
 
     return (

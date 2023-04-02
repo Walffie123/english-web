@@ -339,7 +339,7 @@ export default function CourseCRUDComponent(props) {
                                 </div>
                                 <div className={cx('form-group')}>
                                     <label htmlFor="image">Image</label> <br />
-                                    <img src={toUpdateCourse.images} width={270} height={270} />
+                                    <img src={toUpdateCourse.images} width={270} height={270} alt="Course" />
                                     <input
                                         type="file"
                                         className={cx('form-control')}
