@@ -22,7 +22,11 @@ export default function Login() {
         };
 
         axios
-            .post('//localhost:8080/api/auth/signin', loginDto)
+            .post('//localhost:8080/api/auth/signin', loginDto ,{
+                headers: {
+                    Authorization:localStorage.getItem('jwt')
+                }
+            })
             .then((response) => {
                 // status 200 la login thanh cong, nen them session hay token chi chi do vo day
                 if (response.status === 200) window.location.href = '/';
