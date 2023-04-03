@@ -2,14 +2,16 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
+import Specialty from './Section/Specialty';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const cx = classNames.bind(styles);
 function Home() {
     return (
         <div className={cx('home-container')}>
             <div className={cx('introduce')}>
-                <div>
+                <div className={cx('introduce-wrap')}>
                     <h1 className={cx('introduce-title')}>
                         The <span className={cx('abc')}>Future</span> Of Education Is Here!
                     </h1>
@@ -22,19 +24,13 @@ function Home() {
                         <button className={cx('Explore')}>Explore Course</button>
                     </div>
                 </div>
+
                 <img className={cx('Idiots')} src={images} alt="Idiots"></img>
             </div>
 
-            <div className={cx('content2')}>
-                <div className={cx('search1')}>
-                    <input type="text" placeholder="Course name" />
-                    <input type="text" placeholder="Tutor name" />
-                    <input type="text" placeholder="Popular Course" />
-                </div>
+            <div className={cx('content-2')}>
+                <Specialty />
             </div>
-
-            <Specialty />
-
             <div className={cx('introduce-2')}>
                 <img className={cx('Idiot')} src={newimage} alt="Idiots"></img>
                 <div>

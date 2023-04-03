@@ -3,13 +3,12 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import images from '~/assets/images/Engliterature_free-file.png';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
-
 
 const cx = classNames.bind(styles);
 
@@ -26,18 +25,14 @@ function Header() {
     return (
         <header className={cx('header')}>
             <div className={cx('inner')}>
-                <img className={cx('logo')} src={images} alt="Engliterature"></img>
-                <div className={cx('Home')}>
-                    <a href="/">Home</a>
-                </div>
+                <a href="/">
+                    <img className={cx('logo')} src={images} alt="Engliterature" href="/Home"></img>
+                </a>
                 <div className={cx('Game')}>
                     <a href="/game">Game</a>
                 </div>
-                <div>
+                <div className={cx('Pro')}>
                     <text>Professional Education</text>
-                </div>
-                <div className={cx('Upload')}>
-                    <a href="/upload">Upload</a>
                 </div>
                 <div className={cx('Courses')}>
                     <a href="/courses">Courses</a>

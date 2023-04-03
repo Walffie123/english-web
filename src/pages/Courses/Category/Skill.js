@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Skill.module.scss';
 import '../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
 import { useState } from 'react';
 
 const cx = classNames.bind(styles);
