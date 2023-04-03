@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './WordAssIntro.module.scss';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faArrowRight, faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useRef, useState } from 'react';

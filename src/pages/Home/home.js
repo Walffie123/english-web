@@ -2,10 +2,9 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
-import Specialty from './Section/Specialty';
+import Button from '~/components/Button/Btn';
 
 const cx = classNames.bind(styles);
-
 function Home() {
     return (
         <div className={cx('home-container')}>
@@ -26,13 +25,13 @@ function Home() {
                 <img className={cx('Idiots')} src={images} alt="Idiots"></img>
             </div>
 
-            {/* <div className={cx('content2')}>
+            <div className={cx('content2')}>
                 <div className={cx('search1')}>
                     <input type="text" placeholder="Course name" />
                     <input type="text" placeholder="Tutor name" />
                     <input type="text" placeholder="Popular Course" />
                 </div>
-            </div> */}
+            </div>
 
             <Specialty />
 
