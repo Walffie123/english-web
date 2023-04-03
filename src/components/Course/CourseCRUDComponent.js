@@ -22,22 +22,16 @@ export default function CourseCRUDComponent(props) {
         },
         topic: {
             topicId: '',
-        } 
+        },
     });
     const [toUpdateCourse, setToUpdateCourse] = useState({
         courseName: '',
         descriptions: '',
         payment: '',
         images: '',
-        level: {
-            levelId: '',
-        },
-        teacher: {
-            userId: '',
-        },
-        topic: {
-            topicId: '',
-        } 
+        levelId: '',
+        teacherId: '',
+        topicId: '',
     });
 
     const [courses, setCourses] = useState([]);
@@ -94,8 +88,8 @@ export default function CourseCRUDComponent(props) {
         formData.append('descriptions', course.descriptions);
         formData.append('payment', course.payment);
         formData.append('levelId', course.level.levelId);
-        formData.append('topicId', course.topic.topicId);
         formData.append('multipartFile', course.images);
+        formData.append('topicId', course.topic.topicId);
 
         console.log(formData);
         const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, formData, {
@@ -104,7 +98,23 @@ export default function CourseCRUDComponent(props) {
             },
         });
         console.log(result.data);
+        setCourse({
+            courseName: '',
+            descriptions: '',
+            payment: '',
+            images: '',
+            level: {
+                levelId: '',
+            },
+            teacher: {
+                userId: '',
+            },
+            topic: {
+                topicId: '',
+            },
+        });
         setIsSave(!isSave);
+        setShowAddCourse(false);
     };
 
     const updateCourse = async (courseId) => {
@@ -123,12 +133,12 @@ export default function CourseCRUDComponent(props) {
         formData.append('courseName', toUpdateCourse.courseName);
         formData.append('descriptions', toUpdateCourse.descriptions);
         formData.append('payment', toUpdateCourse.payment);
-        formData.append('levelId', toUpdateCourse.level.levelId);
-        formData.append('topicId', toUpdateCourse.topic.topicId);
+        formData.append('levelId', toUpdateCourse.levelId);
         formData.append('multipartFile', toUpdateCourse.images);
+        formData.append('topicId', toUpdateCourse.topicId);
 
         const result = await axios.put(
-            `${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacher.userId}`,
+            `${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacherId}`,
             formData,
             {
                 headers: {
@@ -139,6 +149,21 @@ export default function CourseCRUDComponent(props) {
         console.log(result.data);
         setIsUpdate(!isUpdate);
         setIsModalOpen(false);
+        setToUpdateCourse({
+            courseName: '',
+            descriptions: '',
+            payment: '',
+            images: '',
+            level: {
+                levelId: '',
+            },
+            teacher: {
+                userId: '',
+            },
+            topic: {
+                topicId: '',
+            },
+        });
         window.location.reload(1000);
     };
 
@@ -159,9 +184,9 @@ export default function CourseCRUDComponent(props) {
         console.log(toUpdateCourse.level.levelId);
     };
 
-    useEffect(() => {
-        loadCourse();
-    }, []);
+    // useEffect(() => {
+    //     loadCourse();
+    // }, []);
 
     return (
         <div className={cx('container')}>
@@ -244,8 +269,8 @@ export default function CourseCRUDComponent(props) {
                                     type="text"
                                     className={cx('form-control')}
                                     id="topic"
-                                    placeholder="Enter Topic"
-                                    value={course.topicId}
+                                    placeholder="Enter topic"
+                                    value={course.topic.topicId}
                                     onChange={(e) => setCourse({ ...course, topic: { topicId: e.target.value } })}
                                 />
                             </div>
@@ -264,6 +289,7 @@ export default function CourseCRUDComponent(props) {
                                 <th scope="col">Image</th>
                                 <th scope="col">Level</th>
                                 <th scope="col">Teacher</th>
+                                <th scope="col">Topic</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -288,7 +314,8 @@ export default function CourseCRUDComponent(props) {
                                     </td>
                                     <td>{course.levelId}</td>
                                     <td>{course.teacherId}</td>
-                                    <td className='row'>
+                                    <td>{course.topicId}</td>
+                                    <td>
                                         <button
                                             className={cx('btn btn-primary', 'col-md-6')}
                                             onClick={() => handleOpenModal(course.courseID)}
@@ -358,7 +385,7 @@ export default function CourseCRUDComponent(props) {
                                 </div>
                                 <div className={cx('form-group')}>
                                     <label htmlFor="image">Image</label> <br />
-                                    <img src={toUpdateCourse.images} width={270} height={270} alt="Course" />
+                                    <img src={toUpdateCourse.images} width={270} height={270} />
                                     <input
                                         type="file"
                                         className={cx('form-control')}
@@ -376,9 +403,22 @@ export default function CourseCRUDComponent(props) {
                                         className={cx('form-control')}
                                         id="level"
                                         placeholder="Enter level"
-                                        value={toUpdateCourse.level.levelId}
+                                        value={toUpdateCourse.levelId}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, level: { levelId: e.target.value } })
+                                            setToUpdateCourse({ ...toUpdateCourse, levelId: e.target.value  })
+                                        }
+                                    />
+                                </div>
+                                <div className={cx('form-group')}>
+                                    <label htmlFor="topic">Topic</label>
+                                    <input
+                                        type="text"
+                                        className={cx('form-control')}
+                                        id="Topic"
+                                        placeholder="Enter topic"
+                                        value={toUpdateCourse.topicId}
+                                        onChange={(e) =>
+                                            setToUpdateCourse({ ...toUpdateCourse, topicId: e.target.value  })
                                         }
                                     />
                                 </div>

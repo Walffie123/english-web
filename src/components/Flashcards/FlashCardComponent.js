@@ -100,8 +100,8 @@ export default function FlashCardComponent(props) {
     };
 
     return (
-        <div className={cx('fl-container')}>
-            <div className="row">
+        <div className={cx('container')}>
+            <div className={cx("row", "flashcard")}>
                 {!loadStarredCards && (
                     <div className="col-md-12">
                         <div className="col-md-12">
@@ -134,7 +134,11 @@ export default function FlashCardComponent(props) {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <div className="row">
+                            <div className="row" style={
+                                {                                   
+                                    textAlign: 'center',
+                                }
+                            }>
                                 <div className="col-md-3">
                                     <div
                                         style={{
@@ -234,7 +238,11 @@ export default function FlashCardComponent(props) {
                             />
                         </div>
                         <div className="col-md-12">
-                            <div className="row">
+                            <div className="row" style={
+                                {
+                                    textAlign: 'center',
+                                }
+                            }>
                                 <div className="col-md-4">
                                     <div
                                         style={{

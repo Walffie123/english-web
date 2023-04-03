@@ -31,10 +31,7 @@ function Home() {
                     <input type="text" placeholder="Course name" />
                     <input type="text" placeholder="Tutor name" />
                     <input type="text" placeholder="Popular Course" />
-                </div> */}
-                <div>
-                    <CourseComponent/>                
-                </div>
+                </div> */}                
             </div>
 
             <div className={cx('content3')}>

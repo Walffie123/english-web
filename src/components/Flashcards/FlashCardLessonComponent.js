@@ -125,7 +125,11 @@ export default function FlashCardLessonComponent(props) {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <div className="row">
+                            <div className="row" style={
+                                {
+                                    textAlign: 'center',
+                                }
+                            }>
                                 <div className="col-md-3">
                                     
                                         <div
@@ -224,7 +228,11 @@ export default function FlashCardLessonComponent(props) {
                             />
                         </div>
                         <div className="col-md-12">
-                            <div className="row">
+                            <div className="row" style={
+                                {
+                                    textAlign: 'center',
+                                }
+                            }>
                                 <div className="col-md-4">
                                     <div
                                         style={{
