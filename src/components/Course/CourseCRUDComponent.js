@@ -20,6 +20,9 @@ export default function CourseCRUDComponent(props) {
         teacher: {
             userId: '',
         },
+        topic: {
+            topicId: '',
+        },
     });
     const [toUpdateCourse, setToUpdateCourse] = useState({
         courseName: '',
@@ -31,6 +34,9 @@ export default function CourseCRUDComponent(props) {
         },
         teacher: {
             userId: '',
+        },
+        topic: {
+            topicId: '',
         },
     });
 
@@ -88,6 +94,7 @@ export default function CourseCRUDComponent(props) {
         formData.append('descriptions', course.descriptions);
         formData.append('payment', course.payment);
         formData.append('levelId', course.level.levelId);
+        formData.append('topicId', course.topic.topicId);
         formData.append('multipartFile', course.images);
 
         console.log(formData);
@@ -117,6 +124,7 @@ export default function CourseCRUDComponent(props) {
         formData.append('descriptions', toUpdateCourse.descriptions);
         formData.append('payment', toUpdateCourse.payment);
         formData.append('levelId', toUpdateCourse.level.levelId);
+        formData.append('topicId', toUpdateCourse.topic.topicId);
         formData.append('multipartFile', toUpdateCourse.images);
 
         const result = await axios.put(
@@ -230,6 +238,17 @@ export default function CourseCRUDComponent(props) {
                                     onChange={(e) => setCourse({ ...course, level: { levelId: e.target.value } })}
                                 />
                             </div>
+                            <div className={cx('form-group')}>
+                                <label htmlFor="topic">Topic</label>
+                                <input
+                                    type="text"
+                                    className={cx('form-control')}
+                                    id="topic"
+                                    placeholder="Enter topic"
+                                    value={course.topic.topicId}
+                                    onChange={(e) => setCourse({ ...course, topic: { topicId: e.target.value } })}
+                                />
+                            </div>
                             <button className={cx('btn btn-primary')} onClick={() => addCourse(teacherid)}>
                                 Add Course
                             </button>
@@ -244,6 +263,7 @@ export default function CourseCRUDComponent(props) {
                                 <th scope="col">Payment</th>
                                 <th scope="col">Image</th>
                                 <th scope="col">Level</th>
+                                <th scope="col">Topic</th>
                                 <th scope="col">Teacher</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -268,6 +288,7 @@ export default function CourseCRUDComponent(props) {
                                         <img src={course.images} width={270} height={270} />
                                     </td>
                                     <td>{course.levelId}</td>
+                                    <td>{course.topicId}</td>
                                     <td>{course.teacherId}</td>
                                     <td>
                                         <button
@@ -357,9 +378,22 @@ export default function CourseCRUDComponent(props) {
                                         className={cx('form-control')}
                                         id="level"
                                         placeholder="Enter level"
-                                        value={toUpdateCourse.level.levelId}
+                                        value={toUpdateCourse.levelId}
                                         onChange={(e) =>
                                             setToUpdateCourse({ ...toUpdateCourse, level: { levelId: e.target.value } })
+                                        }
+                                    />
+                                </div>
+                                <div className={cx('form-group')}>
+                                    <label htmlFor="topic">Topic</label>
+                                    <input
+                                        type="text"
+                                        className={cx('form-control')}
+                                        id="topic"
+                                        placeholder="Enter Topic"
+                                        value={toUpdateCourse.topicId}
+                                        onChange={(e) =>
+                                            setToUpdateCourse({ ...toUpdateCourse, topic: { topicId: e.target.value } })
                                         }
                                     />
                                 </div>

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 export default function Register() {
     const [username, setUsername] = useState('');
-    const [name, setFullName] = useState('');
+    const [fullName, setFullName] = useState('');
     const [email, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [address, setAddress] = useState('');
@@ -19,7 +19,7 @@ export default function Register() {
 
     function SendRegisterRequest() {
         console.log(username);
-        console.log(name);
+        console.log(fullName);
         console.log(email);
         console.log(password);
         console.log(address);
@@ -28,7 +28,7 @@ export default function Register() {
 
         const registerDto = {
             username: username,
-            name: name,
+            fullname: fullName,
             email: email,
             password: password,
             address: address,
@@ -70,7 +70,7 @@ export default function Register() {
                         type="text"
                         className="form-control"
                         placeholder="Full Name"
-                        value={name}
+                        value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                     />
                 </div>
@@ -124,6 +124,7 @@ export default function Register() {
                 </label>
                 <select name="level" id="level" value={level} onChange={(e) => setLevel(e.target.value)}>
                     {/* <option></option> */}
+                    <option></option>
                     <option value="1">Grade 6</option>
                     <option value="2">Grade 7</option>
                     <option value="3">Grade 8</option>
