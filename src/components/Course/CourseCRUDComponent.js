@@ -20,6 +20,9 @@ export default function CourseCRUDComponent(props) {
         teacher: {
             userId: '',
         },
+        topic: {
+            topicId: '',
+        } 
     });
     const [toUpdateCourse, setToUpdateCourse] = useState({
         courseName: '',
@@ -32,13 +35,18 @@ export default function CourseCRUDComponent(props) {
         teacher: {
             userId: '',
         },
+        topic: {
+            topicId: '',
+        } 
     });
+
     const [courses, setCourses] = useState([]);
     const [showAddCourse, setShowAddCourse] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { teacherid } = useParams();
-    const [isDelete, setIsDelete] = useState(false);
     const [isSave, setIsSave] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
@@ -48,7 +56,7 @@ export default function CourseCRUDComponent(props) {
     const loadCourse = async (teacherid) => {
         //Vai bua them vao la findCourseByTeacherId
         const result = await axios.get(`${baseUrl}/findCourseByTeacherId/${teacherid}`);
-        console.log(result.data);
+        // console.log(result.data);
         setCourses(result.data);
     };
 
@@ -57,17 +65,46 @@ export default function CourseCRUDComponent(props) {
         console.log(result.data);
         setToUpdateCourse(result.data);
     };
+    const [image, setImage] = useState([]);
+
+    const uploadFileHandler = (e) => {
+        setImage(e.target.files[0]);
+        setCourse({ ...course, images: e.target.files[0] });
+        // setCourse({ ...course, images: e.target.files[0] });
+        // console.log(image);
+        // console.log(course.images);
+    };
 
     const addCourse = async (teacherId) => {
         if (course.courseName === '' || course.descriptions === '' || course.payment === '' || course.images === '') {
             alert('Please fill all fields');
             return;
         }
+
+        // const formData1 = new FormData();
+
+        // formData1.append('course', course);
+        console.log(image);
         console.log(course);
-        const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, course);
-        setIsSave(!isSave);
+        console.log(teacherId);
+
+        const formData = new FormData();
+
+        formData.append('courseName', course.courseName);
+        formData.append('descriptions', course.descriptions);
+        formData.append('payment', course.payment);
+        formData.append('levelId', course.level.levelId);
+        formData.append('topicId', course.topic.topicId);
+        formData.append('multipartFile', course.images);
+
+        console.log(formData);
+        const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         console.log(result.data);
-        loadCourse();
+        setIsSave(!isSave);
     };
 
     const updateCourse = async (courseId) => {
@@ -80,19 +117,35 @@ export default function CourseCRUDComponent(props) {
             alert('Please fill all fields');
             return;
         }
+        const formData = new FormData();
+        console.log(toUpdateCourse.images);
+
+        formData.append('courseName', toUpdateCourse.courseName);
+        formData.append('descriptions', toUpdateCourse.descriptions);
+        formData.append('payment', toUpdateCourse.payment);
+        formData.append('levelId', toUpdateCourse.level.levelId);
+        formData.append('topicId', toUpdateCourse.topic.topicId);
+        formData.append('multipartFile', toUpdateCourse.images);
+
         const result = await axios.put(
             `${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacher.userId}`,
-            toUpdateCourse,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            },
         );
         console.log(result.data);
-        loadCourse();
+        setIsUpdate(!isUpdate);
+        setIsModalOpen(false);
+        window.location.reload(1000);
     };
 
     const deleteCourse = async (id) => {
         const result = await axios.delete(`${baseUrl}/deleteCourse/${id}`);
+        console.log(result.data);
         setIsDelete(!isDelete);
-        console.log(result.data);    
-        loadCourse();
     };
 
     const handleCloseModal = () => {
@@ -103,8 +156,12 @@ export default function CourseCRUDComponent(props) {
         console.log(courseId);
         setIsModalOpen(true);
         loadCourseById(courseId);
+        console.log(toUpdateCourse.level.levelId);
     };
 
+    useEffect(() => {
+        loadCourse();
+    }, []);
 
     return (
         <div className={cx('container')}>
@@ -112,9 +169,15 @@ export default function CourseCRUDComponent(props) {
                 <div className={cx('col-md-12')}>
                     <h1 className={cx('title')}>Course CRUD</h1>
                     <div className="d-flex justify-content-end">
-                        <Button className={cx('add-btn')} onClick={() => setShowAddCourse(!showAddCourse)} style={
-                            showAddCourse ? { backgroundColor: '#ff0000', borderColor: '#ff0000' } : { backgroundColor: '#28a745', borderColor: '#28a745' }
-                        }>
+                        <Button
+                            className={cx('add-btn')}
+                            onClick={() => setShowAddCourse(!showAddCourse)}
+                            style={
+                                showAddCourse
+                                    ? { backgroundColor: '#ff0000', borderColor: '#ff0000' }
+                                    : { backgroundColor: '#28a745', borderColor: '#28a745' }
+                            }
+                        >
                             <FontAwesomeIcon icon={faFileCirclePlus} />
                             {showAddCourse ? ' Close' : ' Add Course'}
                         </Button>
@@ -157,12 +220,11 @@ export default function CourseCRUDComponent(props) {
                             <div className={cx('form-group')}>
                                 <label htmlFor="image">Image</label>
                                 <input
-                                    type="text"
+                                    type="file"
                                     className={cx('form-control')}
                                     id="image"
-                                    placeholder="Enter image"
-                                    value={course.images}
-                                    onChange={(e) => setCourse({ ...course, images: e.target.value })}
+                                    onChange={uploadFileHandler}
+                                    // onChange={}
                                 />
                             </div>
                             <div className={cx('form-group')}>
@@ -177,17 +239,17 @@ export default function CourseCRUDComponent(props) {
                                 />
                             </div>
                             <div className={cx('form-group')}>
-                                <label htmlFor="teacher">Teacher</label>
+                                <label htmlFor="topic">Topic</label>
                                 <input
                                     type="text"
                                     className={cx('form-control')}
-                                    id="teacher"
-                                    placeholder="Enter teacher"
-                                    value={course.teacher.userId}
-                                    onChange={(e) => setCourse({ ...course, teacher: { userId: e.target.value } })}
+                                    id="topic"
+                                    placeholder="Enter Topic"
+                                    value={course.topicId}
+                                    onChange={(e) => setCourse({ ...course, topic: { topicId: e.target.value } })}
                                 />
                             </div>
-                            <button className={cx('btn btn-primary')} onClick={() => addCourse(course.teacher.userId)}>
+                            <button className={cx('btn btn-primary')} onClick={() => addCourse(teacherid)}>
                                 Add Course
                             </button>
                         </div>
@@ -209,15 +271,21 @@ export default function CourseCRUDComponent(props) {
                             {courses.map((course, index) => (
                                 <tr key={index}>
                                     <th scope="row">{course.courseID}</th>
-                                    <td><a style={
-                                        {
-                                            color: 'blue',
-                                        }
-                                    } href={`/lessonCRUD/${course.courseID}`}>{course.courseName}
-                                    </a></td>
+                                    <td>
+                                        <a
+                                            style={{
+                                                color: 'blue',
+                                            }}
+                                            href={`/courseDetail/${course.courseID}`}
+                                        >
+                                            {course.courseName}
+                                        </a>
+                                    </td>
                                     <td>{course.descriptions}</td>
                                     <td>{course.payment}</td>
-                                    <td>{course.images}</td>
+                                    <td>
+                                        <img src={course.images} width={270} height={270} />
+                                    </td>
                                     <td>{course.levelId}</td>
                                     <td>{course.teacherId}</td>
                                     <td className='row'>
@@ -228,11 +296,11 @@ export default function CourseCRUDComponent(props) {
                                             <FontAwesomeIcon icon={faPenToSquare} />
                                         </button>
                                         <button
-                                            className={cx('btn btn-danger', 'col-md-6') }
+                                            className={cx('btn btn-danger', 'col-md-6')}
                                             onClick={() => deleteCourse(course.courseID)}
                                         >
-                                            <FontAwesomeIcon icon={faTrash}/>
-                                        </button>                               
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -289,15 +357,15 @@ export default function CourseCRUDComponent(props) {
                                     />
                                 </div>
                                 <div className={cx('form-group')}>
-                                    <label htmlFor="image">Image</label>
+                                    <label htmlFor="image">Image</label> <br />
+                                    <img src={toUpdateCourse.images} width={270} height={270} alt="Course" />
                                     <input
-                                        type="text"
+                                        type="file"
                                         className={cx('form-control')}
                                         id="image"
-                                        placeholder="Enter image"
-                                        value={toUpdateCourse.images}
+                                        // value={toUpdateCourse.images}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, images: e.target.value })
+                                            setToUpdateCourse({ ...toUpdateCourse, images: e.target.files[0] })
                                         }
                                     />
                                 </div>

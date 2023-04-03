@@ -29,7 +29,6 @@ export default function CourseDetailComponent(props) {
         setLesson(result.data);
         console.log(lesson[0].lessonName);
     };
-
     return (
         <div className="container">
             <div className="row">

@@ -68,8 +68,8 @@ function Home() {
                             <p style={{ color: 'solid blue' }}> Unit 1 </p>
                         </div>
                         <div className={cx('box-button')}>
-                            <Button home> Practice</Button>
-                            <Button home> See Result</Button>
+                            <button> Practice</button>
+                            <button> See Result</button>
                         </div>
                     </div>
                 </div>
@@ -103,8 +103,8 @@ function Home() {
                             <p style={{ color: 'solid blue' }}> Game 1 </p>
                         </div>
                         <div className={cx('box-button')}>
-                            <Button home> Practice</Button>
-                            <Button home> See Result</Button>
+                            <button> Practice</button>
+                            <button> See Result</button>
                         </div>
                     </div>
                 </div>
@@ -114,7 +114,7 @@ function Home() {
             <div className={cx('introduce')}>
                 <img className={cx('Idiot')} src={newimage} alt="Idiots"></img>
                 <div>
-                    <h1 className={cx('introduce-title')}>
+                    <h1>
                         WHY WE LEARN FROM <span className={cx('abc')}>ENGLITERATURE</span>
                     </h1>
                     <p className={cx('para')}>

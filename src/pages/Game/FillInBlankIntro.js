@@ -5,6 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faArrowRight, faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 function FillInTheBlankIntro() {
+    const token = localStorage.getItem('user');
+    const user = JSON.parse(token);
+    const level = user.level;
+    console.log(level);
     return (
         <div className="fill-container">
             <div className='back'>
@@ -25,7 +29,7 @@ function FillInTheBlankIntro() {
                 </p>
             </div>
             <div className="plays">
-                <Button href={'/fillinblank/1'}>
+                <Button href={`/fillinblank/${level}`}>
                     <FontAwesomeIcon icon={faPlay} /> Play Now
                 </Button>
             </div>

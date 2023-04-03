@@ -105,6 +105,7 @@ function FillInTheBlankGame() {
                     <Button back href={'/fillinblank'}>
                         <FontAwesomeIcon icon={faArrowLeft} /> Back to games
                     </Button>
+                    
                     <Button back onClick={handlePlayAgain}>
                         <FontAwesomeIcon icon={faArrowRotateBackward} /> Play Again
                     </Button>
@@ -136,12 +137,12 @@ function FillInTheBlankGame() {
                     <div className='btn'>
                         {currentQuestionIndex > 0 && (
                             <button className="button" onClick={() => handlePreviousQuestion()}>
-                                 <FontAwesomeIcon icon={faArrowLeft} /> Previous Question
+                                 <FontAwesomeIcon icon={faArrowLeft} /> Previous 
                             </button>
                         )}
                         {currentQuestionIndex < questions.length - 1 && (
                             <button className="button" onClick={() => handleNextQuestion()}>
-                                Next Question <FontAwesomeIcon icon={faArrowRight} />
+                                Next  <FontAwesomeIcon icon={faArrowRight} />
                             </button>
                         )}
                     </div>
