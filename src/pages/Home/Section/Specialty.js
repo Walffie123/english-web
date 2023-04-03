@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './Specialty.module.scss';
-import Button from '~/components/Button/btn';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -12,12 +11,9 @@ import { useState } from 'react';
 import { Card } from 'react-bootstrap';
 import { useEffect } from 'react';
 
-import studying from '../../../assets/images/studying.png';
-import { AnimatePresence, motion } from 'framer-motion';
 const cx = classNames.bind(styles);
 
 export default function Specialty() {
-    const [selectedId, setSelectedId] = useState(null);
     const [course, setCourse] = useState([]);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
@@ -66,12 +62,3 @@ export default function Specialty() {
         </div>
     );
 }
-
-//   <AnimatePresence>
-//     {selectedId && (
-//       <motion.div layoutId={selectedId}>
-//         <motion.h5>{item.subtitle}</motion.h5>
-//         <motion.h2>{item.title}</motion.h2>
-//         <motion.button onClick={() => setSelectedId(null)} />
-//       </motion.div>
-//     )}
