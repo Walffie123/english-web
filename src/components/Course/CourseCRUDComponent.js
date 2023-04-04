@@ -41,10 +41,12 @@ export default function CourseCRUDComponent(props) {
     const [isSave, setIsSave] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
+    const [topics, setTopics] = useState([]);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
         loadCourse(teacherid);
+        loadTopic();
     }, [isDelete, isSave]);
 
     const loadCourse = async (teacherid) => {
@@ -52,6 +54,13 @@ export default function CourseCRUDComponent(props) {
         const result = await axios.get(`${baseUrl}/findCourseByTeacherId/${teacherid}`);
         // console.log(result.data);
         setCourses(result.data);
+    };
+
+    //Load all topics
+    const loadTopic = async () => {
+        const result = await axios.get(`${baseUrl}/loadTopics`);
+        console.log(result.data);
+        setTopics(result.data);
     };
 
     const loadCourseById = async (courseId) => {
@@ -137,15 +146,11 @@ export default function CourseCRUDComponent(props) {
         formData.append('multipartFile', toUpdateCourse.images);
         formData.append('topicId', toUpdateCourse.topicId);
 
-        const result = await axios.put(
-            `${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacherId}`,
-            formData,
-            {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
+        const result = await axios.put(`${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacherId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
             },
-        );
+        });
         console.log(result.data);
         setIsUpdate(!isUpdate);
         setIsModalOpen(false);
@@ -265,16 +270,25 @@ export default function CourseCRUDComponent(props) {
                             </div>
                             <div className={cx('form-group')}>
                                 <label htmlFor="topic">Topic</label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control')}
-                                    id="topic"
-                                    placeholder="Enter topic"
-                                    value={course.topic.topicId}
-                                    onChange={(e) => setCourse({ ...course, topic: { topicId: e.target.value } })}
-                                />
+                                <select onChange={(e) => setCourse({
+                                    ...course, topic: { topicId: e.target.value },
+                                })}>
+                                    <option value="0">Choose topic</option>
+                                    {topics.map((topic) => (
+                                        <option key={topic.topicId} value={topic.topicId}>
+                                            {topic.topicName}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
-                            <button className={cx('btn btn-primary')} onClick={() => addCourse(teacherid)}>
+                            <button
+                                className={cx('btn btn-primary')}
+                                onClick={() => addCourse(teacherid)}
+                                style={{
+                                    marginBottom: '10px',
+                                    marginTop: '10px',
+                                }}
+                            >
                                 Add Course
                             </button>
                         </div>
@@ -405,7 +419,7 @@ export default function CourseCRUDComponent(props) {
                                         placeholder="Enter level"
                                         value={toUpdateCourse.levelId}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, levelId: e.target.value  })
+                                            setToUpdateCourse({ ...toUpdateCourse, levelId: e.target.value })
                                         }
                                     />
                                 </div>
@@ -418,7 +432,7 @@ export default function CourseCRUDComponent(props) {
                                         placeholder="Enter topic"
                                         value={toUpdateCourse.topicId}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, topicId: e.target.value  })
+                                            setToUpdateCourse({ ...toUpdateCourse, topicId: e.target.value })
                                         }
                                     />
                                 </div>
