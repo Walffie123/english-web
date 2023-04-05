@@ -1,0 +1,20 @@
+.gamemenu-container {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.game-box1,
+.game-box2,
+.game-box3 {
+    margin-right: 20px;
+    width: 266px;
+    height: 260px;
+    background-color: #f1f1f1;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    gap: 20px;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: white;
+}

@@ -5,7 +5,7 @@ import Game from '~/pages/Game/game';
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
 import ListComponent from '~/components/Flashcards/ListComponent';
-import FlashCardComponent from '~/components/Flashcards/FlashCardComponent';
+
 import FlashCardLessonComponent from '~/components/Flashcards/FlashCardLessonComponent';
 import WordAsscociation from '../components/Games/WordAssociation/WordAss';
 import CRUDFlashCardComponent from '~/components/Flashcards/CRUDFlashCardComponent';
@@ -22,6 +22,7 @@ import WordAssociation from '~/components/Games/WordAssociation/WordAss';
 import LessonDetailComponent from '~/components/Lesson/LessonDetailComponent';
 import LessonCRUDComponent from '~/components/Lesson/LessonCRUDComponent';
 import { Navigate } from 'react-router';
+import Teacher from '~/pages/Professional Education/Teacher';
 //khong can Login van dung Route nay`
 
 const withAuthAndRole = (Component, allowedRoles) => {
@@ -43,14 +44,13 @@ const withAuthAndRole = (Component, allowedRoles) => {
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/courses', component: Courses },
-    { path: '/upload', component: Upload },
     { path: '/game', component: Game },
     { path: '/login', component: Login, layout: null },
     { path: '/word/:lessonid', component: WordAsscociation, layout: null },
     { path: '/wordassintro', component: WordAssIntro, layout: null },
     { path: '/crudwa/:lessonid', component: WACRUD, layout: null },
     { path: '/list', component: ListComponent },
-    { path: '/flashcard', component: FlashCardComponent },
+    { path: '/teacher', component: Teacher },
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent },
     { path: '/word/:levelid', component: WordAsscociation, layout: null },
 

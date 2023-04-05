@@ -46,7 +46,9 @@ function Header() {
                     </a>
                 </div>
                 <div>
-                    <text className={cx('Pro')}>Professional Education</text>
+                    <a className={cx('Pro')} href="/teacher">
+                        Professional Education
+                    </a>
                 </div>
                 <div>
                     <a className={cx('Courses')} href="/courses">
