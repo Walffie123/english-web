@@ -3,14 +3,19 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import images from '~/assets/images/Engliterature_free-file.png';
-import Button from '~/components/Button/btn';
+
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
+import Button from '~/components/Button/btn';
 
 const cx = classNames.bind(styles);
+const token = localStorage.getItem('user');
+const user = JSON.parse(token);
+// console.log(user.roles);
+const isUserLoggedIn = user !== null;
 
 function Header() {
     const [showLoginModal, setShowLoginModal] = useState(false);
@@ -21,6 +26,11 @@ function Header() {
 
     const handleRegisterModalClose = () => setShowRegisterModal(false);
     const handleRegisterModalOpen = () => setShowRegisterModal(true);
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        window.location.reload(); // Reload the page to reflect the logout
+    };
 
     return (
         <header className={cx('header')}>
@@ -38,10 +48,6 @@ function Header() {
                     <a href="/courses">Courses</a>
                 </div>
                 <div className={cx('actions')}>
-                    <FontAwesomeIcon className={cx('ilogin')} icon={faRightToBracket} />
-                    <Button login onClick={handleLoginModalOpen}>
-                        Login
-                    </Button>
                     <Modal className={cx('auth-modal')} show={showLoginModal} onHide={handleLoginModalClose}>
                         <Modal.Header className={cx('modal-header')} closeButton>
                             <Modal.Title>Login</Modal.Title>
@@ -51,9 +57,6 @@ function Header() {
                         </Modal.Body>
                     </Modal>
 
-                    <Button register onClick={handleRegisterModalOpen}>
-                        Register
-                    </Button>
                     <Modal className={cx('auth-modal')} show={showRegisterModal} onHide={handleRegisterModalClose}>
                         <Modal.Header className={cx('modal-header')} closeButton>
                             <Modal.Title>Register</Modal.Title>
@@ -63,6 +66,45 @@ function Header() {
                         </Modal.Body>
                     </Modal>
                 </div>
+                {user ? (
+                    <>
+                        <div className={cx('username')}>Welcome, {user.username}</div>
+                        <div className={cx('sub-menu-wrap')}>
+                            <div className={cx('sub-menu')}>
+                                <div className={cx('user-info')}>
+                                    <h3> {user.fullname}</h3>
+                                    <p>ID: {user.id}</p>
+                                </div>
+                                <hr></hr>
+                                <a href="/profile">
+                                    <p>Edit Profile</p>
+                                    <span></span>
+                                </a>
+                                <a href="/profile">
+                                    <p>Settings & Privacy</p>
+                                    <span></span>
+                                </a>
+                                <a href="/profile">
+                                    <p>Help&Support</p>
+                                    <span></span>
+                                </a>
+                                <a href="/profile">
+                                    <p onClick={handleLogout}>Logout</p>
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <Button login onClick={handleLoginModalOpen}>
+                            Login
+                        </Button>
+                        <Button register onClick={handleRegisterModalOpen}>
+                            Register
+                        </Button>
+                    </>
+                )}
             </div>
         </header>
     );

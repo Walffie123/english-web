@@ -48,7 +48,7 @@ export default function Specialty() {
                     <div key={course.id} className={cx('slide-content')}>
                         <a courses href={`courseDetail/${course.id}`}>
                             <Card className={cx('card')}>
-                                {/* <Card.Img src={studying} className={cx('cardimg')} /> */}
+                                <Card.Img src={course.image} className={cx('cardimg')} />
                                 <Card.Body className={cx('cardbody')}>
                                     <Card.Title className={cx('cardtitle')}>{course.name}</Card.Title>
                                     <Card.Text className={cx('payment')}>{course.payment}$</Card.Text>

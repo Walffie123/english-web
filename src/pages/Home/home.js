@@ -34,7 +34,7 @@ function Home() {
             <div className={cx('introduce-2')}>
                 <img className={cx('Idiot')} src={newimage} alt="Idiots"></img>
                 <div>
-                    <h1 className={cx('introduce-title')}>
+                    <h1>
                         WHY WE LEARN FROM <span className={cx('abc')}>ENGLITERATURE</span>
                     </h1>
                     <p className={cx('para')}>

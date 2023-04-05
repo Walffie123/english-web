@@ -1,3 +1,55 @@
+.cardtitle{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+.description{
+    height: 5rem;
+    text-align: left;
+    font-size: 1rem;
+    color: #000;
+    margin-bottom: 0.5rem;
+}
+.payment{
+    text-align: center;
+    font-size: 1.25rem;
+    color: green;
+    margin-bottom: 0.5rem;
+}
+.card{
+    margin-top: 1rem;
+}
+
+.pagination{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar{
+    box-sizing:border-box;
+    padding-left: 1.5rem;
+    border-radius: 5px;
+    border: 1px solid #ccc; 
+}
+
+.wrapper {
+    position:relative;
+  }
+
+  .icon {
+    height: 1.5rem;
+    width: 1.5rem;
+    padding: 4px;
+    position: absolute;
+    box-sizing:border-box;
+    top:50%;
+    left:2px;
+    transform: translateY(-50%);
+  }
 
 .cardtitle{
     font-size: 1.5rem;

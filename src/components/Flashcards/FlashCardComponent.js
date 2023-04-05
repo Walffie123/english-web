@@ -100,7 +100,7 @@ export default function FlashCardComponent(props) {
     };
 
     return (
-        <div className={cx('container')}>
+        <div className={cx('fl-container')}>
             <div className={cx("row", "flashcard")}>
                 {!loadStarredCards && (
                     <div className="col-md-12">
