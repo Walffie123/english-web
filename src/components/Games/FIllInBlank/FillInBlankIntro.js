@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './FillInTheBlankIntro.css';
 import Button from '~/components/Button/btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes, faArrowRight, faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
-import clsx from 'clsx';
+import { faCheck, faTimes, faArrowRight, faPlay, faArrowLeft, faUserPen } from '@fortawesome/free-solid-svg-icons';
+
 
 function FillInTheBlankIntro() {
     const token = localStorage.getItem('user');
     const user = JSON.parse(token);
-    const level = user.level;
-    console.log(level);
+    const [showLevelButtons, setShowLevelButtons] = useState(false);
+
+    const handlePlayNowClick = () => {
+        setShowLevelButtons(true);
+    }
+
     return (
         <div className="fill-container">
             <div className='back'>
@@ -30,9 +34,23 @@ function FillInTheBlankIntro() {
                 </p>
             </div>
             <div className="plays">
-                <Button className={'fillintro-btn'} href={`/fillinblank/${level}`}>
-                    <FontAwesomeIcon icon={faPlay} /> Play Now
-                </Button>
+                <div className="play-now-container">
+                    <Button className={'fillintro-btn'} onClick={handlePlayNowClick}>
+                        <FontAwesomeIcon icon={faPlay} /> Play Now
+                    </Button>
+
+                    {showLevelButtons && (
+                        <div>
+                            <p style={{ color: 'white' , margin: '20px'}}>Choose your level</p>
+                            <Button href={`/fillinblank/1`}>Easy </Button>
+                            <Button href={`/fillinblank/2`}>Medium </Button>
+                            <Button href={`/fillinblank/3`}>Hard </Button>
+                            <Button href={`/fillinblank/4`}>Very Hard </Button>
+                        </div>
+                        
+                    )}
+                </div>
+                
             </div>
         </div>
     );

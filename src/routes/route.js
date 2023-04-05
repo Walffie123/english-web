@@ -9,10 +9,10 @@ import FlashCardComponent from '~/components/Flashcards/FlashCardComponent';
 import FlashCardLessonComponent from '~/components/Flashcards/FlashCardLessonComponent';
 import WordAsscociation from '../components/Games/WordAssociation/WordAss';
 import CRUDFlashCardComponent from '~/components/Flashcards/CRUDFlashCardComponent';
-import FillInTheBlankGame from '~/pages/Game/fillinblank';
-import FillInTheBlankIntro from '~/pages/Game/FillInBlankIntro';
-import FillInBlankGame from '~/pages/Game/CRUDFillInBlankComponent';
-import CRUDFillInBlankComponent from '~/pages/Game/CRUDFillInBlankComponent';
+import FillInTheBlankGame from '~/components/Games/FIllInBlank/fillinblank';
+import FillInTheBlankIntro from '~/components/Games/FIllInBlank/FillInBlankIntro'
+import FillInBlankGame from '~/components/Games/FIllInBlank/CRUDFillInBlankComponent';
+import CRUDFillInBlankComponent from '~/components/Games/FIllInBlank/CRUDFillInBlankComponent';
 import CourseComponent from '~/components/Course/CourseComponent';
 import CourseDetailComponent from '~/components/Course/CourseDetailComponent';
 import CourseCRUDComponent from '~/components/Course/CourseCRUDComponent';
@@ -55,8 +55,7 @@ const publicRoutes = [
     { path: '/word/:levelid', component: WordAsscociation, layout: null },
 
     { path: '/register', component: Register, layout: null },
-    { path: '/fillinblank', component: FillInTheBlankIntro, layout: null },
-    { path: '/fillinblank/:levelid', component: FillInTheBlankGame, layout: null },
+   
     { path: '/loadCourse', component: CourseComponent },
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },
     { path: '/courseDetail/findLesson/:lessonid', component: LessonDetailComponent },
@@ -75,6 +74,8 @@ const publicRoutes = [
         component: withAuthAndRole(CourseCRUDComponent, ['ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_USER']),
     },
     { path: '/lessonCRUD/:courseid', component: withAuthAndRole(LessonCRUDComponent, ['ROLE_ADMIN', 'ROLE_TEACHER']) },
+    { path: '/fillinblank', component: withAuthAndRole(FillInTheBlankIntro, ['ROLE_USER']), layout: null },
+    { path: '/fillinblank/:levelid', component: withAuthAndRole(FillInTheBlankGame, ['ROLE_USER']), layout: null },
 ];
 
 //phai Login moi dung Route nay`

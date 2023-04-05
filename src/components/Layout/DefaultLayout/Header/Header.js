@@ -29,7 +29,7 @@ function Header() {
 
     const handleLogout = () => {
         localStorage.removeItem('user');
-        window.location.reload(); // Reload the page to reflect the logout
+        window.location.href('home'); // Reload the page to reflect the logout
     };
 
     return (
@@ -88,7 +88,7 @@ function Header() {
                                     <p>Help&Support</p>
                                     <span></span>
                                 </a>
-                                <a href="/profile">
+                                <a href="/">
                                     <p onClick={handleLogout}>Logout</p>
                                     <span></span>
                                 </a>

@@ -97,7 +97,10 @@ export default function Register() {
             .post('//localhost:8080/api/auth/signup', registerDto)
             .then((response) => {
                 // status 200 la login thanh cong, nen them session hay token chi chi do vo day
-                if (response.status === 200) window.alert('success');
+                if (response.status === 200) {
+                    console.log('Register success');
+                    window.location.href = '/login';
+                }
                 else return Promise.reject('Invalid login');
             })
             .catch((message) => {

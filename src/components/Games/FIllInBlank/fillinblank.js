@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faArrowRight, faArrowRotateBackward, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import './fillinblank.css';
 import Button from '~/components/Button/btn';
+import AudioPlayer from '../WordAssociation/Audio';
 
 function FillInTheBlankGame() {
     const [questions, setQuestions] = useState([]);
@@ -119,6 +120,7 @@ function FillInTheBlankGame() {
     return (
         <>
             <div className="fillquestion-container">
+            <AudioPlayer src={require('../../../assets/images/kahoot12.mp3')} />
                 <div className="qtitle">Fill In Blank Game</div>
                 <div className="qcontainer">
                     <div className="qnumber">

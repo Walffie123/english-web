@@ -38,16 +38,17 @@ export default function CourseDetailComponent(props) {
                 <div className={cx('col-md-8', 'lesson-container')}>   
                             <div className={cx('lesson')}>
                                 <h1>Lesson: {lesson.lessonName}</h1>
-                               
+                                <p>{lesson.content}</p>
                                 {
                                     pdfPath && (
-                                      <a href={pdfPath} target="_blank">Click here to open PDF file</a>  
+                                        
+                                      <a className={cx('pdf_link')} href={pdfPath} target="_blank" >{lesson.lessonName}.pdf</a>  
                                     )
                                 }
                                 
-                                <p>{lesson.content}</p>
+                               
                             </div>
-                    <Button href={`/flashcard/${lessonid}`}>Flash Card</Button>
+                    <Button href={`/flashcard/${lessonid}`}>Review your vocabulary</Button>
                 </div>
             </div>
         </div>

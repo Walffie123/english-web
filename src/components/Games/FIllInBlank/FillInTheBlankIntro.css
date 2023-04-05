@@ -29,14 +29,21 @@ h1 {
     margin-bottom: 1rem;
     margin-top: 1.5rem;
 }
-fillintro-btn {
-    background-color: red;
-    color: white;
-    border: none;
+.fillintro-btn {
+    display: inline-block;
     padding: 10px 20px;
+    background-color: #463f3a;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
-}
+  }
+    .fillintro-btn:hover {
+        background-color: rgb(41, 81, 114);
+    }
 .gname {
     margin-top: 330px;
     margin-bottom: 30px;
@@ -63,7 +70,7 @@ fillintro-btn {
 }
 .plays:hover {
     background-color: rgb(41, 81, 114);
-    width: 210px;
+    width: 280px;
 }
 
 .back {
@@ -83,3 +90,4 @@ fillintro-btn {
     background-color: rgb(41, 81, 114);
     width: 170px;
 }
+

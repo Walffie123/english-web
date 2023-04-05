@@ -1,0 +1,19 @@
+.pdf_link{
+    color: #fff;
+    background-color: #868273;
+    padding: 0.375rem 0.75rem;
+
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    text-decoration: none;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    &:hover{
+        background-color: #0069d9;
+        border-color: #0062cc;
+        color: #fff;
+    }
+}
