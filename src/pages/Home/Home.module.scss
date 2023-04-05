@@ -9,8 +9,8 @@
     display: flex;
     justify-content: justify;
     align-items: center;
-    // background-color: #8e2de2;
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    background-color: #46178f;
+    // background: linear-gradient(to right, #8e2de2, #4a00e0);
     padding-top: 50px;
     color: rgb(255, 255, 255);
 }
@@ -22,9 +22,9 @@
     animation-fill-mode: forwards;
 }
 .introduce-title {
-    font-size: 55px;
+    font-size: 40px;
     margin-bottom: 40px;
-    margin-left: 45px;
+    margin-left: 30px;
     justify-content: justify;
 }
 .d {
@@ -52,6 +52,7 @@
     animation-duration: 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards; /* Giữ lại trạng thái cuối cùng của keyframe sau khi hoàn thành */
+    z-index: 999;
 }
 .Explore {
     font-size: 20px;

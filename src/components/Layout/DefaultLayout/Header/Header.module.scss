@@ -1,11 +1,15 @@
 .header {
     font-size: 18px;
-    height: 110px;
+    height: 56px;
     width: 100%;
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
+    background-color: #46178f;
+    // background: linear-gradient(to right, #8e2de2, #4a00e0);
     font-family: 'DINRoundPro';
     font-weight: 550;
     color: rgb(214, 214, 214);
+    // position: fixed;
+    z-index: 1100;
+    padding: 22px 0;
 }
 .inner {
     height: 100%;
@@ -13,29 +17,35 @@
     align-items: center;
     justify-content: space-between;
 }
+
 .logo {
-    height: 85px;
-    width: 105.42px;
-    margin: 0 0 0 22px;
+    height: 75px;
+    width: 90px;
     animation-name: slideInDown;
     animation-duration: 1s;
     animation-delay: 0s;
     animation-fill-mode: forwards;
+    padding: 10px;
 }
 
-a {
+// .header a {
+//     color: rgb(214, 214, 214);
+//     text-decoration: none;
+//     &:hover {
+//         color: #f4f3ee;
+//     }
+// }
+.Game,
+.Pro,
+.Courses {
     color: rgb(214, 214, 214);
+    opacity: 0;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
     text-decoration: none;
     &:hover {
         color: #f4f3ee;
     }
-}
-.Game,
-.Pro,
-.Courses {
-    opacity: 0;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
 }
 
 @keyframes slideInDown {
@@ -66,9 +76,6 @@ a {
     margin-right: 5px;
 }
 .actions {
-    &:hover {
-        color: #ffa51d;
-    }
     opacity: 0;
     animation-name: slideInDown;
     animation-duration: 1s;
@@ -88,21 +95,24 @@ a {
 /* Modal Content */
 .auth-modal {
     position: fixed;
+    top: 20px;
     margin: 0;
     padding: 0;
     border: 1px solid #888;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     animation-name: animatetop;
     animation-duration: 0.4s;
-    @keyframes animatetop {
-        from {
-            top: -300px;
-            opacity: 0;
-        }
-        to {
-            top: 0;
-            opacity: 1;
-        }
+    z-index: 1200;
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0px;
+        opacity: 1;
     }
 }
 
@@ -115,5 +125,55 @@ a {
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+.ilogin {
+    margin-right: 5px;
+}
+.sub-menu-wrap {
+    position: absolute;
+    top: 100%;
+    right: 10%;
+    width: 320px;
+    z-index: 1000;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+.sub-menu-wrap.open-menu {
+    max-height: 300px;
+}
+.sub-menu {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.user-info h3 {
+    font-weight: 500;
+}
+.sub-menu hr {
+    border: 0px;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    margin: 15px 0 10px;
+}
+.sub-menu-link {
+    display: flex;
+    justify-content: flex-start;
+    text-decoration: none;
+    color: black;
+    margin: 12px 0;
+}
+.sub-menu-link p {
+    width: 100%;
+    &:hover {
+        font-weight: 600;
+        color: #888;
     }
 }

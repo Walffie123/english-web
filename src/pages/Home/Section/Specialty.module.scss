@@ -23,17 +23,9 @@
         outline: none;
     }
 }
-// .cardimg {
-//     content: '';
-//     display: inline-block;
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     right: 0;
-//     bottom: 0;
-//     opacity: 0.8; /* Điều chỉnh độ mờ */
-//     z-index: -1;
-// }
+.cardimg {
+    height: 200px;
+}
 .cardbody {
     height: 450px;
     display: flex;
@@ -41,4 +33,11 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+.course-detail {
+    color: rgb(214, 214, 214);
+    text-decoration: none;
+    &:hover {
+        color: #f4f3ee;
+    }
 }

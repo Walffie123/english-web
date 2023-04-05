@@ -1,12 +1,11 @@
 import React from 'react';
 import CourseComponent from '~/components/Course/CourseComponent';
 import classNames from 'classnames/bind';
-import styles from './courses.module.scss';
+import clsx from 'clsx';
 
-    const cx = classNames.bind(styles);
 function Courses() {
     return (
-        <div className={cx('course-container')}>
+        <div>
             <CourseComponent />
         </div>
     );

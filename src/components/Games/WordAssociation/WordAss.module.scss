@@ -8,24 +8,44 @@
     align-items: center;
     position: relative;
 }
-
+.WA-row {
+    display: flex;
+    justify-content: space-between;
+}
+.WABox {
+    margin-top: 80px;
+}
+.WA-scoreboard{
+    padding: 50px 0;
+}
+.questions-box {
+    padding: 100px 250px;
+    margin-bottom: 100px;
+    background-color: #646f90;
+    white-space: nowrap;
+    color: white;
+    border-radius: 10px;
+    border: 3px solid blue;
+}
 .option {
     border: 0.125rem solid #646f90;
     border-radius: 0.5rem;
     cursor: pointer;
-    display: grid;
+    display: flex; /* thêm dòng này */
+    justify-content: center; /* thêm dòng này */
+    align-items: center; /* thêm dòng này */
     font-size: 1rem;
     font-weight: 400;
-    grid-template-columns: auto 1fr;
+    height: 80px;
     letter-spacing: normal;
-    line-height: 1.5;
-    padding: 1rem;
     position: relative;
+    text-align: center;
     width: 100%;
-
+    background-color: #646f90;
+    color: white;
     &:hover {
-        background-color: gray;
-        color: white;
+      background-color: gray;
+      color: white;
     }
 }
 .option:disabled {

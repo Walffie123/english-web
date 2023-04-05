@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '~/components/Button/Btn';
+import Button from '../../Button/btn';
 import styles from './stylehome.module.css';
 const HangManInfo = () => {
     return (

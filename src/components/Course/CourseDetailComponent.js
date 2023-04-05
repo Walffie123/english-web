@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { Card } from 'react-bootstrap';
+
 
 const cx = classNames.bind(styles);
 export default function CourseDetailComponent(props) {
@@ -29,6 +31,7 @@ export default function CourseDetailComponent(props) {
     const [isModalEnrolledOpen, setIsModalEnrolledOpen] = useState(false);
     const [enrollment, setEnrollment] = useState([]);
     const [isEnrolled, setIsEnrolled] = useState(false);
+    const [lesson, setLesson] = useState([]);
 
     useEffect(() => {
         const loadData = async () => {
@@ -37,6 +40,7 @@ export default function CourseDetailComponent(props) {
         };
         loadData();
         findReviewByCourseId();
+        loadLessonByCourseId();
     }, []);
 
     useEffect(() => {
@@ -183,6 +187,12 @@ export default function CourseDetailComponent(props) {
                 console.error(error);
             });
     }
+    const loadLessonByCourseId = async () => {
+        const result = await axios.get(`${baseUrl}/loadLesson/${courseid}`);
+        // console.log(result.data);
+        setLesson(result.data);
+        console.log(lesson[0].lessonName);
+    };
 
     return (
         <div className="container">
@@ -196,9 +206,28 @@ export default function CourseDetailComponent(props) {
                     <button className={cx("enroll-btn")} onClick={() => { enrollCourse() }}>
                         {isEnrolled ? "Enrolled" : "Enroll Now"}
                     </button>
-                    <button className={cx("enroll-btn")}>
-                        <Link to="/viewenrollment/1">View all of your ongoing course</Link></button>
+                    <button className={cx("enroll-btn")} style={{ marginTop: "20px", marginBottom: "50px", color: "white" }}>
+                        <Link to="/viewenrollment/1">View all of your ongoing course</Link>
+                    </button>
                 </div>
+                <div className={cx('col-md-8', 'lesson-container')}>
+                    {lesson.map((lesson, index) => (
+                        <Card className={cx('card')} style={{ width: '30rem', margin: '10px' }}>
+                            <Card.Body className="cardbody">
+                                <div className={cx('lesson')} key={index}>
+                                    <Card.Title className={cx('cardtitle')}>
+                                        Lesson {index + 1}: {lesson.lessonName}
+                                    </Card.Title>
+                                    <Button variant="primary" href={`findLesson/${lesson.lessonId}`}>
+                                        Go to lesson
+                                    </Button>
+                                </div>
+                            </Card.Body>
+                        </Card>
+                    ))}
+                </div>
+            </div>
+            <div className="row">
                 <textarea placeholder="Enter your review here"
                     style={{ width: "80%", height: "100px" }} value={review} onChange={handleReviewChange} />
                 <FontAwesomeIcon icon={faPaperPlane} className={cx("enroll-btn")} onClick={handleSendReview} size="3x" style={{ width: "20px" }} />
@@ -209,29 +238,44 @@ export default function CourseDetailComponent(props) {
                         {reviews.map((review) => (
                             <li key={review.reviewId}>
                                 {review.reviewId == chosenReview ? (
-                                    <div>
-                                        <textarea style={{ width: "90%", height: "100px" }} value={editReviewContent} onChange={handleEditReviewContentChange} />
-                                        <button onClick={() => handleEditReview(review.reviewId)} style={{ float: 'right' }}><FontAwesomeIcon icon={faCheck} /></button>
-                                        <button style={{ width: "10", height: "10px" }} onClick={handleCancel} style={{ float: 'right' }}><FontAwesomeIcon icon={faTimes} /></button>
+                                    <div style={{ textAlign: "left", marginTop: "50px" }}>
+                                        <textarea style={{ width: "80%", height: "70px" }} value={editReviewContent} onChange={handleEditReviewContentChange} />
+                                        <button className={cx("review-button")} style={{ float: "right"}} onClick={() => handleEditReview(review.reviewId)}>
+                                            <FontAwesomeIcon icon={faCheck} />
+                                        </button>
+
+                                        <button className={cx("review-button")} style={{ float: "right"}} onClick={() => {
+                                            handleCancel()
+                                        }}>
+                                            <FontAwesomeIcon icon={faTimes} />
+                                        </button>
                                     </div>
 
                                 ) : (
                                     <div style={{ marginTop: 40 }}>
-                                        <span className={cx("reviewer-name")}><b>{review.studentName} </b></span>&nbsp;
-                                        <span className={cx("review-time")} style={{ opacity: 0.7 }}>{review.reviewTime} {review.reviewHour}</span>
+                                        <div className={cx("review-info")} style={{ textAlign: "left" }}>
+                                            <span className={cx("reviewer-name")}>
+                                                <b>{review.studentName} </b>
+                                            </span>&nbsp;
+                                            &nbsp;
+                                            <span className={cx("review-time")} style={{ opacity: 0.7 }}>
+                                                {review.reviewTime} {review.reviewHour}
+                                            </span>
+                                        </div>
 
-                                        <button className={cx("review-button")} style={{ float: "right" }} onClick={() => handleDeleteReview(review.reviewId)}>
+
+                                        <button className={cx("review-button")} style={{ float: "right", marginTop: "-20px" }} onClick={() => handleDeleteReview(review.reviewId)}>
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
 
-                                        <button className={cx("review-button")} style={{ float: "right" }} onClick={() => {
+                                        <button className={cx("review-button")} style={{ float: "right", marginTop: "-20px" }} onClick={() => {
                                             handleEdit(review.reviewId);
                                             handleEditReviewContent(review.reviewContent);
                                         }}>
                                             <FontAwesomeIcon icon={faEdit} />
                                         </button>
 
-                                        <p style={{ marginTop: 7, width: '80%' }}>{review.reviewContent}</p>
+                                        <p style={{ marginTop: 7, width: '80%', textAlign: "left" }}>{review.reviewContent}</p>
                                     </div>
 
                                 )}

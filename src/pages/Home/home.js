@@ -2,7 +2,7 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
-import Button from '~/components/Button/Btn';
+import Button from '~/components/Button/btn';
 import Specialty from './Section/Specialty';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -34,7 +34,7 @@ function Home() {
             <div className={cx('introduce-2')}>
                 <img className={cx('Idiot')} src={newimage} alt="Idiots"></img>
                 <div>
-                    <h1 className={cx('introduce-title')}>
+                    <h1>
                         WHY WE LEARN FROM <span className={cx('abc')}>ENGLITERATURE</span>
                     </h1>
                     <p className={cx('para')}>
