@@ -34,3 +34,10 @@
     align-items: center;
     text-align: center;
 }
+.course-detail {
+    color: rgb(214, 214, 214);
+    text-decoration: none;
+    &:hover {
+        color: #f4f3ee;
+    }
+}

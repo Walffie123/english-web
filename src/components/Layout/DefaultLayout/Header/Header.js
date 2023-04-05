@@ -27,6 +27,8 @@ function Header() {
     const handleRegisterModalClose = () => setShowRegisterModal(false);
     const handleRegisterModalOpen = () => setShowRegisterModal(true);
 
+    const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+
     const handleLogout = () => {
         localStorage.removeItem('user');
         window.location.reload(); // Reload the page to reflect the logout
@@ -38,14 +40,18 @@ function Header() {
                 <a href="/">
                     <img className={cx('logo')} src={images} alt="Engliterature" href="/Home"></img>
                 </a>
-                <div className={cx('Game')}>
-                    <a href="/game">Game</a>
+                <div>
+                    <a className={cx('Game')} href="/game">
+                        Game
+                    </a>
                 </div>
-                <div className={cx('Pro')}>
-                    <text>Professional Education</text>
+                <div>
+                    <text className={cx('Pro')}>Professional Education</text>
                 </div>
-                <div className={cx('Courses')}>
-                    <a href="/courses">Courses</a>
+                <div>
+                    <a className={cx('Courses')} href="/courses">
+                        Courses
+                    </a>
                 </div>
                 <div className={cx('actions')}>
                     <Modal className={cx('auth-modal')} show={showLoginModal} onHide={handleLoginModalClose}>
@@ -65,46 +71,56 @@ function Header() {
                             <Register />
                         </Modal.Body>
                     </Modal>
-                </div>
-                {user ? (
-                    <>
-                        <div className={cx('username')}>Welcome, {user.username}</div>
-                        <div className={cx('sub-menu-wrap')}>
-                            <div className={cx('sub-menu')}>
-                                <div className={cx('user-info')}>
-                                    <h3> {user.fullname}</h3>
-                                    <p>ID: {user.id}</p>
-                                </div>
-                                <hr></hr>
-                                <a href="/profile">
-                                    <p>Edit Profile</p>
-                                    <span></span>
-                                </a>
-                                <a href="/profile">
-                                    <p>Settings & Privacy</p>
-                                    <span></span>
-                                </a>
-                                <a href="/profile">
-                                    <p>Help&Support</p>
-                                    <span></span>
-                                </a>
-                                <a href="/profile">
-                                    <p onClick={handleLogout}>Logout</p>
-                                    <span></span>
-                                </a>
+
+                    {user ? (
+                        <>
+                            <div className={cx('username')} onClick={() => setIsSubMenuOpen(!isSubMenuOpen)}>
+                                Welcome, {user.username}
                             </div>
-                        </div>
-                    </>
-                ) : (
-                    <>
-                        <Button login onClick={handleLoginModalOpen}>
-                            Login
-                        </Button>
-                        <Button register onClick={handleRegisterModalOpen}>
-                            Register
-                        </Button>
-                    </>
-                )}
+                            <div className={cx('sub-menu-wrap', { 'open-menu': isSubMenuOpen })}>
+                                <div className={cx('sub-menu')}>
+                                    <div className={cx('user-info')}>
+                                        <h3> {user.fullname}</h3>
+                                        <p>ID: {user.id}</p>
+                                    </div>
+                                    <hr />
+                                    <a href="/profile" className={cx('sub-menu-link')}>
+                                        <p>Edit Profile</p>
+                                        <span></span>
+                                    </a>
+                                    <a href="/profile" className={cx('sub-menu-link')}>
+                                        <p>Settings & Privacy</p>
+                                        <span></span>
+                                    </a>
+
+                                    {user.roles[0] === 'ROLE_TEACHER' && (
+                                        <a href={`/courseCRUD/${user.id}`} className={cx('sub-menu-link')}>
+                                            <p>Course Management</p>
+                                        </a>
+                                    )}
+                                    {user.roles[0] === 'ROLE_ADMIN' && (
+                                        <a href={`/AccountCRUD/`} className={cx('sub-menu-link')}>
+                                            <p>Account Management</p>
+                                        </a>
+                                    )}
+                                    <a href="#" className={cx('sub-menu-link')}>
+                                        <p onClick={handleLogout}>Logout</p>
+                                        <span></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </>
+                    ) : (
+                        <>
+                            <Button login onClick={handleLoginModalOpen}>
+                                Login
+                            </Button>
+                            <Button register onClick={handleRegisterModalOpen}>
+                                Register
+                            </Button>
+                        </>
+                    )}
+                </div>
             </div>
         </header>
     );

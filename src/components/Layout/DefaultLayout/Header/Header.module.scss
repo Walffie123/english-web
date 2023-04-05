@@ -7,7 +7,7 @@
     font-family: 'DINRoundPro';
     font-weight: 550;
     color: rgb(214, 214, 214);
-    position: fixed;
+    // position: fixed;
     z-index: 1100;
     padding: 22px 0;
 }
@@ -19,27 +19,33 @@
 }
 
 .logo {
-    height: 56px;
-    width: 88px;
+    height: 75px;
+    width: 90px;
     animation-name: slideInDown;
     animation-duration: 1s;
     animation-delay: 0s;
     animation-fill-mode: forwards;
+    padding: 10px;
 }
 
-a {
+// .header a {
+//     color: rgb(214, 214, 214);
+//     text-decoration: none;
+//     &:hover {
+//         color: #f4f3ee;
+//     }
+// }
+.Game,
+.Pro,
+.Courses {
     color: rgb(214, 214, 214);
+    opacity: 0;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
     text-decoration: none;
     &:hover {
         color: #f4f3ee;
     }
-}
-.Game,
-.Pro,
-.Courses {
-    opacity: 0;
-    animation-duration: 1s;
-    animation-fill-mode: forwards;
 }
 
 @keyframes slideInDown {
@@ -70,9 +76,6 @@ a {
     margin-right: 5px;
 }
 .actions {
-    &:hover {
-        color: #ffa51d;
-    }
     opacity: 0;
     animation-name: slideInDown;
     animation-duration: 1s;
@@ -133,6 +136,12 @@ a {
     right: 10%;
     width: 320px;
     z-index: 1000;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+.sub-menu-wrap.open-menu {
+    max-height: 300px;
 }
 .sub-menu {
     background-color: #fff;
@@ -156,15 +165,15 @@ a {
 }
 .sub-menu-link {
     display: flex;
-    align-items: center;
+    justify-content: flex-start;
     text-decoration: none;
-    color: #525252;
+    color: black;
     margin: 12px 0;
-    border-bottom: 1px solid #ccc;
-    &:hover {
-        color: #ffa51d;
-    }
 }
 .sub-menu-link p {
     width: 100%;
+    &:hover {
+        font-weight: 600;
+        color: #888;
+    }
 }

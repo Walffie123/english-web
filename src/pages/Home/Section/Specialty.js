@@ -46,7 +46,7 @@ export default function Specialty() {
             <Slider {...settings}>
                 {course.map((course, index) => (
                     <div key={course.id} className={cx('slide-content')}>
-                        <a courses href={`courseDetail/${course.id}`}>
+                        <a className={cx('course-detail')} courses href={`courseDetail/${course.id}`}>
                             <Card className={cx('card')}>
                                 <Card.Img src={course.image} className={cx('cardimg')} />
                                 <Card.Body className={cx('cardbody')}>
