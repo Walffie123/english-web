@@ -41,10 +41,12 @@ export default function CourseCRUDComponent(props) {
     const [isSave, setIsSave] = useState(false);
     const [isUpdate, setIsUpdate] = useState(false);
     const [isDelete, setIsDelete] = useState(false);
+    const [topics, setTopics] = useState([]);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
         loadCourse(teacherid);
+        loadTopic();
     }, [isDelete, isSave]);
 
     const loadCourse = async (teacherid) => {
@@ -52,6 +54,13 @@ export default function CourseCRUDComponent(props) {
         const result = await axios.get(`${baseUrl}/findCourseByTeacherId/${teacherid}`);
         // console.log(result.data);
         setCourses(result.data);
+    };
+
+    //Load all topics
+    const loadTopic = async () => {
+        const result = await axios.get(`${baseUrl}/loadTopics`);
+        console.log(result.data);
+        setTopics(result.data);
     };
 
     const loadCourseById = async (courseId) => {
@@ -265,14 +274,16 @@ export default function CourseCRUDComponent(props) {
                             </div>
                             <div className={cx('form-group')}>
                                 <label htmlFor="topic">Topic</label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control')}
-                                    id="topic"
-                                    placeholder="Enter topic"
-                                    value={course.topic.topicId}
-                                    onChange={(e) => setCourse({ ...course, topic: { topicId: e.target.value } })}
-                                />
+                                <select className={cx('topic')} onChange={(e) => setCourse({
+                                    ...course, topic: { topicId: e.target.value },
+                                })}>
+                                    <option value="0">Choose topic</option>
+                                    {topics.map((topic) => (
+                                        <option key={topic.topicId} value={topic.topicId}>
+                                            {topic.topicName}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                             <button className={cx('btn btn-primary')} onClick={() => addCourse(teacherid)}>
                                 Add Course

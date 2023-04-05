@@ -82,7 +82,7 @@ export default function CRUDFlashCardComponent(props) {
         }
         else{
         axios
-            .put(`${baseUrl}/updateFlashCard/${flashCardId}`, toUpdateFlashCard)
+            .put(`${baseUrl}/updateFlashCard/${flashCardId}/${lessonId.lessonid}`, toUpdateFlashCard)
             .then((response) => {
                 console.log(response);
                 setToUpdateFlashCard({ frontHTML: '', backHTML: '', lesson: { lessonId: '' } });
