@@ -1,56 +1,39 @@
-import React, { useState, useRef } from 'react';
-import { Howl, Howler } from 'howler';
+import { useEffect, useState } from 'react';
+import { Howl } from 'howler';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPause, faPlay } from '@fortawesome/free-solid-svg-icons';
 
 const AudioPlayer = ({ src }) => {
+    const [sound, setSound] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = useRef(null);
 
     const handleClick = () => {
-        if (!isPlaying) {
-            if (audioRef.current) {
-                // Tạm dừng âm thanh cũ trước khi phát âm thanh mới
-                audioRef.current.pause();
-                audioRef.current.currentTime = 0;
-            }
-
-            // Bắt đầu AudioContext trong hàm xử lý sự kiện onClick
-            if (audioRef.current) {
-                audioRef.current.play();
-            }
-            if (Howler.ctx.state === 'suspended') {
-                Howler.ctx.resume();
-            }
-
-            // Tạo đối tượng Howl để phát nhạc
-            const sound = new Howl({
-                src: src,
-                onplay: () => {
-                    setIsPlaying(true);
-                },
-                onend: () => {
-                    setIsPlaying(false);
-                },
-                onpause: () => {
-                    setIsPlaying(false);
-                },
-                onstop: () => {
-                    setIsPlaying(false);
-                },
-            });
-            sound.play();
-        } else {
-            // Dừng nhạc
-            if (audioRef.current) {
-                audioRef.current.pause();
+        if (sound) {
+            setIsPlaying(!isPlaying);
+            if (isPlaying) {
+                sound.pause();
+            } else {
+                sound.play();
             }
         }
-        setIsPlaying(!isPlaying);
     };
+
+    useEffect(() => {
+        if (!sound) {
+            setSound(new Howl({ src }));
+        }
+    }, []);
 
     return (
         <div>
-            <button onClick={handleClick}>{isPlaying ? 'Dừng' : 'Phát'}</button>
-            <audio ref={audioRef} src={src} />
+            <div>
+                {isPlaying ? (
+                    <FontAwesomeIcon icon={faPause} onClick={handleClick} />
+                ) : (
+                    <FontAwesomeIcon icon={faPlay} onClick={handleClick} />
+                )}
+            </div>
+
         </div>
     );
 };

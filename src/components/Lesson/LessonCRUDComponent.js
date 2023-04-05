@@ -4,7 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from '../Lesson/LessonCRUDComponent.module.scss';
 import { Modal, Button } from 'react-bootstrap';
-import { faFileCirclePlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFileCirclePlus, faPenToSquare, faTrash, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const cx = classNames.bind(styles);
@@ -12,21 +12,10 @@ export default function LessonCRUDComponent(props) {
     const [lesson, setLesson] = useState({
         lessonName: '',
         content: '',
-        course: {
-            courseID: '',
-        },
         pdfFile: '',
 
     });
-    const [toUpdateLesson, setToUpdateLesson] = useState({
-        lessonName: '',
-        content: '',
-        course: {
-            courseID: '',
-        },
-        pdfFile: '',
-
-    });
+    const [toUpdateLesson, setToUpdateLesson] = useState([]);
     const [lessons, setLessons] = useState([]);
     const [showAddLesson, setShowAddLesson] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,6 +36,7 @@ export default function LessonCRUDComponent(props) {
         setLessons(result.data);
         
     };
+    console.log(lessons);
 
     const loadLessonById = async (lessonId) => {
         const result = await axios.get(`${baseUrl}/findLesson/${lessonId}`);
@@ -54,14 +44,15 @@ export default function LessonCRUDComponent(props) {
         console.log(result.data.content);
         setToUpdateLesson(result.data);      
     };
+    console.log(toUpdateLesson.courseId);
 
-    const addLesson = async (courseId) => {
+    const addLesson = async () => {
         if (lesson.lessonName === '' || lesson.content === '' ) {
             alert('Please fill all fields');
             return;
         }
         console.log(lesson);
-        const result = await axios.post(`${baseUrl}/saveLesson/${courseId}`, lesson);
+        const result = await axios.post(`${baseUrl}/saveLesson/${courseid}`, lesson);
         setIsSave(!isSave);
         console.log(result.data);
 
@@ -70,20 +61,17 @@ export default function LessonCRUDComponent(props) {
     const updateLesson = async (lessonId) => {
         if (
             toUpdateLesson.lessonName === '' ||
-            toUpdateLesson.content === '' ||
-            toUpdateLesson.course.courseID === ''
+            toUpdateLesson.content === ''
         ) {
             alert('Please fill all fields');
             return;
         }
-        const result = await axios.put(`${baseUrl}/updateLesson/${lessonId}`, toUpdateLesson);
+        console.log(toUpdateLesson.courseId);
+        const result = await axios.put(`${baseUrl}/updateLesson/${lessonId}/${courseid}`, toUpdateLesson);
         console.log(result.data);
         setToUpdateLesson({
             lessonName: '',
             content: '',
-            course: {
-                courseID: '',
-            },
             pdfFile: '',
         });
         setIsUpdate(!isUpdate);
@@ -167,8 +155,8 @@ export default function LessonCRUDComponent(props) {
                                     onChange={(e) => setLesson({ ...lesson, courseId: e.target.value })}
                                 />
                             </div>
-                            <button className={cx('btn btn-primary')} onClick={() => addLesson(lesson.courseId)}>
-                                Add Course
+                            <button className={cx('btn btn-primary')} onClick={() => addLesson()}>
+                                Add Lesson
                             </button>
                         </div>
                     )}
@@ -181,6 +169,7 @@ export default function LessonCRUDComponent(props) {
                                 <th scope="col">Resource link, Drive</th>
                                 <th scope="col">Course ID</th>
                                 <th scope="col">Action</th>
+                                <th scope="col">FlashCard</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -207,6 +196,11 @@ export default function LessonCRUDComponent(props) {
                                         >
                                             <FontAwesomeIcon icon={faTrash}/>
                                         </button>                               
+                                    </td>
+                                    <td>
+                                        <a href={`/crudFlashCard/${lesson.lessonId}`}>
+                                        Forward <FontAwesomeIcon icon={faArrowRight} /> 
+                                        </a>
                                     </td>
                                 </tr>
                             ))}
@@ -259,20 +253,6 @@ export default function LessonCRUDComponent(props) {
                                         value={toUpdateLesson.pdfFile}
                                         onChange={(e) =>
                                             setToUpdateLesson({ ...toUpdateLesson, pdfFile: e.target.value })
-                                        }
-                                    />
-                                </div>
-                                
-                                <div className={cx('form-group')}>
-                                    <label htmlFor="level">Course ID</label>
-                                    <input
-                                        type="text"
-                                        className={cx('form-control')}
-                                        id="level"
-                                        placeholder="Enter Course ID"
-                                        value={toUpdateLesson.course.courseID}
-                                        onChange={(e) =>
-                                            setToUpdateLesson({ ...toUpdateLesson, courseId: e.target.value  })
                                         }
                                     />
                                 </div>

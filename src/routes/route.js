@@ -11,16 +11,16 @@ import WordAsscociation from '../components/Games/WordAssociation/WordAss';
 import HangManInfo from '../components/Games/HangMan/HangManInfo';
 import HangManGameComponent from '../components/Games/HangMan/getData';
 import CreateHangMan from '../components/Games/HangMan/CRUDHangManComponent';
-import FillInTheBlankGame from '~/pages/Game/fillinblank';
-import FillInTheBlankIntro from '~/pages/Game/FillInBlankIntro';
-import FillInBlankGame from '~/pages/Game/CRUDFillInBlankComponent';
-import CRUDFillInBlankComponent from '~/pages/Game/CRUDFillInBlankComponent';
+import CRUDFlashCardComponent from '~/components/Flashcards/CRUDFlashCardComponent';
+import FillInTheBlankGame from '~/components/Games/FIllInBlank/fillinblank';
+import FillInTheBlankIntro from '~/components/Games/FIllInBlank/FillInBlankIntro'
+import FillInBlankGame from '~/components/Games/FIllInBlank/CRUDFillInBlankComponent';
+import CRUDFillInBlankComponent from '~/components/Games/FIllInBlank/CRUDFillInBlankComponent';
 import CourseComponent from '~/components/Course/CourseComponent';
 import CourseDetailComponent from '~/components/Course/CourseDetailComponent';
 import CourseCRUDComponent from '~/components/Course/CourseCRUDComponent';
 import ViewCourseComponent from '~/components/Course/ViewCourse';
 import ViewEnrollmentComponent from '~/components/Course/ViewEnrollment';
-import CRUDFlashCardComponent from '~/components/Flashcards/CRUDFlashCardComponent';
 import WordAssIntro from '../components/Games/WordAssociation/WordAssIntro';
 import WACRUD from '~/components/Games/WordAssociation/WACRUD';
 import WordAssociation from '~/components/Games/WordAssociation/WordAss';
@@ -55,9 +55,9 @@ const publicRoutes = [
     { path: '/game', component: Game },
     { path: '/login', component: Login, layout: null },
     { path: '/word', component: WordAsscociation },
-    { path: '/hangmaninfo', component: HangManInfo, layout:null},
-    { path: '/hangman', component: HangManGameComponent, layout:null},
-    { path: '/crudHangMan/:levelid', component: CreateHangMan, layout:null},
+    { path: '/hangmaninfo', component: withAuthAndRole(HangManInfo, ['ROLE_USER', 'ROLE_TEACHER']), layout:null},
+    { path: '/hangman', component: withAuthAndRole(HangManGameComponent, ['ROLE_USER', 'ROLE_TEACHER']), layout:null},
+    { path: '/crudHangMan/:levelid', component: withAuthAndRole(CreateHangMan, ['ROLE_ADMIN', 'ROLE_TEACHER']), layout:null},
     { path: '/loadCourse', component: CourseComponent },
     { path: '/courseDetail/:courseid', component: CourseDetailComponent},
     { path: '/viewenrollment/courseDetail/:courseid', component: CourseDetailComponent },
@@ -66,15 +66,14 @@ const publicRoutes = [
     { path: '/viewenrollment/:studentid', component: ViewEnrollmentComponent },
     { path: '/word/:lessonid', component: WordAsscociation, layout: null },
     { path: '/wordassintro', component: WordAssIntro, layout: null },
-    { path: '/crudwa/:lessonid', component: WACRUD, layout: null },
+    { path: '/crudwa/:lessonid', component: withAuthAndRole(WACRUD, ['ROLE_ADMIN', 'ROLE_TEACHER']), layout: null },
     { path: '/list', component: ListComponent },
     { path: '/teacher', component: Teacher },
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent },
-    { path: '/word/:levelid', component: WordAsscociation, layout: null },
+    { path: '/word/:levelid',component: withAuthAndRole(WordAssociation, ['ROLE_USER']), layout: null },
 
     { path: '/register', component: Register, layout: null },
-    { path: '/fillinblank', component: FillInTheBlankIntro, layout: null },
-    { path: '/fillinblank/:levelid', component: FillInTheBlankGame, layout: null },
+   
     { path: '/loadCourse', component: CourseComponent },
     { path: '/viewenrollment/courseDetail/findLesson/:lessonid', component: LessonDetailComponent },
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },
@@ -98,6 +97,8 @@ const publicRoutes = [
     },
     { path: '/viewscore/:userid', component: ViewScore },
     { path: '/lessonCRUD/:courseid', component: withAuthAndRole(LessonCRUDComponent, ['ROLE_ADMIN', 'ROLE_TEACHER']) },
+    { path: '/fillinblank', component: withAuthAndRole(FillInTheBlankIntro, ['ROLE_USER', 'ROLE_TEACHER']), layout: null },
+    { path: '/fillinblank/:levelid', component: withAuthAndRole(FillInTheBlankGame, ['ROLE_USER', 'ROLE_TEACHER']), layout: null },
 ];
 
 //phai Login moi dung Route nay`

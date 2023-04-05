@@ -37,7 +37,7 @@ export default function CourseComponent(props) {
         setCourse(newCourse);
     };
     console.log(course);
-    console.log(isSelectTopic);
+    console.log(isSelectTopic)
 
     //Load all topics
     const loadTopic = async () => {
@@ -45,23 +45,26 @@ export default function CourseComponent(props) {
         console.log(result.data);
         setTopics(result.data);
     };
+    
 
     // Filter courses by name
     const filteredCourses = course.filter((course) => course.name.toLowerCase().includes(searchTerm.toLowerCase()));
 
     // Filter courses by topic
     const loadCardByTopic = (e) => {
-        console.log(e.target.value);
-        setSelectedTopic(e.target.value);
-        if (e.target.value === '0') {
-            setIsSelectTopic(false);
-            return;
-        } else {
-            const result = course.filter((course) => course.topicId === parseInt(e.target.value));
+            console.log(e.target.value);
+            setSelectedTopic(e.target.value);
+            if (e.target.value === '0') {
+                setIsSelectTopic(false);
+                return;
+            }
+            else{
+                const result = course.filter((course) => course.topicId === parseInt(e.target.value));
             setCourseByTopic(result);
             setIsSelectTopic(true);
-        }
-    };
+            }
+       }
+
 
     // Get current courses
     const indexOfLastCourse = currentPage * coursesPerPage;
@@ -103,64 +106,60 @@ export default function CourseComponent(props) {
                 </div>
             </div>
             <div className="row">
-                {isSelectTopic &&
-                    courseByTopic.map((course, index) => (
-                        <div className="col-md-4" key={course.id}>
-                            <Card className={cx('card')} style={{ width: '24rem', height: '100%' }}>
-                                <Card.Img
-                                    variant="top"
-                                    src={course.image}
-                                    height={300}
-                                    width={40}
-                                    className={cx('cardimg')}
-                                />
-                                <Card.Body className={cx('cardbody')}>
-                                    <Card.Title className={cx('cardtitle')}>{course.name}</Card.Title>
-                                    <Card.Text
-                                        className={cx('description')}
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                    >
-                                        {course.description}
-                                    </Card.Text>
-                                    <Card.Text className={cx('payment')}>{course.payment}$</Card.Text>
-                                    <Button variant="primary" href={`courseDetail/${course.id}`}>
-                                        Course detail
-                                    </Button>
-                                </Card.Body>
-                            </Card>
+                {isSelectTopic && (courseByTopic.map((course, index) => (
+                    <div className="col-md-4" key={course.id}>
+                        <Card className={cx('card')} style={{ width: '24rem', height: '100%' }}>
+                            <Card.Img
+                                variant="top"
+                                src={course.image}
+                                height={300}
+                                width={40}
+                                className={cx('cardimg')}
+                            />
+                            <Card.Body className={cx('cardbody')}>
+                                <Card.Title className={cx('cardtitle')}>{course.name}</Card.Title>
+                                <Card.Text
+                                    className={cx('description')}
+                                >
+                                    {course.description}
+                                </Card.Text>
+                                <Card.Text className={cx('payment')}>{course.payment}$</Card.Text>
+                                <Button variant="primary" href={`courseDetail/${course.id}`}>
+                                    Course detail
+                                </Button>
+                            </Card.Body>
+                        </Card>
+                    </div>
+                )))
+                }
+                {!isSelectTopic && (currentCourses.map((course, index) => (
+                    <div className="col-md-4" key={course.id}>
+                        <Card className={cx('card')} style={{ width: '24rem', height: '100%' }}>
+                            <Card.Img
+                                variant="top"
+                                src={course.image}
+                                height={300}
+                                width={40}
+                                className={cx('cardimg')}
+                            />
+                            <Card.Body className={cx('cardbody')}>
+                                <Card.Title className={cx('cardtitle')}>{course.name}</Card.Title>
+                                <Card.Text
+                                    className={cx('description')}
+                                    style={{
+                                        width: '100%',
+                                    }}
+                                >
+                                    {course.description}
+                                </Card.Text>
+                                <Card.Text className={cx('payment')}>{course.payment}$</Card.Text>
+                                <Button variant="primary" href={`courseDetail/${course.id}`}>
+                                    Course detail
+                                </Button>
+                            </Card.Body>
+                        </Card>
                         </div>
-                    ))}
-                {!isSelectTopic &&
-                    currentCourses.map((course, index) => (
-                        <div className="col-md-4" key={course.id}>
-                            <Card className={cx('card')} style={{ width: '24rem', height: '100%' }}>
-                                <Card.Img
-                                    variant="top"
-                                    src={course.image}
-                                    height={300}
-                                    width={40}
-                                    className={cx('cardimg')}
-                                />
-                                <Card.Body className={cx('cardbody')}>
-                                    <Card.Title className={cx('cardtitle')}>{course.name}</Card.Title>
-                                    <Card.Text
-                                        className={cx('description')}
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                    >
-                                        {course.description}
-                                    </Card.Text>
-                                    <Card.Text className={cx('payment')}>{course.payment}$</Card.Text>
-                                    <Button variant="primary" href={`courseDetail/${course.id}`}>
-                                        Course detail
-                                    </Button>
-                                </Card.Body>
-                            </Card>
-                        </div>
-                    ))}
+                )))}
             </div>
             <div className="row">
                 <div className="col-md-12">

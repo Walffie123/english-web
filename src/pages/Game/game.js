@@ -28,8 +28,8 @@ function Game() {
                 </div>
                 <div className={cx('game-box3')}>
                     <img className={cx('hangman-img')} src={hangin} alt="Hang in Man Game"></img>
-                    <Button gamemenu href={'/hangman'}>
-                        Hang In Man
+                    <Button gamemenu href={'/hangmaninfo'}>
+                        Hang Man
                     </Button>
                 </div>
             </div>

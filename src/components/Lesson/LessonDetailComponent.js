@@ -38,7 +38,7 @@ export default function CourseDetailComponent(props) {
 
                         {
                             pdfPath && (
-                                <a href={pdfPath} target="_blank">Click here to open PDF file</a>
+                                <a className={cx('pdf_link')} href={pdfPath} target="_blank" >{lesson.lessonName}.pdf</a>  
                             )
                         }
 

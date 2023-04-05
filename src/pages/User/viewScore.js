@@ -57,9 +57,9 @@ export default function CourseCRUDComponent(props) {
                                     <div key={filteredEnrollmentItem.id}>
                                         <ul>{filteredEnrollmentItem.name}: </ul>
                                         {score.filter((scoreItem) => scoreItem.courseid == filteredEnrollmentItem.courseid).length > 0 ? (
-                                            <div>
+                                            <div class="center">
                                                 <br />
-                                                <table style={{ width: '30%', border: '1px solid black' }}>
+                                                <table style={{ marginLeft: "400px", width: '30%', border: '1px solid black' }}>
                                                     <thead>
                                                         <tr>
                                                             <th>Lesson Name</th>

@@ -3,13 +3,13 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import images from '~/assets/images/Engliterature_free-file.png';
-import Button from '~/components/Button/btn';
 
 import { Modal } from 'react-bootstrap';
 import { useState } from 'react';
 
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
+import Button from '~/components/Button/btn';
 
 const cx = classNames.bind(styles);
 const token = localStorage.getItem('user');
@@ -88,10 +88,6 @@ function Header() {
                                     <hr />
                                     <a href="/profile" className={cx('sub-menu-link')}>
                                         <p>Edit Profile</p>
-                                        <span></span>
-                                    </a>
-                                    <a href="/profile" className={cx('sub-menu-link')}>
-                                        <p>Settings & Privacy</p>
                                         <span></span>
                                     </a>
 

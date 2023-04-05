@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { less } from 'fontawesome';
 import { Card } from 'react-bootstrap';
 
 
@@ -18,6 +19,7 @@ export default function CourseDetailComponent(props) {
     const moment = require('moment-timezone');
     const [course, setCourse] = useState([]);
     const [reviews, setReviews] = useState([]);
+    const [lesson, setLesson] = useState([]);
     const { courseid } = useParams();
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
     const enrollmentTime = moment();
@@ -31,7 +33,6 @@ export default function CourseDetailComponent(props) {
     const [isModalEnrolledOpen, setIsModalEnrolledOpen] = useState(false);
     const [enrollment, setEnrollment] = useState([]);
     const [isEnrolled, setIsEnrolled] = useState(false);
-    const [lesson, setLesson] = useState([]);
 
     useEffect(() => {
         const loadData = async () => {
@@ -40,6 +41,7 @@ export default function CourseDetailComponent(props) {
         };
         loadData();
         findReviewByCourseId();
+        loadCourseById();
         loadLessonByCourseId();
     }, []);
 
@@ -102,6 +104,13 @@ export default function CourseDetailComponent(props) {
         setIsModalEnrollOpen(false);
         setIsModalEnrolledOpen(false);
     }
+
+    const loadLessonByCourseId = async () => {
+        const result = await axios.get(`${baseUrl}/loadLesson/${courseid}`);
+        // console.log(result.data);
+        setLesson(result.data);
+        console.log(lesson[0].lessonName);
+    };
 
     const handleSendReview = async () => {
         if (review.trim() === '') {
@@ -187,12 +196,6 @@ export default function CourseDetailComponent(props) {
                 console.error(error);
             });
     }
-    const loadLessonByCourseId = async () => {
-        const result = await axios.get(`${baseUrl}/loadLesson/${courseid}`);
-        // console.log(result.data);
-        setLesson(result.data);
-        console.log(lesson[0].lessonName);
-    };
 
     return (
         <div className={cx("container-course-detail")}>
@@ -240,11 +243,11 @@ export default function CourseDetailComponent(props) {
                                 {review.reviewId == chosenReview ? (
                                     <div style={{ textAlign: "left", marginTop: "50px" }}>
                                         <textarea style={{ width: "80%", height: "70px" }} value={editReviewContent} onChange={handleEditReviewContentChange} />
-                                        <button className={cx("review-button")} style={{ float: "right"}} onClick={() => handleEditReview(review.reviewId)}>
+                                        <button className={cx("review-button")} style={{ float: "right" }} onClick={() => handleEditReview(review.reviewId)}>
                                             <FontAwesomeIcon icon={faCheck} />
                                         </button>
 
-                                        <button className={cx("review-button")} style={{ float: "right"}} onClick={() => {
+                                        <button className={cx("review-button")} style={{ float: "right" }} onClick={() => {
                                             handleCancel()
                                         }}>
                                             <FontAwesomeIcon icon={faTimes} />

@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 
 export default function Register() {
     const [username, setUsername] = useState('');
-    const [name, setFullName] = useState('');
+    const [fullName, setFullName] = useState('');
     const [email, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
     const [address, setAddress] = useState('');
@@ -85,7 +85,7 @@ export default function Register() {
 
         const registerDto = {
             username: username,
-            fullname: name,
+            fullname: fullName,
             email: email,
             password: password,
             address: address,
@@ -97,7 +97,10 @@ export default function Register() {
             .post('//localhost:8080/api/auth/signup', registerDto)
             .then((response) => {
                 // status 200 la login thanh cong, nen them session hay token chi chi do vo day
-                if (response.status === 200) window.alert('success');
+                if (response.status === 200) {
+                    console.log('Register success');
+                    window.location.href = '/login';
+                }
                 else return Promise.reject('Invalid login');
             })
             .catch((message) => {
@@ -128,7 +131,7 @@ export default function Register() {
                         type="text"
                         className="form-control"
                         placeholder="Full Name"
-                        value={name}
+                        value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                     />
                 </div>
@@ -191,6 +194,7 @@ export default function Register() {
                         <option value="4">Grade 9</option>
                     </select>
                 </div>
+
                 <div className={cx('box2')}>
                     <div className="custom-control custom-checkbox">
                         <input type="checkbox" className="custom-control-input" id="customCheck1" />

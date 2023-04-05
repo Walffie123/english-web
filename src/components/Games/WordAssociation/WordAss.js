@@ -9,6 +9,7 @@ import Button from '../../Button/btn';
 import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './WordAss.module.scss';
 import { Howl, Howler } from 'howler'; // Import Howl here
+import moment from 'moment';
 import AudioPlayer from './Audio';
 const cx = classNames.bind(styles);
 const token = localStorage.getItem('user');
@@ -20,11 +21,11 @@ export default function WordAssociation() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [selectedOption, setSelectedOption] = useState([]);
-
+    const resultTime = moment();
     const { lessonid } = useParams();
     const [questions, setQuestions] = useState([]);
     const clicked = [];
-
+    const baseUrl = 'http://localhost:8080'
     useEffect(() => {
         getQuestions(lessonid);
     }, []);
@@ -45,10 +46,22 @@ export default function WordAssociation() {
         if (isCorrect) {
             setScore(score + 10);
         }
+
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < questions.length) {
             setCurrentQuestion(nextQuestion);
         } else {
+            const sendData = {
+                resultTime: resultTime.toJSON(),
+                score: score
+            };
+            axios.post(`${baseUrl}/saveResult/${lessonid}/1`, sendData).then(response => {
+                // Xử lý kết quả trả về từ backend (nếu có)
+                console.log(response.data);
+            }).catch(error => {
+                // Xử lý lỗi khi gửi request đến backend
+                console.error(error);
+            });
             alert(`Game over! Your score is ${score}`);
         }
     };
@@ -66,17 +79,16 @@ export default function WordAssociation() {
         ));
     };
 
-    // Phát nhạc
-
     return (
         <div className={cx('gameWA-container')}>
             <div className={cx('WA-row')}>
                 <div className={cx('WA-scoreboard', 'col-md-3', 'order-md-2')}>
-                    <AudioPlayer src={require('../../../assets/images/kahoot2.mp3')} />
-
-                    <a href="/wordassintro">
-                        <FontAwesomeIcon icon={faX} />
-                    </a>
+                    <div className={cx('WA-button-navi')}>
+                        <AudioPlayer src={require('../../../assets/images/kahoot2.mp3')} />
+                        <a href="/wordassintro" style={{ marginLeft: '20px' }}>
+                            <FontAwesomeIcon icon={faX} />
+                        </a>
+                    </div>
                     <h3 className={cx('score')}>Score is: {score}</h3>
                     <div className={cx('username')}>Welcome, {user.username}</div>
                 </div>
@@ -92,7 +104,7 @@ export default function WordAssociation() {
                                 </div>
                                 <div className={cx('options-box')}>{renderOptions(question.option)}</div>
                                 <div className={cx('navi-container')}>
-                                    {currentQuestion !== questions.length + 1 ? (
+                                    {currentQuestion !== 0 ? (
                                         <Button
                                             className={cx('navigation-button')}
                                             onClick={() => setCurrentQuestion(currentQuestion - 1)}

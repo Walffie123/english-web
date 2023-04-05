@@ -108,9 +108,6 @@ function AccountCRUD() {
                                 <Button onClick={() => handleOpenModal(user.userId)}>
                                     <FontAwesomeIcon icon={faUserPen} />
                                 </Button>
-                                <Button>
-                                    <FontAwesomeIcon icon={faXmark} />
-                                </Button>
                             </td>
                         </tr>
                     ))}
