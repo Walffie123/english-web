@@ -21,8 +21,10 @@ import WACRUD from '~/components/Games/WordAssociation/WACRUD';
 import WordAssociation from '~/components/Games/WordAssociation/WordAss';
 import LessonDetailComponent from '~/components/Lesson/LessonDetailComponent';
 import LessonCRUDComponent from '~/components/Lesson/LessonCRUDComponent';
+import AccountCRUD from '~/pages/Auth/AccountCRUD';
 import { Navigate } from 'react-router';
 import Teacher from '~/pages/Professional Education/Teacher';
+import Profile from '~/pages/Auth/Profile';
 //khong can Login van dung Route nay`
 
 const withAuthAndRole = (Component, allowedRoles) => {
@@ -61,6 +63,9 @@ const publicRoutes = [
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },
     { path: '/courseDetail/findLesson/:lessonid', component: LessonDetailComponent },
     //private route
+
+    { path: '/profile', component: withAuthAndRole(Profile, ['ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_USER']) },
+    { path: '/AccountCRUD', component: withAuthAndRole(AccountCRUD, ['ROLE_ADMIN']) },
     { path: '/fillinblankcrud', component: withAuthAndRole(FillInBlankGame, ['ROLE_ADMIN', 'ROLE_TEACHER']) },
     {
         path: '/crudFlashCard/:lessonid',
