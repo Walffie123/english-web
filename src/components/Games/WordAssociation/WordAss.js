@@ -3,41 +3,47 @@ import { useHref, useParams } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faX } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes, faArrowLeft, faArrowRight, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import Button from '../../Button/btn';
-import Logo from './icons8-bear-64.png';
+import '../../../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import styles from './WordAss.module.scss';
+import { Howl, Howler } from 'howler'; // Import Howl here
+import AudioPlayer from './Audio';
 const cx = classNames.bind(styles);
+const token = localStorage.getItem('user');
+const user = JSON.parse(token);
+// console.log(user.roles);
+const isUserLoggedIn = user !== null;
 
 export default function WordAssociation() {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
-    const [selectedOption, setSelectedOption] = useState(null);
+    const [selectedOption, setSelectedOption] = useState([]);
 
-    const { levelid } = useParams();
+    const { lessonid } = useParams();
     const [questions, setQuestions] = useState([]);
     const clicked = [];
 
     useEffect(() => {
-        getQuestions(levelid);
+        getQuestions(lessonid);
     }, []);
 
-    const getQuestions = async (levelid) => {
-        const res = await axios.get(`http://localhost:8080/word/${levelid}`);
+    const getQuestions = async (lessonid) => {
+        const res = await axios.get(`http://localhost:8080/word/${lessonid}`);
         setQuestions(res.data);
         console.log(res.data);
     };
 
     const handleOptionClick = (option) => {
         setSelectedOption(option);
-        handleAnswer(option.correct);
-        clicked.push(option);
-        renderOptions.disabled = clicked.includes(option);
+        handleAnswer(option.isCorrect);
+        setSelectedOption([...selectedOption, option]);
     };
 
-    const handleAnswer = (correct) => {
-        if (correct) {
-            setScore(score + 1);
+    const handleAnswer = (isCorrect) => {
+        if (isCorrect) {
+            setScore(score + 10);
         }
         const nextQuestion = currentQuestion + 1;
         if (nextQuestion < questions.length) {
@@ -53,45 +59,57 @@ export default function WordAssociation() {
                 className={cx('option', { selected: selectedOption === option })}
                 key={option.id}
                 onClick={() => handleOptionClick(option)}
+                disabled={selectedOption.includes(option)}
             >
                 {option.optionText}
             </Button>
         ));
     };
 
+    // Phát nhạc
+
     return (
         <div className={cx('gameWA-container')}>
-            <div>
-                <h1>Let's Rock 🤖</h1>
-                <h3 className={cx('score')}>Your score is: {score}</h3>
-                <div className={cx('WAbox')}>
+            <div className={cx('WA-row')}>
+                <div className={cx('WA-scoreboard', 'col-md-3', 'order-md-2')}>
+                    <AudioPlayer src={require('../../../assets/images/kahoot2.mp3')} />
+
+                    <a href="/wordassintro">
+                        <FontAwesomeIcon icon={faX} />
+                    </a>
+                    <h3 className={cx('score')}>Score is: {score}</h3>
+                    <div className={cx('username')}>Welcome, {user.username}</div>
+                </div>
+                <div className={cx('WABox', 'col-md-9')}>
                     {questions.map((question, index) => {
                         if (index !== currentQuestion) {
                             return null;
                         }
                         return (
-                            <div className={cx('questions')} id="question-display" key={question.id}>
-                                <div>{question.questionText}</div>
-                                <div>{renderOptions(question.option)}</div>
-                                <div className="">
-                                    {currentQuestion !== questions.length - 1 ? (
-                                        <Button
-                                            className={cx('navigation-button')}
-                                            onClick={() => setCurrentQuestion(currentQuestion + 1)}
-                                        >
-                                            Next
-                                        </Button>
-                                    ) : null}
+                            <article>
+                                <div className={cx('questions-box')} id="question-display" key={question.id}>
+                                    {question.questionText}
+                                </div>
+                                <div className={cx('options-box')}>{renderOptions(question.option)}</div>
+                                <div className={cx('navi-container')}>
                                     {currentQuestion !== questions.length + 1 ? (
                                         <Button
                                             className={cx('navigation-button')}
                                             onClick={() => setCurrentQuestion(currentQuestion - 1)}
                                         >
-                                            Back
+                                            <FontAwesomeIcon icon={faArrowLeft} />
+                                        </Button>
+                                    ) : null}
+                                    {currentQuestion !== questions.length - 1 ? (
+                                        <Button
+                                            className={cx('navigation-button')}
+                                            onClick={() => setCurrentQuestion(currentQuestion + 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faArrowRight} />
                                         </Button>
                                     ) : null}
                                 </div>
-                            </div>
+                            </article>
                         );
                     })}
                 </div>

@@ -3,6 +3,7 @@ import './FillInTheBlankIntro.css';
 import Button from '~/components/Button/btn';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes, faArrowRight, faPlay, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import clsx from 'clsx';
 
 function FillInTheBlankIntro() {
     const token = localStorage.getItem('user');
@@ -29,7 +30,7 @@ function FillInTheBlankIntro() {
                 </p>
             </div>
             <div className="plays">
-                <Button href={`/fillinblank/${level}`}>
+                <Button className={'fillintro-btn'} href={`/fillinblank/${level}`}>
                     <FontAwesomeIcon icon={faPlay} /> Play Now
                 </Button>
             </div>

@@ -101,8 +101,8 @@ export default function FlashCardComponent(props) {
     };
 
     return (
-        <div className={cx('container')}>
-            <div className={cx("row", "flashcard")}>
+        <div className={cx('fl-container')}>
+            <div className={cx("row", 'flashcard')}>                           
                 {!loadStarredCards && (
                     <div className="col-md-12">
                         <div className="col-md-12">
@@ -111,9 +111,9 @@ export default function FlashCardComponent(props) {
                                 style={{
                                     display: 'flex',
                                     justifyContent: 'center',
-                                    alignItems: 'center',
+                                    alignItems: 'center',                                 
                                 }}
-                            >
+                            >                             
                                 <FlashcardArray
                                     cards={cards}
                                     frontContentStyle={{

@@ -1,22 +1,30 @@
 .header {
     font-size: 18px;
-    height: 110px;
+    height: 56px;
     width: 100%;
-    box-shadow: rgb(0 0 0 / 10%) 0px 1px 1px;
-    background: linear-gradient(to right, #8e2de2, #4a00e0);
-    // background-color: #ffe7cc;
+    background-color: #46178f;
+    // background: linear-gradient(to right, #8e2de2, #4a00e0);
     font-family: 'DINRoundPro';
-    padding: 0px;
-    margin: 0px;
     font-weight: 550;
     color: rgb(214, 214, 214);
+    // position: fixed;
+    z-index: 1100;
+    padding: 22px 0;
 }
-
 .inner {
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.logo {
+    height: 56px;
+    width: 88px;
+    animation-name: slideInDown;
+    animation-duration: 1s;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
 }
 
 a {
@@ -26,12 +34,38 @@ a {
         color: #f4f3ee;
     }
 }
-
-.logo {
-    height: 85px;
-    width: 105.42px;
-    margin: 0 0 0 22px;
+.Game,
+.Pro,
+.Courses {
+    opacity: 0;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
+
+@keyframes slideInDown {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.Game {
+    animation-name: slideInDown;
+    animation-delay: 1.2s;
+}
+
+.Pro {
+    animation-name: slideInDown;
+    animation-delay: 1.2s;
+}
+
+.Courses {
+    animation-name: slideInDown;
+    animation-delay: 1.2s;
+}
+
 .ilogin {
     margin-right: 5px;
 }
@@ -39,7 +73,98 @@ a {
     &:hover {
         color: #ffa51d;
     }
+    opacity: 0;
+    animation-name: slideInDown;
+    animation-duration: 1s;
+    animation-delay: 1.6s;
+    animation-fill-mode: forwards;
+}
+.modal-header {
+    padding: 2px 16px;
+    color: white;
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 2px 16px;
+}
+
+/* Modal Content */
+.auth-modal {
+    position: fixed;
+    top: 20px;
+    margin: 0;
+    padding: 0;
+    border: 1px solid #888;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    z-index: 1200;
+}
+
+@keyframes animatetop {
+    from {
+        top: -300px;
+        opacity: 0;
+    }
+    to {
+        top: 0px;
+        opacity: 1;
+    }
+}
+
+/* Add Animation */
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 .ilogin {
     margin-right: 5px;
+}
+.sub-menu-wrap {
+    position: absolute;
+    top: 100%;
+    right: 10%;
+    width: 320px;
+    z-index: 1000;
+}
+.sub-menu {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+.user-info h3 {
+    font-weight: 500;
+}
+.sub-menu hr {
+    border: 0px;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    margin: 15px 0 10px;
+}
+.sub-menu-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+    border-bottom: 1px solid #ccc;
+    &:hover {
+        color: #ffa51d;
+    }
+}
+.sub-menu-link p {
+    width: 100%;
 }

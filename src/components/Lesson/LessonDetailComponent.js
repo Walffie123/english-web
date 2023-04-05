@@ -5,7 +5,7 @@ import classNames from 'classnames/bind';
 import styles from '../Lesson/LessonDetailComponent.module.scss';
 import { less } from 'fontawesome';
 import { Card, Button } from 'react-bootstrap';
-import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5';
+
 
 
 
