@@ -46,7 +46,9 @@ function Header() {
                     </a>
                 </div>
                 <div>
-                    <text className={cx('Pro')}>Professional Education</text>
+                    <a className={cx('Pro')} href="/teacher">
+                        Professional Education
+                    </a>
                 </div>
                 <div>
                     <a className={cx('Courses')} href="/courses">
@@ -94,12 +96,12 @@ function Header() {
                                     </a>
 
                                     {user.roles[0] === 'ROLE_TEACHER' && (
-                                        <a href={`/courseCRUD/${user.id}`} className={cx('sub-menu-link')}>
+                                        <a href={`/CourseCRUD/${user.id}`} className={cx('sub-menu-link')}>
                                             <p>Course Management</p>
                                         </a>
                                     )}
                                     {user.roles[0] === 'ROLE_ADMIN' && (
-                                        <a href={`/AccountCRUD/`} className={cx('sub-menu-link')}>
+                                        <a href={`/AccountCRUD`} className={cx('sub-menu-link')}>
                                             <p>Account Management</p>
                                         </a>
                                     )}

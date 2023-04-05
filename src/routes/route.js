@@ -5,7 +5,7 @@ import Game from '~/pages/Game/game';
 import Login from '~/pages/Auth/login';
 import Register from '~/pages/Auth/register';
 import ListComponent from '~/components/Flashcards/ListComponent';
-import FlashCardComponent from '~/components/Flashcards/FlashCardComponent';
+
 import FlashCardLessonComponent from '~/components/Flashcards/FlashCardLessonComponent';
 import WordAsscociation from '../components/Games/WordAssociation/WordAss';
 import HangManInfo from '../components/Games/HangMan/HangManInfo';
@@ -27,7 +27,10 @@ import WordAssociation from '~/components/Games/WordAssociation/WordAss';
 import LessonDetailComponent from '~/components/Lesson/LessonDetailComponent';
 import LessonCRUDComponent from '~/components/Lesson/LessonCRUDComponent';
 import ViewScore from '~/pages/User/viewScore';
+import AccountCRUD from '~/pages/Auth/AccountCRUD';
 import { Navigate } from 'react-router';
+import Teacher from '~/pages/Professional Education/Teacher';
+import Profile from '~/pages/Auth/Profile';
 //khong can Login van dung Route nay`
 
 const withAuthAndRole = (Component, allowedRoles) => {
@@ -49,7 +52,6 @@ const withAuthAndRole = (Component, allowedRoles) => {
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/courses', component: Courses },
-    { path: '/upload', component: Upload },
     { path: '/game', component: Game },
     { path: '/login', component: Login, layout: null },
     { path: '/word', component: WordAsscociation },
@@ -66,7 +68,7 @@ const publicRoutes = [
     { path: '/wordassintro', component: WordAssIntro, layout: null },
     { path: '/crudwa/:lessonid', component: WACRUD, layout: null },
     { path: '/list', component: ListComponent },
-    { path: '/flashcard', component: FlashCardComponent },
+    { path: '/teacher', component: Teacher },
     { path: '/flashcard/:lessonid', component: FlashCardLessonComponent },
     { path: '/word/:levelid', component: WordAsscociation, layout: null },
 
@@ -78,6 +80,9 @@ const publicRoutes = [
     { path: '/courseDetail/:courseid', component: CourseDetailComponent },
     { path: '/courseDetail/findLesson/:lessonid', component: LessonDetailComponent },
     //private route
+
+    { path: '/profile', component: withAuthAndRole(Profile, ['ROLE_ADMIN', 'ROLE_TEACHER', 'ROLE_USER']) },
+    { path: '/AccountCRUD', component: withAuthAndRole(AccountCRUD, ['ROLE_ADMIN']) },
     { path: '/fillinblankcrud', component: withAuthAndRole(FillInBlankGame, ['ROLE_ADMIN', 'ROLE_TEACHER']) },
     {
         path: '/crudFlashCard/:lessonid',

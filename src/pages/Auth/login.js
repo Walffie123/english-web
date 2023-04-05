@@ -17,23 +17,6 @@ export default function Login() {
         console.log(username);
         console.log(password);
 
-        // const loginDto = {
-        // usernameOrEmail: username,
-        // password: password,
-        // };
-
-        // axios
-        //     .post('//localhost:8080/api/auth/signin', loginDto)
-        //     .then((response) => {
-        //         // status 200 la login thanh cong, nen them session hay token chi chi do vo day
-        //         if (response.status === 200) {
-        //             console.log(response);
-        //             window.location.href = '/';
-        //         } else return Promise.reject('Invalid login');
-        //     })
-        //     .catch((message) => {
-        //         alert(message);
-        //     });
         authService.login(username, password).then(() => {
             window.location.href = '/';
         });

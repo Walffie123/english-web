@@ -3,9 +3,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShuffle, faEye, faLightbulb, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import styles from './FlashCard.module.scss';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+import classNames from 'classnames/bind';
 import { useParams } from 'react-router-dom';
 
+const cx = classNames.bind(styles);
 export default function FlashCardLessonComponent(props) {
     const [cards, setCards] = useState([]);
     const [starredIds, setStarredIds] = useState([]);
@@ -19,7 +22,7 @@ export default function FlashCardLessonComponent(props) {
     const [isDelete, setIsDelete] = useState(false);
     // const [clickStar, setClickStar] = useState(false);
     const controlRef = useRef({});
-    const {lessonid} = useParams();
+    const { lessonid } = useParams();
 
     useEffect(() => {
         loadCards(lessonid);
@@ -88,11 +91,11 @@ export default function FlashCardLessonComponent(props) {
                 setLoadStarredCards(!loadStarredCards);
             }
         }
-      };
+    };
 
     return (
-        <div className="container">
-            <div className="row">
+        <div className={cx('fl-container')}>
+            <div className={cx('row', 'flashcard')}>
                 {!loadStarredCards && (
                     <div className="col-md-12">
                         <div className="col-md-12">
@@ -125,24 +128,27 @@ export default function FlashCardLessonComponent(props) {
                             </div>
                         </div>
                         <div className="col-md-12">
-                            <div className="row">
+                            <div
+                                className="row"
+                                style={{
+                                    textAlign: 'center',
+                                }}
+                            >
                                 <div className="col-md-3">
-                                    
-                                        <div
-                                            style={{
-                                                color: shuffle ? 'orange' : 'black',
-                                            }}
+                                    <div
+                                        style={{
+                                            color: shuffle ? 'orange' : 'black',
+                                        }}
+                                    >
+                                        <OverlayTrigger
+                                            placement="bottom"
+                                            overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
                                         >
-                                             <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
-                                            >
                                             <span>
-                                            <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
+                                                <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
                                             </span>
-                                            </OverlayTrigger>
-                                        </div>
-                                    
+                                        </OverlayTrigger>
+                                    </div>
                                 </div>
                                 <div className="col-md-3">
                                     <div>
@@ -155,40 +161,43 @@ export default function FlashCardLessonComponent(props) {
                                                 placement="bottom"
                                                 overlay={<Tooltip id="star">Remember this card</Tooltip>}
                                             >
-                                            <span>
-                                                <FontAwesomeIcon
-                                                    icon={faLightbulb}
-                                                    onClick={() => handleStarClick(currentCard)}
-                                                />
-                                                
-                                            </span>
+                                                <span>
+                                                    <FontAwesomeIcon
+                                                        icon={faLightbulb}
+                                                        onClick={() => handleStarClick(currentCard)}
+                                                    />
+                                                </span>
                                             </OverlayTrigger>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-3">
-                                        <div>
+                                    <div>
                                         <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="star">Show starred card</Tooltip>}
-                                            >
+                                            placement="bottom"
+                                            overlay={<Tooltip id="star">Show starred card</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                                <FontAwesomeIcon
+                                                    icon={faEye}
+                                                    onClick={handleLoadStarredCards}
+                                                    style={{ color: loadStarredCards ? 'orange' : 'black' }}
+                                                />
                                             </span>
-                                            </OverlayTrigger>
-                                        </div>                                 
+                                        </OverlayTrigger>
+                                    </div>
                                 </div>
                                 <div className="col-md-3">
-                                        <div>
+                                    <div>
                                         <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
-                                            >
+                                            placement="bottom"
+                                            overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faTrashCan} onClick={handleDeleteStarredCards} />
+                                                <FontAwesomeIcon icon={faTrashCan} onClick={handleDeleteStarredCards} />
                                             </span>
-                                            </OverlayTrigger>
-                                        </div>                                 
+                                        </OverlayTrigger>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -224,7 +233,12 @@ export default function FlashCardLessonComponent(props) {
                             />
                         </div>
                         <div className="col-md-12">
-                            <div className="row">
+                            <div
+                                className="row"
+                                style={{
+                                    textAlign: 'center',
+                                }}
+                            >
                                 <div className="col-md-4">
                                     <div
                                         style={{
@@ -232,39 +246,46 @@ export default function FlashCardLessonComponent(props) {
                                         }}
                                     >
                                         <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
-                                            >
+                                            placement="bottom"
+                                            overlay={<Tooltip id="shuffle">Shuffle</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
+                                                <FontAwesomeIcon icon={faShuffle} onClick={handleShuffleClick} />
                                             </span>
-                                            </OverlayTrigger>
+                                        </OverlayTrigger>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                    <div>
-                                        <OverlayTrigger
+                                        <div>
+                                            <OverlayTrigger
                                                 placement="bottom"
                                                 overlay={<Tooltip id="star">Delete all starred card</Tooltip>}
                                             >
-                                            <span>
-                                            <FontAwesomeIcon icon={faTrashCan} onClick={handleDeleteStarredCards} />
-                                            </span>
+                                                <span>
+                                                    <FontAwesomeIcon
+                                                        icon={faTrashCan}
+                                                        onClick={handleDeleteStarredCards}
+                                                    />
+                                                </span>
                                             </OverlayTrigger>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div>
-                                    <OverlayTrigger
-                                                placement="bottom"
-                                                overlay={<Tooltip id="star">Show full card</Tooltip>}
-                                            >
+                                        <OverlayTrigger
+                                            placement="bottom"
+                                            overlay={<Tooltip id="star">Show full card</Tooltip>}
+                                        >
                                             <span>
-                                            <FontAwesomeIcon icon={faEye} onClick={handleLoadStarredCards} />
+                                                <FontAwesomeIcon
+                                                    icon={faEye}
+                                                    onClick={handleLoadStarredCards}
+                                                    style={{ color: loadStarredCards ? 'orange' : 'black' }}
+                                                />
                                             </span>
-                                            </OverlayTrigger>
+                                        </OverlayTrigger>
                                     </div>
                                 </div>
                             </div>

@@ -12,10 +12,12 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 export default function WACRUD(props) {
     const [question, setquestion] = useState({ questionText: '', lesson: { lessonId: '' } });
+    const [options, setoptions] = useState({ questionText: '', lesson: { lessonId: '' } });
     const [toUpdatequestion, setToUpdatequestion] = useState({ questionText: '', lesson: { lessonId: '' } });
     const [questions, setquestions] = useState([]);
     const [questionId, setquestionId] = useState('');
     const [showAddquestion, setShowAddquestion] = useState(false);
+    const [showAddoption, setShowAddoption] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
     const lessonId = useParams();
@@ -213,7 +215,7 @@ export default function WACRUD(props) {
                 </div>
                 <Modal show={isModalOpen} onHide={handleCloseModal}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Update Flash Card</Modal.Title>
+                        <Modal.Title>Update Quiz</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <div className="row" style={{ marginBottom: '1rem' }}>

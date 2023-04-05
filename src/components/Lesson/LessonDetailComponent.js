@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import classNames from 'classnames/bind';
-import styles from '../Lesson/LessonDetailComponent.module.scss';
+import styles from './LessonDetailComponent.module.scss';
 import { less } from 'fontawesome';
 import { Card, Button } from 'react-bootstrap';
-
-
-
 
 export default function CourseDetailComponent(props) {
     const cx = classNames.bind(styles);
@@ -23,30 +20,30 @@ export default function CourseDetailComponent(props) {
         setLesson(result.data);
         setPdfPath(result.data.pdfFile);
     };
-    
+
     console.log(lesson.pdfFile);
     // console.log(pdfPath);
     useEffect(() => {
         loadLessonByLessonId(lessonid);
     }, []);
 
-   
+
 
     return (
-        <div className="container">
-            <div className="row">
-                <div className={cx('col-md-8', 'lesson-container')}>   
-                            <div className={cx('lesson')}>
-                                <h1>Lesson: {lesson.lessonName}</h1>
-                               
-                                {
-                                    pdfPath && (
-                                      <a href={pdfPath} target="_blank">Click here to open PDF file</a>  
-                                    )
-                                }
-                                
-                                <p>{lesson.content}</p>
-                            </div>
+        <div className={cx("lesson-detail-container")}>
+            <div className={cx("row")}>
+                <div className={cx('col-md-8', 'lesson-container')}>
+                    <div className={cx('lesson')}>
+                        <h1>Lesson: {lesson.lessonName}</h1>
+
+                        {
+                            pdfPath && (
+                                <a href={pdfPath} target="_blank">Click here to open PDF file</a>
+                            )
+                        }
+
+                        <p>{lesson.content}</p>
+                    </div>
                     <Button href={`/flashcard/${lessonid}`}>Flash Card</Button>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import classNames from "classnames/bind";
-import styles from "../Course/CourseDetail.module.scss";
+import styles from "./CourseDetail.module.scss";
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
@@ -195,8 +195,8 @@ export default function CourseDetailComponent(props) {
     };
 
     return (
-        <div className="container">
-            <div className="row">
+        <div className={cx("container-course-detail")}>
+            <div className={cx("row")}>
                 <div className={cx("col-md-4", "image-container")}>
                     <img className={cx("image")} src={course.images} alt="Course Image" />
                     <h3 className={cx("course-name")}>Name: {course.courseName}</h3>
