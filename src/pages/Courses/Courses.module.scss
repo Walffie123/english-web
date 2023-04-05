@@ -1,0 +1,20 @@
+.box {
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    background-color: #fcefef;
+    width: 408.75px;
+    height: 320px;
+    padding: 30px 15px 5px 15px;
+    box-shadow: rgb(0 0 0 / 30%) 1px 1px 1px 1px;
+    .box-content {
+        font-size: 20px;
+        text-align: left;
+    }
+    .box-card {
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+        justify-content: space-between;
+    }
+}

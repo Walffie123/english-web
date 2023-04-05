@@ -3,7 +3,7 @@
 }
 
 .hangmain {
-  background-color: #34495e;
+  background: linear-gradient(to bottom, #34495e, #283747);
   color: #fff;
   font-family: Helvetica, Arial, sans-serif;
   display: flex;
@@ -14,14 +14,25 @@
   overflow: hidden;
 }
 
-h1 {
-  margin: 20px 0 0;
+.hangmain h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+.hangmain h3 {
+  margin: 20px 20px 10px 20px;
+}
+
+.hangmain p {
+  margin: 0px 20px 10px 20px;
+}
+.muted {
+  opacity: 0.7;
 }
 
 .game-container {
-  padding: 20px 30px;
+  padding: 0px 0px;
   position: relative;
-  margin: auto;
+  margin: 80px 0px 20px 0px;
   height: 350px;
   width: 450px;
 }
@@ -117,14 +128,13 @@ h1 {
   border-radius: 10px 10px 0 0;
   padding: 15px 20px;
   position: absolute;
-  bottom: -50px;
-  transition: transform 0.3s ease-in-out;
+  opacity: 0;
+}
+.notification-container.show {
+  bottom: 0;
+  opacity: 1;
 }
 
 .notification-container p {
   margin: 0;
-}
-
-.notification-container.show {
-  transform: translateY(-50px);
 }

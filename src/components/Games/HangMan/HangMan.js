@@ -66,9 +66,8 @@ export default function HangMan(props) {
   return (
     <div className="hangmain">
       <Header />
-      <>{props.question}</>
-      <>{props.data}</>
       <Score score={props.score} len={props.len} words={props.words} />
+      <h3>Hint: {props.question}</h3>
       <div className="game-container">
         <Figure wrongLetters={wrongLetters} />
         <WrongLetters wrongLetters={wrongLetters} />

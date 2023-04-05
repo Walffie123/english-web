@@ -1,0 +1,44 @@
+.specialty-slide-container {
+    height: 450px;
+    background: white;
+    max-width: 100%;
+    margin: 0;
+    text-align: center;
+}
+.slide-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-left: 100px;
+    height: 500px;
+}
+.card {
+    width: 268px;
+    height: 384px;
+    text-align: center;
+    color: black;
+    &:hover {
+        box-shadow: 4px 5px 10px 8px #f0f2f3;
+        outline: none;
+    }
+}
+// .cardimg {
+//     content: '';
+//     display: inline-block;
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     opacity: 0.8; /* Điều chỉnh độ mờ */
+//     z-index: -1;
+// }
+.cardbody {
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

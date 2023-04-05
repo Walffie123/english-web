@@ -1,201 +1,103 @@
-// import './style.css';
-// import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHref, useParams } from 'react-router-dom';
+import axios from 'axios';
+import classNames from 'classnames/bind';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faTimes, faArrowLeft, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import Button from '../../Button/Btn';
 
-// function WordAsscociation() {
-//     const scoreDisplay = document.getElementById('score-display');
-//     const questionDisplay = document.getElementById('question-display');
+import styles from './WordAss.module.scss';
+const cx = classNames.bind(styles);
 
-//     const questions = [
-//         {
-//             quiz: ['big', 'giant', 'gigantic'],
-//             options: ['small', 'huge'],
-//             correct: 2,
-//         },
-//         {
-//             quiz: ['close', 'near', 'next'],
-//             options: ['trace', 'adjacent'],
-//             correct: 2,
-//         },
-//         {
-//             quiz: ['bird', 'fly', 'cucumber'],
-//             options: ['duck', 'dick'],
-//             correct: 2,
-//         },
-//     ];
-
-//     let score = 0;
-//     let clicked = [];
-//     scoreDisplay.textContent = score;
-
-//     function populateQuestions() {
-//         //Create a box that append questions and options
-//         questions.forEach((question) => {
-//             const questionBox = document.createElement('div');
-//             questionBox.classList.add('question-box');
-
-//             //Create a logo in box
-//             const logoDisplay = document.createElement('img');
-//             logoDisplay.src = './icons8-bear-64.png';
-//             logoDisplay.alt = 'Logo';
-//             logoDisplay.id = 'logo';
-//             questionBox.append(logoDisplay);
-
-//             //get question from array and post it in box
-//             question.quiz.forEach((tip) => {
-//                 const tipText = document.createElement('p');
-//                 tipText.textContent = tip;
-//                 questionBox.append(tipText);
-//             });
-
-//             //create a button for each option
-//             const optionsButtons = document.createElement('div');
-//             optionsButtons.classList.add('options-buttons');
-
-//             question.options.forEach((option, optionIndex) => {
-//                 const optionButton = document.createElement('button');
-//                 optionButton.classList.add('option-button');
-//                 optionButton.textContent = option;
-//                 //check if the option is correct (cach 1)
-//                 optionButton.addEventListener('click', () =>
-//                     checkAnswer(optionButton, questionBox, option, optionIndex + 1, question.correct),
-//                 );
-
-//                 optionsButtons.append(optionButton);
-//                 questionBox.append(optionsButtons);
-//                 //Cach 2
-//                 //     optionButton.addEventListener('click',() => {
-//                 //         if(optionButton.textContent === question.options[question.correct - 1]) {
-//                 //             score++
-//                 //             scoreDisplay.textContent = score
-
-//                 //         } else {
-//                 //            score--
-//                 //         scoreDisplay.textContent = score
-//                 //         }
-//                 //     })
-//             });
-//             //hien thi ket qua
-//             const answerDisplay = document.createElement('div');
-//             answerDisplay.classList.add('answer-display');
-//             questionBox.append(answerDisplay);
-
-//             questionDisplay.append(questionBox);
-//         });
-//     }
-
-//     populateQuestions();
-
-//     function checkAnswer(optionButton, questionBox, option, optionIndex, correctAnswer) {
-//         console.log('option!', option);
-//         console.log('optionIndex!', optionIndex);
-//         if (optionIndex === correctAnswer) {
-//             score++;
-//             scoreDisplay.textContent = score;
-//             addResult(questionBox, 'Correct :)!');
-//         } else {
-//             score--;
-//             scoreDisplay.textContent = score;
-//             addResult(questionBox, 'Wrong :( !');
-//         }
-//         //disable button after click
-//         clicked.push(option);
-//         optionButton.disabled = clicked.includes(option);
-//     }
-
-//     function addResult(questionBox, result) {
-//         const answerDisplay = questionBox.querySelector('.answer-display');
-//         answerDisplay.textContent = '';
-//         answerDisplay.textContent = result;
-
-//         // const resultBox = document.createElement('div')
-//         // resultBox.classList.add('result-box')
-//         // const resultText = document.createElement('p')
-//         // resultText.textContent = question.option
-//         // resultBox.append(resultText)
-//         // questionBox.append(resultBox)
-//     }
-//     return (
-//         <div class="game-container">
-//             <div class="question-area">
-//                 <h1>Welcome to Word Asscociation</h1>
-//                 <h3>
-//                     Your score is: <span id="score-display"></span>
-//                 </h3>
-//                 <div class="questions" id="question-display"></div>
-//             </div>
-//         </div>
-//     );
-// }
-
-// export default WordAsscociation;
-
-import React, { useState } from 'react';
-import './style.css';
-import Logo from '../../..//components//Games//WordAssociation//icons8-bear-64.png';
-
-function WordAssociation() {
+export default function WordAssociation() {
+    const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
-    const questions = [
-        {
-            quiz: ['big', 'giant', 'gigantic'],
-            options: ['small', 'huge'],
-            correct: 2,
-        },
-        {
-            quiz: ['close', 'near', 'next'],
-            options: ['trace', 'adjacent'],
-            correct: 2,
-        },
-        {
-            quiz: ['bird', 'fly', 'cucumber'],
-            options: ['duck', 'dick'],
-            correct: 2,
-        },
-    ];
+    const [selectedOption, setSelectedOption] = useState(null);
 
-    function checkAnswer(optionIndex, correctAnswer) {
-        if (optionIndex === correctAnswer) {
-            setScore((prevScore) => prevScore + 1);
-            return 'Correct 🙂!';
-        } else {
-            setScore((prevScore) => prevScore - 1);
-            return 'Wrong 🙁 !';
+    const { lessonid } = useParams();
+    const [questions, setQuestions] = useState([]);
+    const clicked = [];
+
+    useEffect(() => {
+        getQuestions(lessonid);
+    }, []);
+
+    const getQuestions = async (lessonid) => {
+        const res = await axios.get(`http://localhost:8080/word/${lessonid}`);
+        setQuestions(res.data);
+        console.log(res.data);
+    };
+
+    const handleOptionClick = (option) => {
+        setSelectedOption(option);
+        handleAnswer(option.isCorrect);
+        clicked.push(option);
+        renderOptions.disabled = clicked.includes(option);
+    };
+
+    const handleAnswer = (isCorrect) => {
+        if (isCorrect) {
+            setScore(score + 1);
         }
-    }
+        const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < questions.length) {
+            setCurrentQuestion(nextQuestion);
+        } else {
+            alert(`Game over! Your score is ${score}`);
+        }
+    };
+
+    const renderOptions = (options) => {
+        return options.map((option) => (
+            <Button
+                className={cx('option', { selected: selectedOption === option })}
+                key={option.id}
+                onClick={() => handleOptionClick(option)}
+            >
+                {option.optionText}
+            </Button>
+        ));
+    };
 
     return (
-        <div className="game-container">
-            <div className="question-area">
-                <h1>Welcome to Word Association</h1>
-                <h3>
-                    Your score is: <span id="score-display">{score}</span>
-                </h3>
-                <div className="questions" id="question-display">
-                    {questions.map((question, index) => (
-                        <div className="question-box" key={index}>
-                            <img src={Logo} alt="Logo" id="logo" />
-                            {question.quiz.map((tip, tipIndex) => (
-                                <p key={tipIndex}>{tip}</p>
-                            ))}
-                            <div className="options-buttons">
-                                {question.options.map((option, optionIndex) => (
-                                    <button
-                                        className="option-button"
-                                        key={optionIndex}
-                                        onClick={() => checkAnswer(optionIndex + 1, question.correct)}
-                                        disabled={score < 0}
-                                    >
-                                        {option}
-                                    </button>
-                                ))}
-                            </div>
-                            <div className="answer-display"></div>
-                        </div>
-                    ))}
+        <div className={cx('gameWA-container')}>
+            <div>
+                <h1>Let's Rock 🤖</h1>
+                <h3 className={cx('score')}>Your score is: {score}</h3>
+                <div className={cx('')}>
+                    {questions.map((question, index) => {
+                        if (index !== currentQuestion) {
+                            return null;
+                        }
+                        return (
+                            <article className={cx('WABox')}>
+                                <div className={cx('questions-box')} id="question-display" key={question.id}>
+                                    {question.questionText}
+                                </div>
+                                <div className={cx('options-box')}>{renderOptions(question.option)}</div>
+                                <div className={cx('navi-container')}>
+                                    {currentQuestion !== questions.length + 1 ? (
+                                        <Button
+                                            className={cx('navigation-button')}
+                                            onClick={() => setCurrentQuestion(currentQuestion - 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faArrowLeft} />
+                                        </Button>
+                                    ) : null}
+                                    {currentQuestion !== questions.length - 1 ? (
+                                        <Button
+                                            className={cx('navigation-button')}
+                                            onClick={() => setCurrentQuestion(currentQuestion + 1)}
+                                        >
+                                            <FontAwesomeIcon icon={faArrowRight} />
+                                        </Button>
+                                    ) : null}
+                                </div>
+                            </article>
+                        );
+                    })}
                 </div>
             </div>
         </div>
     );
 }
-
-export default WordAssociation;

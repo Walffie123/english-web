@@ -16,7 +16,7 @@ export default function Login() {
         console.log(password);
 
         const loginDto = {
-            usernameOrEmail: username,
+            username: username,
             password: password,
         };
 

@@ -37,8 +37,9 @@ export default function CourseCRUDComponent(props) {
     const [showAddCourse, setShowAddCourse] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { teacherid } = useParams();
-    const [isDelete, setIsDelete] = useState(false);
     const [isSave, setIsSave] = useState(false);
+    const [isUpdate, setIsUpdate] = useState(false);
+    const [isDelete, setIsDelete] = useState(false);
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
 
     useEffect(() => {
@@ -48,13 +49,23 @@ export default function CourseCRUDComponent(props) {
     const loadCourse = async (teacherid) => {
         //Vai bua them vao la findCourseByTeacherId
         const result = await axios.get(`${baseUrl}/findCourseByTeacherId/${teacherid}`);
-        console.log(result.data);
+        // console.log(result.data);
         setCourses(result.data);
     };
 
     const loadCourseById = async (courseId) => {
         const result = await axios.get(`${baseUrl}/findCourse/${courseId}`);
+        console.log(result.data);
         setToUpdateCourse(result.data);
+    };
+    const [image, setImage] = useState([]);
+
+    const uploadFileHandler = (e) => {
+        setImage(e.target.files[0]);
+        setCourse({ ...course, images: e.target.files[0] });
+        // setCourse({ ...course, images: e.target.files[0] });
+        // console.log(image);
+        // console.log(course.images);
     };
 
     const addCourse = async (teacherId) => {
@@ -62,25 +73,31 @@ export default function CourseCRUDComponent(props) {
             alert('Please fill all fields');
             return;
         }
-        else {
-            console.log(course);
-            const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, course);
-            setIsSave(!isSave);
-            console.log(result.data);
-            setCourse({
-                courseName: '',
-                descriptions: '',
-                payment: '',
-                images: '',
-                level: {
-                    levelId: '',
-                },
-                teacher: {
-                    userId: '',
-                }
 
-            }); // clear input fields
-        }
+        // const formData1 = new FormData();
+
+        // formData1.append('course', course);
+        console.log(image);
+        console.log(course);
+        console.log(teacherId);
+
+        const formData = new FormData();
+
+        formData.append('courseName', course.courseName);
+        formData.append('descriptions', course.descriptions);
+        formData.append('payment', course.payment);
+        formData.append('levelId', course.level.levelId);
+        formData.append('multipartFile', course.images);
+
+        console.log(formData);
+        const result = await axios.post(`${baseUrl}/saveCourse/${teacherId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
+        console.log(result.data);
+        setIsSave(!isSave);
+        setShowAddCourse(false);
     };
 
     const updateCourse = async (courseId) => {
@@ -93,12 +110,28 @@ export default function CourseCRUDComponent(props) {
             alert('Please fill all fields');
             return;
         }
+        const formData = new FormData();
+        console.log(toUpdateCourse.images);
+
+        formData.append('courseName', toUpdateCourse.courseName);
+        formData.append('descriptions', toUpdateCourse.descriptions);
+        formData.append('payment', toUpdateCourse.payment);
+        formData.append('levelId', toUpdateCourse.level.levelId);
+        formData.append('multipartFile', toUpdateCourse.images);
+
         const result = await axios.put(
             `${baseUrl}/updateCourse/${courseId}/${toUpdateCourse.teacher.userId}`,
-            toUpdateCourse,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            },
         );
         console.log(result.data);
-        loadCourse();
+        setIsUpdate(!isUpdate);
+        setIsModalOpen(false);
+        window.location.reload(1000);
     };
 
     const deleteCourse = async (id) => {
@@ -115,18 +148,28 @@ export default function CourseCRUDComponent(props) {
         console.log(courseId);
         setIsModalOpen(true);
         loadCourseById(courseId);
+        console.log(toUpdateCourse.level.levelId);
     };
 
+    // useEffect(() => {
+    //     loadCourse();
+    // }, []);
 
     return (
         <div className={cx('container')}>
             <div className={cx('row')}>
                 <div className={cx('col-md-12')}>
-                    <h1 className={cx('title')}>All Course</h1>
+                    <h1 className={cx('title')}>Course CRUD</h1>
                     <div className="d-flex justify-content-end">
-                        <Button className={cx('add-btn')} onClick={() => setShowAddCourse(!showAddCourse)} style={
-                            showAddCourse ? { backgroundColor: '#ff0000', borderColor: '#ff0000' } : { backgroundColor: '#28a745', borderColor: '#28a745' }
-                        }>
+                        <Button
+                            className={cx('add-btn')}
+                            onClick={() => setShowAddCourse(!showAddCourse)}
+                            style={
+                                showAddCourse
+                                    ? { backgroundColor: '#ff0000', borderColor: '#ff0000' }
+                                    : { backgroundColor: '#28a745', borderColor: '#28a745' }
+                            }
+                        >
                             <FontAwesomeIcon icon={faFileCirclePlus} />
                             {showAddCourse ? ' Close' : ' Add Course'}
                         </Button>
@@ -172,8 +215,8 @@ export default function CourseCRUDComponent(props) {
                                     type="file"
                                     className={cx('form-control')}
                                     id="image"
-                                    placeholder="Enter image"
-                                    onChange={(e) => setCourse({ ...course, images: e.target.files[0].name })}
+                                    onChange={uploadFileHandler}
+                                    // onChange={}
                                 />
                             </div>
                             <div className={cx('form-group')}>
@@ -187,23 +230,11 @@ export default function CourseCRUDComponent(props) {
                                     onChange={(e) => setCourse({ ...course, level: { levelId: e.target.value } })}
                                 />
                             </div>
-                            <div className={cx('form-group')}>
-                                <label htmlFor="teacher">Teacher</label>
-                                <input
-                                    type="text"
-                                    className={cx('form-control')}
-                                    id="teacher"
-                                    placeholder="Enter teacher"
-                                    value={course.teacher.userId}
-                                    onChange={(e) => setCourse({ ...course, teacher: { userId: e.target.value } })}
-                                />
-                            </div>
-                            <button className={cx('btn btn-primary')} onClick={() => addCourse(course.teacher.userId)}>
+                            <button className={cx('btn btn-primary')} onClick={() => addCourse(teacherid)}>
                                 Add Course
                             </button>
                         </div>
                     )}
-                    <h2>Level 1 Course</h2>
                     <table className={cx('table table-bordered table-striped')}>
                         <thead>
                             <tr>
@@ -218,104 +249,37 @@ export default function CourseCRUDComponent(props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {courses.filter(course => course.levelId === 1).map((course, index) => (
+                            {courses.map((course, index) => (
                                 <tr key={index}>
                                     <th scope="row">{course.courseID}</th>
                                     <td>
-                                        <a style={{ color: 'blue' }} href={`/courseDetail/${course.courseID}`}>
+                                        <a
+                                            style={{
+                                                color: 'blue',
+                                            }}
+                                            href={`/courseDetail/${course.courseID}`}
+                                        >
                                             {course.courseName}
                                         </a>
                                     </td>
                                     <td>{course.descriptions}</td>
                                     <td>{course.payment}</td>
-                                    <td>{course.images}</td>
+                                    <td>
+                                        <img src={course.images} width={270} height={270} />
+                                    </td>
                                     <td>{course.levelId}</td>
                                     <td>{course.teacherId}</td>
                                     <td>
-                                        <button className={cx('btn btn-primary', 'col-md-6')} onClick={() => handleOpenModal(course.courseID)}>
+                                        <button
+                                            className={cx('btn btn-primary', 'col-md-6')}
+                                            onClick={() => handleOpenModal(course.courseID)}
+                                        >
                                             <FontAwesomeIcon icon={faPenToSquare} />
                                         </button>
-                                        <button className={cx('btn btn-danger', 'col-md-6')} onClick={() => deleteCourse(course.courseID)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <h2>Level 2 Course</h2>
-                    <table className={cx('table table-bordered table-striped')}>
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Level</th>
-                                <th scope="col">Teacher</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {courses.filter(course => course.levelId === 2).map((course, index) => (
-                                <tr key={index}>
-                                    <th scope="row">{course.courseID}</th>
-                                    <td>
-                                        <a style={{ color: 'blue' }} href={`/courseDetail/${course.courseID}`}>
-                                            {course.courseName}
-                                        </a>
-                                    </td>
-                                    <td>{course.descriptions}</td>
-                                    <td>{course.payment}</td>
-                                    <td>{course.images}</td>
-                                    <td>{course.levelId}</td>
-                                    <td>{course.teacherId}</td>
-                                    <td>
-                                        <button className={cx('btn btn-primary', 'col-md-6')} onClick={() => handleOpenModal(course.courseID)}>
-                                            <FontAwesomeIcon icon={faPenToSquare} />
-                                        </button>
-                                        <button className={cx('btn btn-danger', 'col-md-6')} onClick={() => deleteCourse(course.courseID)}>
-                                            <FontAwesomeIcon icon={faTrash} />
-                                        </button>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <h2>Level 3 Course</h2>
-                    <table className={cx('table table-bordered table-striped')}>
-                        <thead>
-                            <tr>
-                                <th scope="col">ID</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Payment</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Level</th>
-                                <th scope="col">Teacher</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {courses.filter(course => course.levelId === 3).map((course, index) => (
-                                <tr key={index}>
-                                    <th scope="row">{course.courseID}</th>
-                                    <td>
-                                        <a style={{ color: 'blue' }} href={`/courseDetail/${course.courseID}`}>
-                                            {course.courseName}
-                                        </a>
-                                    </td>
-                                    <td>{course.descriptions}</td>
-                                    <td>{course.payment}</td>
-                                    <td>{course.images}</td>
-                                    <td>{course.levelId}</td>
-                                    <td>{course.teacherId}</td>
-                                    <td>
-                                        <button className={cx('btn btn-primary', 'col-md-6')} onClick={() => handleOpenModal(course.courseID)}>
-                                            <FontAwesomeIcon icon={faPenToSquare} />
-                                        </button>
-                                        <button className={cx('btn btn-danger', 'col-md-6')} onClick={() => deleteCourse(course.courseID)}>
+                                        <button
+                                            className={cx('btn btn-danger', 'col-md-6')}
+                                            onClick={() => deleteCourse(course.courseID)}
+                                        >
                                             <FontAwesomeIcon icon={faTrash} />
                                         </button>
                                     </td>
@@ -374,15 +338,15 @@ export default function CourseCRUDComponent(props) {
                                     />
                                 </div>
                                 <div className={cx('form-group')}>
-                                    <label htmlFor="image">Image</label>
+                                    <label htmlFor="image">Image</label> <br />
+                                    <img src={toUpdateCourse.images} width={270} height={270} />
                                     <input
-                                        type="text"
+                                        type="file"
                                         className={cx('form-control')}
                                         id="image"
-                                        placeholder="Enter image"
-                                        value={toUpdateCourse.images}
+                                        // value={toUpdateCourse.images}
                                         onChange={(e) =>
-                                            setToUpdateCourse({ ...toUpdateCourse, images: e.target.value })
+                                            setToUpdateCourse({ ...toUpdateCourse, images: e.target.files[0] })
                                         }
                                     />
                                 </div>

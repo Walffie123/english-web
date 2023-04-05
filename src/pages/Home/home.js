@@ -2,15 +2,16 @@ import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 import images from '~/assets/images/Daco_4375001.png';
 import newimage from '~/assets/images/like.png';
-import CourseComponent from '~/components/Course/CourseComponent';
 import Button from '~/components/Button/Btn';
+import Specialty from './Section/Specialty';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const cx = classNames.bind(styles);
 function Home() {
     return (
         <div className={cx('home-container')}>
             <div className={cx('introduce')}>
-                <div>
+                <div className={cx('introduce-wrap')}>
                     <h1 className={cx('introduce-title')}>
                         The <span className={cx('abc')}>Future</span> Of Education Is Here!
                     </h1>
@@ -23,95 +24,14 @@ function Home() {
                         <button className={cx('Explore')}>Explore Course</button>
                     </div>
                 </div>
+
                 <img className={cx('Idiots')} src={images} alt="Idiots"></img>
             </div>
 
-            <div className={cx('content2')}>
-                {/* <div className={cx('search1')}>
-                    <input type="text" placeholder="Course name" />
-                    <input type="text" placeholder="Tutor name" />
-                    <input type="text" placeholder="Popular Course" />
-                </div> */}
-                <div>
-                    <CourseComponent/>                
-                </div>
+            <div className={cx('content-2')}>
+                <Specialty />
             </div>
-
-            <div className={cx('content3')}>
-                <div className={cx('box')}>
-                    <span></span>
-                    <br></br>
-                    <h3 className={cx('textTitle')}> Practice by Unit </h3>
-                    <div className={cx('box-content')}>
-                        <div className={cx('box-text')}>
-                            <p>
-                                Unit are Completed:
-                                <span> 0/20</span>
-                            </p>
-                            <p>
-                                Units are 90% above:
-                                <span> 0/20</span>
-                            </p>
-                            <p>
-                                Units are 90% below:
-                                <span> 0/20</span>
-                            </p>
-                            <p>
-                                Time spent on course:
-                                <span>00:00:00</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div className={cx('box-card')}>
-                        <div>
-                            <span> On Practice </span>
-                            <p style={{ color: 'solid blue' }}> Unit 1 </p>
-                        </div>
-                        <div className={cx('box-button')}>
-                            <Button home> Practice</Button>
-                            <Button home> See Result</Button>
-                        </div>
-                    </div>
-                </div>
-                <div className={cx('box')}>
-                    <span></span>
-                    <br></br>
-                    <h3 className={cx('textTitle')}> Practice by Game </h3>
-                    <div className={cx('box-content')}>
-                        <div className={cx('box-text')}>
-                            <p>
-                                Game are Completed:
-                                <span> 0/3</span>
-                            </p>
-                            <p>
-                                Games are 90% above:
-                                <span> 0/3</span>
-                            </p>
-                            <p>
-                                Games are 90% below:
-                                <span> 0/3</span>
-                            </p>
-                            <p>
-                                Time spent on game:
-                                <span>00:00:00</span>
-                            </p>
-                        </div>
-                    </div>
-                    <div className={cx('box-card')}>
-                        <div>
-                            <span> On Practice </span>
-                            <p style={{ color: 'solid blue' }}> Game 1 </p>
-                        </div>
-                        <div className={cx('box-button')}>
-                            <Button home> Practice</Button>
-                            <Button home> See Result</Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <hr></hr>
-
-            <div className={cx('introduce')}>
+            <div className={cx('introduce-2')}>
                 <img className={cx('Idiot')} src={newimage} alt="Idiots"></img>
                 <div>
                     <h1 className={cx('introduce-title')}>

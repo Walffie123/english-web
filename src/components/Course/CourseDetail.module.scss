@@ -57,6 +57,48 @@
   cursor: pointer;
   border-radius: 5px;
 }
+.my-modal {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.my-modal button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.my-modal button:hover {
+  background-color: #3e8e41;
+}
+
+.my-modal h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.my-modal p {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
 
 
 

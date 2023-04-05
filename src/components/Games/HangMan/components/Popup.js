@@ -17,12 +17,12 @@ const Popup = ({ correctLetters, wrongLetters, selectedWord, setPlayable, next, 
         playable = false;
     } else if (checkWin(correctLetters, wrongLetters, selectedWord, words) == 'finishwin') {
         finalMessage = 'Congratulations! You won!';
-        showScore = `Your score is: ${score + 1}/${len}`;
+        showScore = `Your score is: ${score + 1}/${words.length}`;
         playable = false;
     } else if (checkWin(correctLetters, wrongLetters, selectedWord, words) == 'finishlose') {
         finalMessage = 'Unfortunately you lose. ';
         finalMessageRevealWord = `... the word was: ${selectedWord}`;
-        showScore = `Your score is: ${score}/${len}`;
+        showScore = `Your score is: ${score}/${words.length}`;
         playable = false;
     }
 

@@ -28,7 +28,7 @@ export default function Register() {
 
         const registerDto = {
             username: username,
-            name: name,
+            fullName: name,
             email: email,
             password: password,
             address: address,

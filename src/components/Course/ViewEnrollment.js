@@ -48,12 +48,16 @@ export default function CourseComponent(props) {
                     <div className="col-md-4" key={enrollment.id}>
                         <Card className={cx('card')} style={{ width: '18rem' }}>
                             <Card.Body className="cardbody">
-                                <Card.Text className={cx('description')}>Course Name: {enrollment.name}</Card.Text>
+                                <Card.Text className={cx('description', 'text-center')} style={{fontSize: '24px', fontWeight: 'bold'}}>
+                                    Course Name: {enrollment.name}
+                                </Card.Text>
                                 <Card.Text className={cx('payment')}>Price: ${enrollment.price}</Card.Text>
                                 <Card.Text className={cx('payment')}>Enroll Date: {enrollment.date}</Card.Text>
-                                <Button variant="primary" href={`courseDetail/${enrollment.courseid}`}>
-                                    Course detail
-                                </Button>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <Button variant="primary" href={`courseDetail/${enrollment.courseid}`}>
+                                        Course detail
+                                    </Button>
+                                </div>
                             </Card.Body>
                         </Card>
                     </div>
@@ -67,7 +71,7 @@ export default function CourseComponent(props) {
                                 display: 'flex',
                                 justifyContent: 'center',
                                 alignItems: 'center',
-                                marginTop: '20px',                           
+                                marginTop: '20px',
                             }
                         }>
                             {pageNumbers.map((number) => (

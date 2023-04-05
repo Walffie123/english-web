@@ -4,7 +4,7 @@ const Score = ({ score, len, words }) => {
     return (
         <>
             <h3>Score: {score}/{words.length}</h3>
-            <h3>{len} questions left</h3>
+            <h4>({len} questions left)</h4>
         </>
     )
 }

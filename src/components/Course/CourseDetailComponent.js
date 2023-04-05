@@ -6,17 +6,20 @@ import styles from "../Course/CourseDetail.module.scss";
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
 const cx = classNames.bind(styles);
 export default function CourseDetailComponent(props) {
+    const moment = require('moment-timezone');
     const [course, setCourse] = useState([]);
     const [reviews, setReviews] = useState([]);
     const { courseid } = useParams();
     const baseUrl = 'http://localhost:8080'; // replace with your backend URL
     const enrollmentTime = moment();
-    const reviewTime = moment();
+    const reviewTime = moment().tz('Asia/Ha_Noi');
     const [review, setReview] = useState('');
     const [editing, setEditing] = useState(false);
     const [chosenReview, setChosenReview] = useState(null);
@@ -24,20 +27,51 @@ export default function CourseDetailComponent(props) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalEnrollOpen, setIsModalEnrollOpen] = useState(false);
     const [isModalEnrolledOpen, setIsModalEnrolledOpen] = useState(false);
+    const [enrollment, setEnrollment] = useState([]);
+    const [isEnrolled, setIsEnrolled] = useState(false);
 
     useEffect(() => {
-        loadCourseById();
+        const loadData = async () => {
+            await loadEnrollment();
+            await loadCourseById();
+        };
+        loadData();
         findReviewByCourseId();
     }, []);
+
+    useEffect(() => {
+        checkEnrollment(enrollment, course);
+    }, [enrollment, course]);
+
+    const loadEnrollment = async () => {
+        const result = await axios.get(`${baseUrl}/findEnrollmentByStudentId/1`);
+        // console.log(result.data);
+        const newEnrollment = result.data.map((enrollment) => ({
+            id: enrollment.enrollmentId,
+            courseid: enrollment.courseId,
+            name: enrollment.courseName,
+            price: enrollment.payment,
+            date: new Date(enrollment.enrollmentTime).toLocaleDateString("vi-VN")
+        }));
+        setEnrollment(newEnrollment);
+        console.log("Enrollment: ", enrollment);
+    };
     const loadCourseById = async () => {
         const result = await axios.get(`${baseUrl}/findCourse/${courseid}`);
-        console.log(result.data);
         setCourse(result.data);
+        console.log("Course: ", course);
     }
     const findReviewByCourseId = async () => {
         const result = await axios.get(`${baseUrl}/findReviewByCourseId/${courseid}`);
-        console.log(result.data);
-        setReviews(result.data);
+        const newReview = result.data.map((review) => ({
+            reviewId: review.reviewId,
+            studentName: review.studentName,
+            reviewContent: review.reviewContent,
+            reviewTime: new Date(review.reviewTime).toLocaleDateString("vi-VN"),
+            reviewHour: `${new Date(review.reviewTime).getHours()}:${new Date(review.reviewTime).getMinutes()}:${new Date(review.reviewTime).getSeconds()}`
+        }));
+        console.log(newReview);
+        setReviews(newReview);
     }
     const enrollCourse = async () => {
         const enrollmentData = {
@@ -49,6 +83,7 @@ export default function CourseDetailComponent(props) {
             .then(response => {
                 console.log(response);
                 setIsModalEnrolledOpen(true);
+                setIsEnrolled(true);
             })
             .catch(error => {
                 console.log(error);
@@ -98,6 +133,20 @@ export default function CourseDetailComponent(props) {
     const handleEditReviewContentChange = (event) => {
         setEditReviewContent(event.target.value);
     }
+    function checkEnrollment(enrollment, course) {
+        console.log('Checking enrollment...');
+        console.log("Enrollment trong checkEnrollment: ", enrollment);
+        console.log("Course trong checkEnrollment: ", course);
+        enrollment.forEach(item => {
+            console.log('Checking enrollment2...');
+            console.log(item.courseid);
+            console.log(course.courseID);
+            if (item.courseid == course.courseID) {
+                setIsEnrolled(true);
+                console.log(isEnrolled);
+            }
+        });
+    }
 
     const handleCancel = () => {
         setChosenReview(null);
@@ -144,39 +193,47 @@ export default function CourseDetailComponent(props) {
                     <p className={cx("description")}>Description: {course.descriptions}</p>
                     <p className={cx("payment")}>Price: {course.payment}$</p>
                     <p className={cx("payment")}>Teacher Name: {course.teacher?.fullName}</p>
-                    <button className={cx("enroll-btn")} onClick={() => {enrollCourse()}}>Enroll Now</button>
+                    <button className={cx("enroll-btn")} onClick={() => { enrollCourse() }}>
+                        {isEnrolled ? "Enrolled" : "Enroll Now"}
+                    </button>
                     <button className={cx("enroll-btn")}>
                         <Link to="/viewenrollment/1">View all of your ongoing course</Link></button>
                 </div>
-                <textarea placeholder="Enter your review here" value={review} onChange={handleReviewChange} />
-                <button className={cx("enroll-btn")} onClick={handleSendReview}>Send</button>
+                <textarea placeholder="Enter your review here"
+                    style={{ width: "80%", height: "100px" }} value={review} onChange={handleReviewChange} />
+                <FontAwesomeIcon icon={faPaperPlane} className={cx("enroll-btn")} onClick={handleSendReview} size="3x" style={{ width: "20px" }} />
+
+
                 <div className="col-md-8">
                     <ul>
                         {reviews.map((review) => (
                             <li key={review.reviewId}>
                                 {review.reviewId == chosenReview ? (
                                     <div>
-                                        <textarea value={editReviewContent} onChange={handleEditReviewContentChange} />
-                                        <button onClick={handleCancel}>X</button>
-                                        <button onClick={() => handleEditReview(review.reviewId)}>OK</button>
+                                        <textarea style={{ width: "90%", height: "100px" }} value={editReviewContent} onChange={handleEditReviewContentChange} />
+                                        <button onClick={() => handleEditReview(review.reviewId)} style={{ float: 'right' }}><FontAwesomeIcon icon={faCheck} /></button>
+                                        <button style={{ width: "10", height: "10px" }} onClick={handleCancel} style={{ float: 'right' }}><FontAwesomeIcon icon={faTimes} /></button>
                                     </div>
-                                ) : (
-                                    <div>
-                                        <p>
-                                            <span className={cx("reviewer-name")}>{review.studentName}</span>
-                                            <span className={cx("review-time")}>{review.reviewTime}</span>
-                                            <button className={cx("review-button")} onClick={() => {
-                                                handleEdit(review.reviewId);
-                                                handleEditReviewContent(review.reviewContent);
-                                            }}>
-                                                Edit
-                                            </button>
 
-                                            <button className={cx("review-button")} onClick={() => handleDeleteReview(review.reviewId)}>
-                                                Delete
-                                            </button>
-                                        </p>
-                                        <p>{review.reviewContent}</p></div>
+                                ) : (
+                                    <div style={{ marginTop: 40 }}>
+                                        <span className={cx("reviewer-name")}><b>{review.studentName} </b></span>&nbsp;
+                                        <span className={cx("review-time")} style={{ opacity: 0.7 }}>{review.reviewTime} {review.reviewHour}</span>
+
+                                        <button className={cx("review-button")} style={{ float: "right" }} onClick={() => handleDeleteReview(review.reviewId)}>
+                                            <FontAwesomeIcon icon={faTrash} />
+                                        </button>
+
+                                        <button className={cx("review-button")} style={{ float: "right" }} onClick={() => {
+                                            handleEdit(review.reviewId);
+                                            handleEditReviewContent(review.reviewContent);
+                                        }}>
+                                            <FontAwesomeIcon icon={faEdit} />
+                                        </button>
+
+                                        <p style={{ marginTop: 7, width: '80%' }}>{review.reviewContent}</p>
+                                    </div>
+
                                 )}
                             </li>
                         ))}
