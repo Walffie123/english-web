@@ -4,7 +4,7 @@ import axios from 'axios';
 import classNames from 'classnames/bind';
 import styles from '../Lesson/LessonCRUDComponent.module.scss';
 import { Modal, Button } from 'react-bootstrap';
-import { faFileCirclePlus, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faFileCirclePlus, faPenToSquare, faTrash, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const cx = classNames.bind(styles);
@@ -156,7 +156,7 @@ export default function LessonCRUDComponent(props) {
                                 />
                             </div>
                             <button className={cx('btn btn-primary')} onClick={() => addLesson()}>
-                                Add Course
+                                Add Lesson
                             </button>
                         </div>
                     )}
@@ -169,6 +169,7 @@ export default function LessonCRUDComponent(props) {
                                 <th scope="col">Resource link, Drive</th>
                                 <th scope="col">Course ID</th>
                                 <th scope="col">Action</th>
+                                <th scope="col">FlashCard</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -195,6 +196,11 @@ export default function LessonCRUDComponent(props) {
                                         >
                                             <FontAwesomeIcon icon={faTrash}/>
                                         </button>                               
+                                    </td>
+                                    <td>
+                                        <a href={`/crudFlashCard/${lesson.lessonId}`}>
+                                        Forward <FontAwesomeIcon icon={faArrowRight} /> 
+                                        </a>
                                     </td>
                                 </tr>
                             ))}
