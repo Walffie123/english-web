@@ -120,7 +120,7 @@ export default function CRUDFillInBlankComponent(props) {
     }, []);
 
     return (
-        <div className={cx('container')}>
+        <div className={cx('Fillincrud-container')}>
             <div className={cx('row')}>
                 <div className="col-md-12">
                     <h1>List Fill In Blank questions</h1>

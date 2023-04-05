@@ -120,9 +120,6 @@ export default function CourseComponent(props) {
                                 <Card.Title className={cx('cardtitle')}>{course.name}</Card.Title>
                                 <Card.Text
                                     className={cx('description')}
-                                    style={{
-                                        width: '100%',
-                                    }}
                                 >
                                     {course.description}
                                 </Card.Text>

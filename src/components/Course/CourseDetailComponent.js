@@ -22,13 +22,13 @@ export default function CourseDetailComponent(props) {
         console.log(result.data);
         setCourse(result.data);
     };
-
     const loadLessonByCourseId = async () => {
         const result = await axios.get(`${baseUrl}/loadLesson/${courseid}`);
         // console.log(result.data);
         setLesson(result.data);
         console.log(lesson[0].lessonName);
     };
+
     return (
         <div className="container">
             <div className="row">

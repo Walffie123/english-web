@@ -270,15 +270,9 @@ export default function CourseCRUDComponent(props) {
                             </div>
                             <div className={cx('form-group')}>
                                 <label htmlFor="topic">Topic</label>
-                                <select
-                                    className={cx('topic')}
-                                    onChange={(e) =>
-                                        setCourse({
-                                            ...course,
-                                            topic: { topicId: e.target.value },
-                                        })
-                                    }
-                                >
+                                <select className={cx('topic')} onChange={(e) => setCourse({
+                                    ...course, topic: { topicId: e.target.value },
+                                })}>
                                     <option value="0">Choose topic</option>
                                     {topics.map((topic) => (
                                         <option key={topic.topicId} value={topic.topicId}>
@@ -315,7 +309,7 @@ export default function CourseCRUDComponent(props) {
                                             style={{
                                                 color: 'blue',
                                             }}
-                                            href={`/courseDetail/${course.courseID}`}
+                                            href={`/lessonCRUD/${course.courseID}`}
                                         >
                                             {course.courseName}
                                         </a>

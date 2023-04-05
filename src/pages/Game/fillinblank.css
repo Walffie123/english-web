@@ -25,7 +25,7 @@
     margin-bottom: 1rem;
     margin-top: 1.5rem;
 }
-.button {
+.fillin-button {
     padding: 5px;
     margin: 10px;
 }
@@ -58,29 +58,29 @@
     margin-bottom: 1rem;
     font-size: 50px;
 }
-.result{
+.result {
     background-image: url(../../../src/assets/images/fibgame2.jpg);
     background-size: 100%;
     height: 980px;
 }
-.display-result{
+.display-result {
     background-color: #eff2f3;
     border-radius: 5px;
 }
-.questions{
+.questions {
     font-size: 1rem;
     font-weight: 600;
     margin-bottom: 1rem;
     font-size: 30px;
 }
-.input{
+.input {
     border: #4a4e4a;
     border-radius: 5px;
 }
 ::placeholder {
-    text-align: center; 
- }
-.btn{
+    text-align: center;
+}
+.btn {
     display: flex;
     flex-direction: row;
- }
+}

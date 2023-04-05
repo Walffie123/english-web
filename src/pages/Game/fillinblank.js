@@ -105,7 +105,7 @@ function FillInTheBlankGame() {
                     <Button back href={'/fillinblank'}>
                         <FontAwesomeIcon icon={faArrowLeft} /> Back to games
                     </Button>
-                    
+
                     <Button back onClick={handlePlayAgain}>
                         <FontAwesomeIcon icon={faArrowRotateBackward} /> Play Again
                     </Button>
@@ -134,21 +134,21 @@ function FillInTheBlankGame() {
                             placeholder="Enter your answer"
                         />
                     </div>
-                    <div className='btn'>
+                    <div className="btn">
                         {currentQuestionIndex > 0 && (
-                            <button className="button" onClick={() => handlePreviousQuestion()}>
-                                 <FontAwesomeIcon icon={faArrowLeft} /> Previous 
+                            <button className="fillin-button" onClick={() => handlePreviousQuestion()}>
+                                <FontAwesomeIcon icon={faArrowLeft} /> Previous
                             </button>
                         )}
                         {currentQuestionIndex < questions.length - 1 && (
-                            <button className="button" onClick={() => handleNextQuestion()}>
-                                Next  <FontAwesomeIcon icon={faArrowRight} />
+                            <button className="fillin-button" onClick={() => handleNextQuestion()}>
+                                Next <FontAwesomeIcon icon={faArrowRight} />
                             </button>
                         )}
                     </div>
 
                     {currentQuestionIndex === questions.length - 1 && (
-                        <button className="button" onClick={() => handleNextQuestion()}>
+                        <button className="fillin-button" onClick={() => handleNextQuestion()}>
                             Finish <FontAwesomeIcon icon={faCheck} />
                         </button>
                     )}

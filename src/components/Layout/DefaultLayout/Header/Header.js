@@ -3,6 +3,12 @@ import styles from './Header.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
 import images from '~/assets/images/Engliterature_free-file.png';
+
+import { Modal } from 'react-bootstrap';
+import { useState } from 'react';
+
+import Login from '~/pages/Auth/login';
+import Register from '~/pages/Auth/register';
 import Button from '~/components/Button/btn';
 
 const cx = classNames.bind(styles);
@@ -12,6 +18,14 @@ const user = JSON.parse(token);
 const isUserLoggedIn = user !== null;
 
 function Header() {
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showRegisterModal, setShowRegisterModal] = useState(false);
+
+    const handleLoginModalClose = () => setShowLoginModal(false);
+    const handleLoginModalOpen = () => setShowLoginModal(true);
+
+    const handleRegisterModalClose = () => setShowRegisterModal(false);
+    const handleRegisterModalOpen = () => setShowRegisterModal(true);
 
     const handleLogout = () => {
         localStorage.removeItem('user');
@@ -21,42 +35,76 @@ function Header() {
     return (
         <header className={cx('header')}>
             <div className={cx('inner')}>
-                <img className={cx('logo')} src={images} alt="Engliterature"></img>
-                <div className={cx('Home')}>
-                    <a href="/">Home</a>
-                </div>
+                <a href="/">
+                    <img className={cx('logo')} src={images} alt="Engliterature" href="/Home"></img>
+                </a>
                 <div className={cx('Game')}>
                     <a href="/game">Game</a>
                 </div>
-                <div className={cx()}>
-                    <a>Professional Education</a>
-                </div>
-                <div className={cx('Upload')}>
-                    <a href="/upload">Upload</a>
+                <div className={cx('Pro')}>
+                    <text>Professional Education</text>
                 </div>
                 <div className={cx('Courses')}>
                     <a href="/courses">Courses</a>
                 </div>
                 <div className={cx('actions')}>
-                    {user ? (
-                        <>
-                            <div className={cx('username')}>Welcome, {user.username}</div>
-                            <Button logout onClick={handleLogout}>
-                                Logout
-                            </Button>
-                        </>
-                    ) : (
-                        <>
-                            <FontAwesomeIcon className={cx('ilogin')} icon={faRightToBracket} />
-                            <Button login href="/login" target="_blank">
-                                Login
-                            </Button>
-                            <Button register href="/register" target="_blank">
-                                Register
-                            </Button>
-                        </>
-                    )}
+                    <Modal className={cx('auth-modal')} show={showLoginModal} onHide={handleLoginModalClose}>
+                        <Modal.Header className={cx('modal-header')} closeButton>
+                            <Modal.Title>Login</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className={cx('modal-body')}>
+                            <Login />
+                        </Modal.Body>
+                    </Modal>
+
+                    <Modal className={cx('auth-modal')} show={showRegisterModal} onHide={handleRegisterModalClose}>
+                        <Modal.Header className={cx('modal-header')} closeButton>
+                            <Modal.Title>Register</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body className={cx('modal-body')}>
+                            <Register />
+                        </Modal.Body>
+                    </Modal>
                 </div>
+                {user ? (
+                    <>
+                        <div className={cx('username')}>Welcome, {user.username}</div>
+                        <div className={cx('sub-menu-wrap')}>
+                            <div className={cx('sub-menu')}>
+                                <div className={cx('user-info')}>
+                                    <h3> {user.fullname}</h3>
+                                    <p>ID: {user.id}</p>
+                                </div>
+                                <hr></hr>
+                                <a href="/profile">
+                                    <p>Edit Profile</p>
+                                    <span></span>
+                                </a>
+                                <a href="/profile">
+                                    <p>Settings & Privacy</p>
+                                    <span></span>
+                                </a>
+                                <a href="/profile">
+                                    <p>Help&Support</p>
+                                    <span></span>
+                                </a>
+                                <a href="/profile">
+                                    <p onClick={handleLogout}>Logout</p>
+                                    <span></span>
+                                </a>
+                            </div>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <Button login onClick={handleLoginModalOpen}>
+                            Login
+                        </Button>
+                        <Button register onClick={handleRegisterModalOpen}>
+                            Register
+                        </Button>
+                    </>
+                )}
             </div>
         </header>
     );
