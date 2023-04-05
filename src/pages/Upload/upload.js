@@ -25,14 +25,9 @@ function Upload() {
     };
 
     useEffect(() => {
-        axios
-            .get('//localhost:8080/cloudinary/list')
-            .then(function (result) {
-                setVideos(result.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        axios.get('//localhost:8080/cloudinary/list').then(function (result) {
+            setVideos(result.data);
+        });
     });
 
     const deleteVideo = (id) => {

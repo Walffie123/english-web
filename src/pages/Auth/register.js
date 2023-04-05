@@ -18,13 +18,13 @@ export default function Register() {
     const [level, setLevel] = useState('');
 
     function SendRegisterRequest() {
-        console.log(username);
-        console.log(fullName);
-        console.log(email);
-        console.log(password);
-        console.log(address);
-        console.log(phone);
-        console.log(level);
+        // console.log(username);
+        // console.log(fullName);
+        // console.log(email);
+        // console.log(password);
+        // console.log(address);
+        // console.log(phone);
+        // console.log(level);
 
         const registerDto = {
             username: username,
