@@ -20,7 +20,7 @@ function Upload() {
         const formData = new FormData();
         formData.append('multipartFile', videoURL);
         console.log(videoURL);
-        axios.post('//localhost:8080/cloudinary/upload/1', formData);
+        axios.post('//localhost:8080/cloudinary/upload/5', formData);
         // };
     };
 
@@ -54,27 +54,23 @@ function Upload() {
                 {/* </div> */}
             </div>
 
-            <Container>
-                {videos.map((v) => (
-                    <Paper key={v.id}>
-                        <button onClick={() => deleteVideo(v.id)}>Delete</button>
+            <Paper key={videos.id}>
+                        <button onClick={() => deleteVideo(videos.id)}>Delete</button>
                         <br />
-                        ID: {v.id} <br />
-                        Name: {v.videoname} <br />
+                        ID: {videos.id} <br />
+                        Name: {videos.videoname} <br />
                         <video
                             controls
                             controlsList="nodownload"
                             crossorigin
                             playsinline
                             id="player"
-                            src={v.videoURL}
+                            src={videos.videoURL}
                         ></video>
                         {/* <DefaultPlayer>
                             <source src={v.videoURL} type="video/webm" />
                         </DefaultPlayer> */}
                     </Paper>
-                ))}
-            </Container>
         </div>
     );
 }
