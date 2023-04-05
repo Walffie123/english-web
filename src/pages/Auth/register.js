@@ -75,17 +75,17 @@ export default function Register() {
     };
 
     function SendRegisterRequest() {
-        console.log(username);
-        console.log(name);
-        console.log(email);
-        console.log(password);
-        console.log(address);
-        console.log(phone);
-        console.log(level);
+        // console.log(username);
+        // console.log(name);
+        // console.log(email);
+        // console.log(password);
+        // console.log(address);
+        // console.log(phone);
+        // console.log(level);
 
         const registerDto = {
             username: username,
-            name: name,
+            fullname: name,
             email: email,
             password: password,
             address: address,
